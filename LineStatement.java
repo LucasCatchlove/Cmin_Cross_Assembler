@@ -1,9 +1,9 @@
 public class LineStatement
 {
-    private string label;
-    private string instruction;
-    private string directive;
-    private string comment;
+    private String label;
+    private String instruction;
+    private String directive;
+    private String comment;
 
     public LineStatement(label, instrcution, directive, comment)
     {
