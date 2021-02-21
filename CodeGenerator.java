@@ -1,3 +1,3 @@
-CodeGenerator{
-	createListingFile(){}
+public class CodeGenerator{
+	public createListingFile(){}
 }
