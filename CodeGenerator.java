@@ -1,1 +1,3 @@
-createListingFile()
+CodeGenerator{
+	createListingFile(){}
+}
