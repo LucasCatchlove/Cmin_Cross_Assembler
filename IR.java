@@ -4,8 +4,8 @@ public class IR implements IntermediateRepresentation {
 
 	private ArrayList<LineStatement> lineStatementList = new ArrayList<>();
 	
-	public void addLineStatement(LineStatement linestatement) {
-		lineStatementList.add(linestatement);
+	public void addLineStatement(LineStatement lineStatement) {
+		lineStatementList.add(lineStatement);
 	}
 
 	public LineStatement getLineStatement(int index) {

@@ -3,12 +3,12 @@ import java.util.ArrayList;
 public class SyntaxAnalyser {
 
     //private ArrayList<LineStatement> IR = new ArrayList<>();
-    private IR;
+    private IR intRep;
 
     private String[] lineStatementElements;
 
     private SyntaxAnalyser() {
-        IR intRep = new IR();
+        intRep = new IR();
     }
 
     public void createIR() {
