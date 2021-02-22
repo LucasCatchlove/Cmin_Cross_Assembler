@@ -1,11 +1,11 @@
 public class LineStatement
 {
     private String label;
-    private String instruction;
+    private Instruction instruction;
     private String directive;
     private String comment;
 
-    public LineStatement(label, instrcution, directive, comment)
+    public LineStatement(String label, Instruction instruction, String directive, String comment)
     {
         this.label = label;
         this.instruction = instruction;

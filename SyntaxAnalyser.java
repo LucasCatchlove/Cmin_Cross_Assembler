@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class SyntaxAnalyser {
 
     private ArrayList<LineStatement> IR = new ArrayList<>();

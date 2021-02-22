@@ -1,5 +1,4 @@
-interface IR {
-	public void addLineStatement();
-	public LineStatement getLineStatement(); 
-
+interface IntermediateRepresentation {
+	public void addLineStatement(LineStatement lineStatement);
+	public LineStatement getLineStatement(int index);
 }
