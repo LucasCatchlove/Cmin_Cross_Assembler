@@ -6,4 +6,13 @@ public class Mnemonic {
         this.mnemonicName = mnemonicName;
         this.opCode = opCode;
     }
+
+    public String getMnemonicName() {
+        return mnemonicName;
+    }
+
+    public String getOpCode() {
+        return opCode;
+    }
 }
+
