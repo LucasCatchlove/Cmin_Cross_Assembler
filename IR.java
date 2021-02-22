@@ -2,14 +2,14 @@ import java.util.ArrayList;
 
 public class IR implements IntermediateRepresentation {
 
-	private ArrayList<LineStatement> intRep = new ArrayList<>();
+	private ArrayList<LineStatement> lineStatementList = new ArrayList<>();
 	
 	public void addLineStatement(LineStatement linestatement) {
-		intRep.add(linestatement);
+		lineStatementList.add(linestatement);
 	}
 
 	public LineStatement getLineStatement(int index) {
-		return intRep.get(index);
+		return lineStatementList.get(index);
 	}
 
 
