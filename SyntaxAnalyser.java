@@ -1,8 +1,11 @@
 import java.util.ArrayList;
 
 public class SyntaxAnalyser {
+    /*
+    the IR class creates the ArrayList
+    private ArrayList<LineStatement> IR = new ArrayList<>();
+     */
 
-    //private ArrayList<LineStatement> IR = new ArrayList<>();
     private IR intRep;
 
     private String[] lineStatementElements;
@@ -11,9 +14,12 @@ public class SyntaxAnalyser {
         intRep = new IR();
     }
 
-    public void createIR() {
+    /* no longer needed as the creation of the IR is taken care of in the constructor
 
+    public void createIR() {
     }
+
+     */
 
     public LineStatement createLineStatement() {
 
