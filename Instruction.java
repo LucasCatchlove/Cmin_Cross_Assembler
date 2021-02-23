@@ -7,4 +7,12 @@ public class Instruction {
         this.mnemonic = mnemonic;
         this.operand = operand;
     }
+
+    public Mnemonic getMnemonic() {
+        return mnemonic;
+    }
+
+    public String getOperand() {
+        return operand;
+    }
 }

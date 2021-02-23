@@ -16,4 +16,20 @@ public class LineStatement
         this.instruction = instruction;
         this.comment = comment;
     }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public Instruction getInstruction() {
+        return instruction;
+    }
+
+    public String getDirective() {
+        return directive;
+    }
+
+    public String getComment() {
+        return comment;
+    }
 }
