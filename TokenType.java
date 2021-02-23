@@ -1,0 +1,1 @@
+public enum TokenType { Mnemonic, Label, LabelOperand }
