@@ -5,8 +5,7 @@ public class LineStatement
     private String directive;
     private String comment;
 
-    public LineStatement(String label, String directive, String comment)
-    {
+    public LineStatement(String label, String directive, String comment) {
         this.label = label;
         this.directive = directive;
         this.comment = comment;

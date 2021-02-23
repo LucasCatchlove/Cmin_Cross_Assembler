@@ -1,8 +1,6 @@
 import jdk.nashorn.internal.parser.TokenType;
 
-import java.util.ArrayList;
-
-public class SyntaxAnalyser {
+public class SyntaxAnalyser implements  ISyntaxAnalyser {
     /*
     the IR class creates the ArrayList
     private ArrayList<LineStatement> IR = new ArrayList<>();
@@ -12,29 +10,28 @@ public class SyntaxAnalyser {
     private SymbolTable symbolTable;
     private LineStatement lineStatement;
 
-    private SyntaxAnalyser() {
+    public SyntaxAnalyser(SymbolTable symbolTable) {
+        this.symbolTable = symbolTable;
         intRep = new IR();
     }
 
     //Used by the Lexical Analyser to send the token/identifier
-    //tokenLine = [Label, Mnemonic or Directive, Comment]
-    public void createLineStatement(Token[] tokenLine) {
+    //tokenLine = [Label, Mnemonic or Directive, Comment] //For other sprints
+    public void createLineStatement(Token token) {
 
         //if tokenLine[1] is an Instruction
-        if (tokenLine[1].getType() == TokenType.Mnemonic) 
-            lineStatement = new LineStatement(tokenLine[0].getName(), new Instruction(parseToken(tokenLine[1].getName()), ""), tokenLine[2].getName());
+        if (token.getType() == TokenType.Mnemonic)
+            lineStatement = new LineStatement("", new Instruction(parseToken(token.getName()), ""), "");
         //else tokenLine[1] is a Directive
-        else
-            lineStatement = new LineStatement(tokenLine[0].getName(), tokenLine[1].getName(), tokenLine[2].getName());
         updateIR();
 
     }
 
-    public void updateIR() {
+    private void updateIR() {
         intRep.addLineStatement(lineStatement);
     }
 
-    public Mnemonic parseToken(String identifier) {
+    private Mnemonic parseToken(String identifier) {
         return symbolTable.get(identifier); //hashtable or SymbolTable
     }
 
