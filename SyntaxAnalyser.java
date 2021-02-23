@@ -17,7 +17,7 @@ public class SyntaxAnalyser {
     }
 
     //Used by the Lexical Analyser to send the token/identifier
-    //tokenLine = [Label, Instruction or Directive, Comment]
+    //tokenLine = [Label, Mnemonic or Directive, Comment]
     public void createLineStatement(Token[] tokenLine) {
 
         //if tokenLine[1] is an Instruction
