@@ -3,32 +3,36 @@ public class SymbolTable{
 	public byte get(String token){
 		return instructions.get(token);
 	}
-	private HashMap<String, String> instructions;
+	private HashMap<String, Object> instructions;
 		instructions = new HashMap<>();
-        instructions.put("halt", "00");
-        instructions.put("pop", "01");
-        instructions.put("dup", "02");
-        instructions.put("exit", "03");
-        instructions.put("ret", "04");
-        instructions.put("not", "0C");
-        instructions.put("and", "0D");
-        instructions.put("or", "0E");
-        instructions.put("xor", "0F");
-        instructions.put("neg", "10");
-        instructions.put("inc", "11");
-        instructions.put("dec", "12");
-        instructions.put("add", "13");
-        instructions.put("sub", "14");
-        instructions.put("mul", "15");
-        instructions.put("div", "16");
-        instructions.put("rem", "17");
-        instructions.put("shl", "18");
-        instructions.put("shr", "19");
-        instructions.put("teq", "1A");
-        instructions.put("tne", "1B");
-        instructions.put("tlt", "1C");
-        instructions.put("tgt", "1D");
-        instructions.put("tle", "1E");
-        instructions.put("tge", "1F");
+        instructions.put("halt", new Mnemonic("halt", 0x00));
+        instructions.put("pop", new Mnemonic("pop", 0x01));
+        instructions.put("dup", new Mnemonic("dud", 0x02));
+        instructions.put("exit", new Mnemonic("exit", 0x03));
+        instructions.put("ret", new Mnemonic("ret", 0x04));
+        instructions.put("not", new Mnemonic("not", 0x0C));
+        instructions.put("and", new Mnemonic("and", 0x0D));
+        instructions.put("or", new Mnemonic("or", 0x0E));
+        instructions.put("xor", new Mnemonic("xor", 0x0F));
+        instructions.put("neg", new Mnemonic("neg", 0x10));
+        instructions.put("inc", new Mnemonic("inc", 0x11));
+        instructions.put("dec", new Mnemonic("dec", 0x12));
+        instructions.put("add", new Mnemonic("add", 0x13));
+        instructions.put("sub", new Mnemonic("sub", 0x14));
+        instructions.put("mul", new Mnemonic("mul", 0x15));
+        instructions.put("div", new Mnemonic("div", 0x16));
+        instructions.put("rem", new Mnemonic("rem", 0x17));
+        instructions.put("shl", new Mnemonic("shl", 0x18));
+        instructions.put("shr", new Mnemonic("shr", 0x19));
+        instructions.put("teq", new Mnemonic("teq", 0x1A));
+        instructions.put("tne", new Mnemonic("tne", 0x1B));
+        instructions.put("tlt", new Mnemonic("tlt", 0x1C));
+        instructions.put("tgt", new Mnemonic("tgt", 0x1D));
+        instructions.put("tle", new Mnemonic("tle", 0x1E));
+        instructions.put("tge", new Mnemonic("tge", 0x1F));
 
+}
+private Mnemonic(String tok, Int hex){
+	String token = tok;
+	Int value = hex;
 }
