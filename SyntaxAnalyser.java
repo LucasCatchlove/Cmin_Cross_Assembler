@@ -1,3 +1,5 @@
+import jdk.nashorn.internal.parser.TokenType;
+
 import java.util.ArrayList;
 
 public class SyntaxAnalyser {
@@ -7,31 +9,33 @@ public class SyntaxAnalyser {
      */
 
     private IR intRep;
-
-    private String[] lineStatementElements;
+    private SymbolTable symbolTable;
+    private LineStatement lineStatement;
 
     private SyntaxAnalyser() {
         intRep = new IR();
     }
 
-    /* no longer needed as the creation of the IR is taken care of in the constructor
+    //Used by the Lexical Analyser to send the token/identifier
+    //tokenLine = [Label, Instruction or Directive, Comment]
+    public void createLineStatement(Token[] tokenLine) {
 
-    public void createIR() {
-    }
-
-     */
-
-    public LineStatement createLineStatement() {
+        //if tokenLine[1] is an Instruction
+        if (tokenLine[1].getType() == TokenType.Mnemonic) 
+            lineStatement = new LineStatement(tokenLine[0].getName(), new Instruction(parseToken(tokenLine[1].getName()), ""), tokenLine[2].getName());
+        //else tokenLine[1] is a Directive
+        else
+            lineStatement = new LineStatement(tokenLine[0].getName(), tokenLine[1].getName(), tokenLine[2].getName());
+        updateIR();
 
     }
 
     public void updateIR() {
-
+        intRep.addLineStatement(lineStatement);
     }
 
-    public void parseToken() { //returns what?
-
+    public Mnemonic parseToken(String identifier) {
+        return symbolTable.get(identifier); //hashtable or SymbolTable
     }
-
 
 }
