@@ -30,7 +30,6 @@ public class SymbolTable{
         instructions.put("tgt", new Mnemonic("tgt", 0x1D));
         instructions.put("tle", new Mnemonic("tle", 0x1E));
         instructions.put("tge", new Mnemonic("tge", 0x1F));
-
 }
 private Mnemonic(String tok, Int hex){
 	String token = tok;

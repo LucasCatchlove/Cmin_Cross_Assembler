@@ -1,3 +1,3 @@
 public class CodeGenerator{
-	public createListingFile(){}
+	Listing.createListingFile(){}
 }
