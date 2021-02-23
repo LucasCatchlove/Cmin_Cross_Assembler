@@ -1,7 +1,10 @@
+import java.util.HashMap;
 public class SymbolTable{
-	public byte getToken(String token){}
+	public byte get(String token){
+		return instructions.get(token);
+	}
 	private HashMap<String, String> instructions;
-instructions = new HashMap<>();
+		instructions = new HashMap<>();
         instructions.put("halt", "00");
         instructions.put("pop", "01");
         instructions.put("dup", "02");
