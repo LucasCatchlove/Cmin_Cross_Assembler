@@ -12,5 +12,7 @@ public class IR implements IntermediateRepresentation {
 		return lineStatementList.get(index);
 	}
 
-
+	public ArrayList<LineStatement> getLineStatementList() {
+		return lineStatementList;
+	}
 }
