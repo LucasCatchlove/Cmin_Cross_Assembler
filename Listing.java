@@ -20,6 +20,8 @@ public class Listing{
 			ArrayList<LineStatement> list = intRep.getLineStatementList();
 			for ( LineStatement line : list){
 				writer.write(String.valueOf(openingLine()).getBytes());
+				writer.write(address().getBytes());
+				writer.write(code(line).getBytes());
 				writer.write(printInstruction(line).getBytes());
 				writer.write(closingLine().getBytes());
 			}
@@ -36,15 +38,27 @@ public class Listing{
 		String line;
 		String label = ls.getLabel();
 		String instruction = ls.getInstruction().getMnemonic().getMnemonicName();
-		String directive = ls.getDirective();
+		//String directive = ls.getDirective();
 		String comment = ls.getComment();
-		line ="           " + label + "            " + instruction + "           " + directive + "       " + comment;
+		line ="           " + label + "              " + instruction + "           " /*+ directive */+ "       "+comment;
 		System.out.println(line);
 		return line;
 	}
-	private int openingLine(){
-		int TEMP = lineCount+1;
+	private String openingLine(){
+		String TEMP;
+		if(lineCount < 9)
+			TEMP = Integer.toString(lineCount + 1) + " " ;
+		else
+			TEMP = Integer.toString(lineCount + 1);
 		return TEMP;
+	}
+	private String address() {
+		String addr = String.format("%04X", lineCount);
+		return "   " + addr;
+	}
+	private String code(LineStatement ls){
+		String code = String.format("%02X",ls.getInstruction().getMnemonic().getOpCode());
+		return "  " + code;
 	}
 	private String closingLine(){
 		lineCount++;
