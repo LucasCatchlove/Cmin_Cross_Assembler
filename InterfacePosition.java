@@ -1,6 +1,6 @@
 public interface InterfacePosition {
 
-    public int getLineCounter();
-    public int getColumnCounter();
+    int getLineCounter();
+    int getColumnCounter();
 
 }

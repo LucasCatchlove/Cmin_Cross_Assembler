@@ -1,4 +1,7 @@
 interface IIR {
-	public void addLineStatement(LineStatement lineStatement);
-	public LineStatement getLineStatement(int index);
+
+	void addLineStatement(LineStatement lineStatement);
+
+	LineStatement getLineStatement(int index);
+
 }

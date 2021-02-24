@@ -37,8 +37,8 @@ public class SyntaxAnalyser implements  ISyntaxAnalyser {
     }
 
     private Mnemonic parseToken(String token) {
-        return symbolTable.get(token.replaceAll("\\s+",""));
-       //return symbolTable.get(token); //hashtable or SymbolTable
+//        return symbolTable.get(token.replaceAll("\\s+",""));
+       return symbolTable.get(token); //hashtable or SymbolTable
     }
 
 }

@@ -1,12 +1,12 @@
 public interface ILineStatement {
 
-    public String getLabel();
+    String getLabel();
 
-    public Instruction getInstruction();
+    Instruction getInstruction();
 
-    public String getDirective();
+    String getDirective();
 
-    public String getComment();
+    String getComment();
 
 
 }

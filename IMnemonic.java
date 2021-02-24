@@ -1,10 +1,9 @@
 public interface IMnemonic {
 
-    public String getMnemonicName();
+    String getMnemonicName();
 
-    public int getOpCode();
+    int getOpCode();
 
-
-    public String toString();
+    String toString();
 
 }
