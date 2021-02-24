@@ -1,6 +1,6 @@
 import javax.sound.sampled.Line;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -16,14 +16,13 @@ public class Listing{
 
 	public void createListingFile(){
 		try{
-			File Listing = new File("Listing.txt");
-			FileWriter writer = new FileWriter("Listing.txt");
-			writer.write(printHeader());
+			FileOutputStream writer = new FileOutputStream("Listing.txt");
+			writer.write(printHeader().getBytes());
 			ArrayList<LineStatement> list = intRep.getLineStatementList();
 			for ( LineStatement line : list){
 				writer.write(openingLine());
-				writer.write(printInstruction(line));
-				writer.write(closingLine());
+				writer.write(printInstruction(line).getBytes());
+				writer.write(closingLine().getBytes());
 			}
 			writer.close();
     	} catch (IOException e) {
@@ -37,7 +36,7 @@ public class Listing{
 	private String printInstruction(LineStatement ls){
 		String line;
 		String label = ls.getLabel();
-		String instruction = ls.getInstruction().getMnemonic().getMnemonicName();
+		String instruction = "placeholder"; //ls.getInstruction().getMnemonic().getMnemonicName();
 		String directive = ls.getDirective();
 		String comment = ls.getComment();
 		line = label + " " + instruction + " " + directive + " " + comment;
@@ -48,6 +47,6 @@ public class Listing{
 	}
 	private String closingLine(){
 		lineCount++;
-		return "/n";
+		return "\n";
 	}
 }

@@ -1,4 +1,3 @@
-import com.sun.tools.javac.jvm.Code;
 
 public class CrossAssembler {
     public static void main(String[] args) {
@@ -12,8 +11,10 @@ public class CrossAssembler {
         IR intRep = parser.getIntRep();
         Listing list = new Listing(intRep);
 
-        CodeGenerator codeGenerator = new CodeGenerator(list);
+        //CodeGenerator codeGenerator = new CodeGenerator(list);
 
+       // System.out.print(intRep.getLineStatement(4).getInstruction().getMnemonic().getMnemonicName());
+//
 
 
 
