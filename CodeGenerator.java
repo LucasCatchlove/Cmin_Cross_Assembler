@@ -1,4 +1,12 @@
 public class CodeGenerator{
-	Listing.createListingFile(){}
+	private Listing list;
+	public CodeGenerator(Listing list) {
+		this.list = list;
+		this.list.createListingFile();
+	}
+
+
+
+
 
 }

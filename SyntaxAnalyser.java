@@ -36,3 +36,7 @@ public class SyntaxAnalyser implements  ISyntaxAnalyser {
     }
 
 }
+
+public IR getIntRep() {
+
+}

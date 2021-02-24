@@ -63,11 +63,13 @@ public class LexicalAnalyser {
             fin.close();
         }catch(Exception e){System.out.println(e);}
     }
-
+/*
     public static void main(String[] args) {
         LexicalAnalyser test = new LexicalAnalyser();
         test.traverseFile();
 
     }
+
+ */
 }
 

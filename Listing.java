@@ -1,16 +1,25 @@
+import javax.sound.sampled.Line;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import java.util.ArrayList;
 public class Listing{
 	private int lineCount = 0;
+	private IR intRep;
 
-	public createListingFile(){
+	public Listing(IR intRep) {
+		this.intRep = intRep;
+	}
+
+
+
+	public void createListingFile(){
 		try{
 			File Listing = new File("Listing.txt");
 			FileWriter writer = new FileWriter("Listing.txt")
 			writer.write(printHeader());
-			LineStatement<> list = getLineStatementList();
+			ArrayList<LineStatement> list = intRep.getLineStatementList();
 			for ( LineStatement line : list){
 				writer.write(openingLine());
 				writer.write(printInstruction(line));
