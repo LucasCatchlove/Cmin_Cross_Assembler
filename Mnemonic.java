@@ -1,8 +1,8 @@
 public class Mnemonic {
     private String mnemonicName;
-    private String opCode;
+    private int opCode;
 
-    public Mnemonic(String mnemonicName, String opCode) {
+    public Mnemonic(String mnemonicName, int opCode) {
         this.mnemonicName = mnemonicName;
         this.opCode = opCode;
     }
@@ -11,7 +11,7 @@ public class Mnemonic {
         return mnemonicName;
     }
 
-    public String getOpCode() {
+    public int getOpCode() {
         return opCode;
     }
 }

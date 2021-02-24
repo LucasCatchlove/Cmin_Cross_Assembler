@@ -10,9 +10,11 @@ public class LexicalAnalyser {
     int columnCounter = 0;
     int tokenColumn = 0;
     FileReader reader;
+    SyntaxAnalyser parser;
 
-    public LexicalAnalyser(FileReader reader){
+    public LexicalAnalyser(FileReader reader, SyntaxAnalyser parser){
         this.reader = reader;
+        this.parser = parser;
     }
 
     public int getEOL() {
@@ -37,11 +39,15 @@ public class LexicalAnalyser {
                     columnCounter++;
                     if(sbToken.length()>=1) {
                         Token token = generateToken(sbToken);
+                        parser.createLineStatement(token);
+                        /*
                         System.out.println(token.getName());
                         System.out.println(token.getPosition().getLineCounter());
                         System.out.println(token.getPosition().getColumnCounter());
                         System.out.println(token.getCode());
                         //System.out.println(sbToken.toString());
+
+                         */
                     sbToken.setLength(0);}
                     if(i==EOL ){
                         lineCounter++;

@@ -1,11 +1,12 @@
 import java.util.HashMap;
+
 public class SymbolTable{
 	public byte get(String token){
 		return instructions.get(token);
 	}
 	private HashMap<String, Object> instructions;
 		instructions = new HashMap<>();
-        instructions.put("halt", new Mnemonic("halt", 0x00));
+        instructions.put("halt", new Mnemonic("halt",0x00));
         instructions.put("pop", new Mnemonic("pop", 0x01));
         instructions.put("dup", new Mnemonic("dud", 0x02));
         instructions.put("exit", new Mnemonic("exit", 0x03));
@@ -30,8 +31,8 @@ public class SymbolTable{
         instructions.put("tgt", new Mnemonic("tgt", 0x1D));
         instructions.put("tle", new Mnemonic("tle", 0x1E));
         instructions.put("tge", new Mnemonic("tge", 0x1F));
-}
-private Mnemonic(String tok, Int hex){
-	String token = tok;
-	Int value = hex;
+
+
+
+
 }
