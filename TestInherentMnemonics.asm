@@ -1,4 +1,4 @@
- halt pop
+ halt
  pop
  dup
  exit

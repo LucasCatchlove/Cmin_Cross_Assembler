@@ -48,6 +48,6 @@ public class Listing{
 	}
 	private String closingLine(){
 		lineCount++;
-		return "/n";
+		return "\n";
 	}
 }
