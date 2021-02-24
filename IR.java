@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class IR implements IntermediateRepresentation {
+public class IR implements IIR {
 
 	private ArrayList<LineStatement> lineStatementList = new ArrayList<>();
 	
@@ -15,4 +15,5 @@ public class IR implements IntermediateRepresentation {
 	public ArrayList<LineStatement> getLineStatementList() {
 		return lineStatementList;
 	}
+
 }

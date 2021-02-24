@@ -1,6 +1,7 @@
 public class Mnemonic {
-    private String mnemonicName;
-    private int opCode;
+
+    private String mnemonicName; //Mnemonic Name: "halt",...
+    private int opCode; //Mnemonic opCode: 00,0A...
 
     public Mnemonic(String mnemonicName, int opCode) {
         this.mnemonicName = mnemonicName;

@@ -1,15 +1,14 @@
 import java.util.HashMap;
 
-public class SymbolTable{
-
-        public Mnemonic get(String token){
-                return instructions.get(token);
-        }
+public class SymbolTable {
 
 	private HashMap<String, Mnemonic> instructions;
 
+	//Default Constructor: define the HashMap and add all the elements
 	public SymbolTable() {
-        instructions = new HashMap<String, Mnemonic>();
+
+        instructions = new HashMap<>();
+
         instructions.put("halt", new Mnemonic("halt", 0x00));
         instructions.put("pop", new Mnemonic("pop", 0x01));
         instructions.put("dup", new Mnemonic("dud", 0x02));
@@ -35,11 +34,12 @@ public class SymbolTable{
         instructions.put("tgt", new Mnemonic("tgt", 0x1D));
         instructions.put("tle", new Mnemonic("tle", 0x1E));
         instructions.put("tge", new Mnemonic("tge", 0x1F));
+
     }
 
-
-
-
-
+    //get method receives a token, and returns the Mnemonic object value related to the token key in the HashMap
+    public Mnemonic get(String token){
+                return instructions.get(token);
+        }
 
 }

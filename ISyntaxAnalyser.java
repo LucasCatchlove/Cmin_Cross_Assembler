@@ -1,5 +1,6 @@
 public interface ISyntaxAnalyser {
 
-    public void createLineStatement(Token token);
+    IR getIntRep();
+    void createLineStatement(Token token);
 
 }

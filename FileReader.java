@@ -1,14 +1,14 @@
 import java.io.File;
 
-class FileReader{
+class FileReader implements IFileReader {
 
-    File file;
+    private File file;
 
     public FileReader(String srcFile) {
         file = new File(srcFile);
     }
 
-    File getFileName(){
+    public File getFileName(){
         return file;
     }
 

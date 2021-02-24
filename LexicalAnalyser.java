@@ -1,44 +1,51 @@
 import java.io.FileInputStream;
+import java.io.IOException;
 
 
-public class LexicalAnalyser {
+public class LexicalAnalyser implements InterfaceLexicalAnalyser{
 
-    int EOL = 10;
-    int EOF = -1;
-    int spaces = 32;
-    int lineCounter = 1;
-    int columnCounter = 0;
-    int tokenColumn = 0;
-    SyntaxAnalyser parser;
+    private int EOL = 10;
+    private int EOF = -1;
+    private int spaces = 32;
+    private int lineCounter = 1;
+    private int columnCounter = 0;
+    private int tokenColumn = 0;
+    private SyntaxAnalyser parser;
 
     public LexicalAnalyser(FileReader reader, SyntaxAnalyser parser){
         this.parser = parser;
-        this.traverseFile(reader);
+        this.openStream(reader);
     }
 
-    public int getEOL() {
-        return EOL;
+    private void openStream(FileReader file) {
+
+        FileInputStream fin = null;
+
+        try {
+            fin = new FileInputStream(file.getFileName());
+            traverseFile(fin);
+            fin.close();
+        } catch(Exception e){
+            System.err.println(e);
+            System.exit(1);
+        }
+
     }
 
-    public int getEOF() {
-        return EOF;
-    }
+    private void traverseFile(FileInputStream fin) throws IOException {
 
-    private Token generateToken(StringBuilder sbToken){
-       return new Token(new Position(lineCounter,tokenColumn), sbToken.toString(), TypeToken.Mnemonic);
-    }
+        int i = 0;
+        StringBuilder sbToken = new StringBuilder();
 
-    void traverseFile(FileReader file){
-        try{
-            FileInputStream fin=new FileInputStream(file.getFileName());
-            int i=0;
-            StringBuilder sbToken = new StringBuilder();
-            while((i=fin.read())!=EOF){
-                if(i==EOL || i==spaces){
-                    columnCounter++;
-                    if(sbToken.length()>=1) {
-                        Token token = generateToken(sbToken);
-                        parser.createLineStatement(token);
+        while((i=fin.read())!=EOF){
+
+            columnCounter++;
+
+            if(i==EOL || i==spaces) {
+
+                if(sbToken.length()>=1) {
+                    Token token = generateToken(sbToken);
+                    parser.createLineStatement(token);
                         /*
                         System.out.println(token.getName());
                         System.out.println(token.getPosition().getLineCounter());
@@ -47,20 +54,25 @@ public class LexicalAnalyser {
                         //System.out.println(sbToken.toString());
 
                          */
-                    sbToken.setLength(0);}
-                    if(i==EOL ){
-                        lineCounter++;
-                        columnCounter = 0;}
+                    sbToken.setLength(0);
                 }
-                else{
-                    columnCounter++;
+
+                if(i==EOL ){
+                    lineCounter++;
+                    columnCounter = 0;
+                }
+
+            } else {
                 sbToken.append((char)i);
-                    if(sbToken.length() == 1)
-                        tokenColumn = columnCounter;
-                }
+                if(sbToken.length() == 1)
+                    tokenColumn = columnCounter;
             }
-            fin.close();
-        }catch(Exception e){System.out.println(e);}
+        }
+
+    }
+
+    private Token generateToken(StringBuilder sbToken){
+        return new Token(new Position(lineCounter,tokenColumn), sbToken.toString(), TypeToken.Mnemonic);
     }
 
 /*

@@ -1,17 +1,15 @@
-import javax.sound.sampled.Line;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import java.util.ArrayList;
-public class Listing{
+
+public class Listing {
+
 	private int lineCount = 0;
 	private IR intRep;
 
 	public Listing(IR intRep) {
 		this.intRep = intRep;
 	}
-
-
 
 	public void createListingFile(){
 		try{
@@ -34,6 +32,7 @@ public class Listing{
 	private String printHeader(){
 		return "Line Addr Code          Label         Mne   Operand       Comments        \n";
 	}
+
 	private String printInstruction(LineStatement ls){
 		String line;
 		String label = ls.getLabel();
@@ -41,9 +40,9 @@ public class Listing{
 		//String directive = ls.getDirective();
 		String comment = ls.getComment();
 		line ="           " + label + "              " + instruction + "           " /*+ directive */+ "       "+comment;
-		System.out.println(line);
 		return line;
 	}
+
 	private String openingLine(){
 		String TEMP;
 		if(lineCount < 9)
@@ -52,16 +51,20 @@ public class Listing{
 			TEMP = Integer.toString(lineCount + 1);
 		return TEMP;
 	}
+
 	private String address() {
 		String addr = String.format("%04X", lineCount);
 		return "   " + addr;
 	}
+
 	private String code(LineStatement ls){
 		String code = String.format("%02X",ls.getInstruction().getMnemonic().getOpCode());
 		return "  " + code;
 	}
+
 	private String closingLine(){
 		lineCount++;
 		return "\n";
 	}
+
 }

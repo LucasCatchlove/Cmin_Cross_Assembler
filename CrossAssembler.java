@@ -1,6 +1,8 @@
 
 public class CrossAssembler {
+
     public static void main(String[] args) {
+
         String srcFile = "TestInherentMnemonics.asm";
 
         FileReader reader = new FileReader(srcFile);
@@ -14,13 +16,7 @@ public class CrossAssembler {
         CodeGenerator codeGenerator = new CodeGenerator(list);
 
        // System.out.print(intRep.getLineStatement(4).getInstruction().getMnemonic().getMnemonicName());
-//
-
-
-
-
-
-
 
     }
+
 }

@@ -15,4 +15,5 @@ public class Instruction {
     public String getOperand() {
         return operand;
     }
+
 }
