@@ -1,7 +1,7 @@
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class LexicalAnalyser implements ILexicalAnalyzer {
+public class LexicalAnalyser implements ILexicalAnalyser {
 
     private int EOL = 10;
     private int EOF = -1;
