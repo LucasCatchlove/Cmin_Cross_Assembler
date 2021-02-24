@@ -14,5 +14,12 @@ public class Mnemonic {
     public int getOpCode() {
         return opCode;
     }
+
+
+    public String toString() {
+        return mnemonicName;
+    }
 }
+
+
 
