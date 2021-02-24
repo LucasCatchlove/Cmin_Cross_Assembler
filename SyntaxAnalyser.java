@@ -20,10 +20,11 @@ public class SyntaxAnalyser implements  ISyntaxAnalyser {
     public void createLineStatement(Token token) {
 
         //if tokenLine[1] is an Instruction
-        if (token.getType() == TypeToken.Mnemonic)
+        if (token.getType() == TypeToken.Mnemonic) {
             lineStatement = new LineStatement("", new Instruction(parseToken(token.getName()), ""), "");
-        //else tokenLine[1] is a Directive
-        updateIR();
+            //else tokenLine[1] is a Directive
+            updateIR();
+        }
 
     }
 

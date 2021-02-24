@@ -9,12 +9,11 @@ public class LexicalAnalyser {
     int lineCounter = 1;
     int columnCounter = 0;
     int tokenColumn = 0;
-    FileReader reader;
     SyntaxAnalyser parser;
 
     public LexicalAnalyser(FileReader reader, SyntaxAnalyser parser){
-        this.reader = reader;
         this.parser = parser;
+        this.traverseFile(reader);
     }
 
     public int getEOL() {
@@ -31,7 +30,7 @@ public class LexicalAnalyser {
 
     void traverseFile(FileReader file){
         try{
-            FileInputStream fin=new FileInputStream(reader.getFileName());
+            FileInputStream fin=new FileInputStream(file.getFileName());
             int i=0;
             StringBuilder sbToken = new StringBuilder();
             while((i=fin.read())!=EOF){

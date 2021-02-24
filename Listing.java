@@ -25,6 +25,7 @@ public class Listing{
 				writer.write(printInstruction(line));
 				writer.write(closingLine());
 			}
+			writer.close();
     	} catch (IOException e) {
     		System.out.println("An error occurred.");
     		e.printStackTrace();
@@ -36,7 +37,7 @@ public class Listing{
 	private String printInstruction(LineStatement ls){
 		String line;
 		String label = ls.getLabel();
-		Instruction instruction = ls.getInstruction();
+		String instruction = ls.getInstruction().getMnemonic().getMnemonicName();
 		String directive = ls.getDirective();
 		String comment = ls.getComment();
 		line = label + " " + instruction + " " + directive + " " + comment;
