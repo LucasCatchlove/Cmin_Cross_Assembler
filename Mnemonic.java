@@ -1,4 +1,4 @@
-public class Mnemonic {
+public class Mnemonic implements IMnemonic {
 
     private String mnemonicName; //Mnemonic Name: "halt",...
     private int opCode; //Mnemonic opCode: 00,0A...
@@ -17,9 +17,7 @@ public class Mnemonic {
     }
 
 
-    public String toString() {
-        return mnemonicName;
-    }
+
 }
 
 

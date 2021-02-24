@@ -31,13 +31,13 @@ public class SyntaxAnalyser implements  ISyntaxAnalyser {
 
     }
 
-    //It adds a lineStatment
+    //adds line statement to IR
     private void updateIR() {
         intRep.addLineStatement(lineStatement);
     }
 
+
     private Mnemonic parseToken(String token) {
-//        return symbolTable.get(token.replaceAll("\\s+",""));
        return symbolTable.get(token); //hashtable or SymbolTable
     }
 

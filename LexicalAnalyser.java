@@ -1,8 +1,7 @@
 import java.io.FileInputStream;
 import java.io.IOException;
 
-
-public class LexicalAnalyser implements InterfaceLexicalAnalyser {
+public class LexicalAnalyser implements ILexicalAnalyzer {
 
     private int EOL = 10;
     private int EOF = -1;
@@ -13,12 +12,20 @@ public class LexicalAnalyser implements InterfaceLexicalAnalyser {
     private int tokenColumn = 0;
     private SyntaxAnalyser parser;
 
+    /**
+     * parametrized constructor that also opens the .asm for tokenizing
+     * @param reader
+     * @param parser
+     */
     public LexicalAnalyser(FileReader reader, SyntaxAnalyser parser) {
         this.parser = parser;
         this.openStream(reader);
     }
 
-    //Opens the input stream and calls for the traverseFile()
+    /**
+     * Opens the input stream and calls for the traverseFile()
+     * @param file
+     */
     private void openStream(FileReader file) {
 
         try {
@@ -32,8 +39,12 @@ public class LexicalAnalyser implements InterfaceLexicalAnalyser {
 
     }
 
-    //Traverse the file byte by byte and collect them in a StringBuilder;
-    //when a space or EOL is reached, the StringBuilder is sent to the generateToken() then the token is sent to createLineStatement
+    /**
+     * Traverse the file byte by byte and collect them in a StringBuilder;
+     * when a space or EOL is reached, the StringBuilder is sent to the generateToken() then the token is sent to createLineStatement
+     * @param fin
+     * @throws IOException
+     */
     private void traverseFile(FileInputStream fin) throws IOException {
 
         int i = 0;
@@ -48,14 +59,6 @@ public class LexicalAnalyser implements InterfaceLexicalAnalyser {
                 if(sbToken.length() >= 1) {
                     Token token = generateToken(sbToken);
                     parser.createLineStatement(token);
-                        /*
-                        System.out.println(token.getName());
-                        System.out.println(token.getPosition().getLineCounter());
-                        System.out.println(token.getPosition().getColumnCounter());
-                        System.out.println(token.getCode());
-                        //System.out.println(sbToken.toString());
-
-                         */
                     sbToken.setLength(0);
                 }
 
@@ -76,19 +79,14 @@ public class LexicalAnalyser implements InterfaceLexicalAnalyser {
 
     }
 
-    //Generates a Token object from the sbToken collected
+    /**
+     * Generates a Token object from the sbToken collected
+     * @param sbToken
+     * @return
+     */
     private Token generateToken(StringBuilder sbToken) {
         return new Token(new Position(lineCounter,tokenColumn), sbToken.toString(), TypeToken.Mnemonic);
     }
-
-/*
-    public static void main(String[] args) {
-        LexicalAnalyser test = new LexicalAnalyser();
-        test.traverseFile();
-
-    }
-
- */
 
 }
 
