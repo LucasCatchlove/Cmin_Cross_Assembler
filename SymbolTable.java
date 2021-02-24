@@ -31,8 +31,16 @@ public class SymbolTable{
         instructions.put("tgt", new Mnemonic("tgt", 0x1D));
         instructions.put("tle", new Mnemonic("tle", 0x1E));
         instructions.put("tge", new Mnemonic("tge", 0x1F));
+<<<<<<< HEAD
 
 
 
 
 }
+=======
+	private Mnemonic(String tok, Int hex){
+		String token = tok;
+		Int value = hex;
+	}
+}
+>>>>>>> 3a8e1d9eafef4724429a51869bff431da7d177e4
