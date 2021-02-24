@@ -1,13 +1,15 @@
-import java.io.*;
+import java.io.File;
 
 class FileReader{
 
-    File file;
+   private File file;
 
-    String getFileName(){
-        return "";
+   public FileReader(String filename){
+        file = filename;
+   }
+
+   public String getFileName(){
+        return file;
     }
-
-
 
 }
