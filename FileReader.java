@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import java.io.File;
 
 class FileReader{
@@ -13,3 +14,20 @@ class FileReader{
     }
 
 }
+=======
+import java.io.*;
+
+class FileReader{
+
+    File file;
+
+    public FileReader(String srcFile) {
+        file = new File(srcFile);
+    }
+
+    File getFileName(){
+        return file;
+    }
+
+}
+>>>>>>> Stashed changes
