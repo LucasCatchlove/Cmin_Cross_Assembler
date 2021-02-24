@@ -11,11 +11,13 @@ public class Listing {
 		this.intRep = intRep;
 	}
 
-	//Opens the output stream
+	/**
+	 * Opens the output stream
+	 */
 	public void openOutputStream(){
 
 		try {
-			FileOutputStream writer = new FileOutputStream("Listing.txt", false);
+			FileOutputStream writer = new FileOutputStream("Listing.lst", false);
 			writeListingFile(writer);
 			writer.close();
     	} catch (Exception e) {
@@ -26,7 +28,11 @@ public class Listing {
 
 	}
 
-	//Writes the header and contents of the Listing File
+	/**
+	 * Writes the header and contents of the Listing File
+	 * @param writer
+	 * @throws IOException
+	 */
 	private void writeListingFile(FileOutputStream writer) throws IOException {
 
 		writer.write(header().getBytes());
@@ -41,17 +47,34 @@ public class Listing {
 
 	}
 
-	//Formats the line to look like a table
+	/**
+	 * Formats the line to look like a table
+	 * @param line
+	 * @param address
+	 * @param code
+	 * @param label
+	 * @param mne
+	 * @param operand
+	 * @param comments
+	 * @return
+	 */
 	private String LineFormatter(String line, String address, String code, String label, String mne, String operand, String comments) {
 		return String.format("%-6s %-7s %-6s %-20s %-7s %-12s %-20s\n", line, address, code, label, mne, operand, comments);
 	}
 
-	//Returns the header of the Listing File
+	/**
+	 * Returns the header of the Listing File
+	 * @return returns the header to the listing file
+	 */
 	private String header(){
 		return LineFormatter("Line", "Addr", "Code", "Label", "Mne", "Operand", "Comments");
 	}
 
-	//gets the [code, label, mnemonic name, comment] from the lineStatement
+	/**
+	 * gets the [code, label, mnemonic name, comment] from the lineStatement
+	 * @param ls
+	 * @return
+	 */
 	private String[] separateLineStatement(LineStatement ls){
 
 		String code = String.format("%02X",ls.getInstruction().getMnemonic().getOpCode());
@@ -63,12 +86,18 @@ public class Listing {
 		return new String[]{code, label, mnemonicName, comment};
 	}
 
-	//get the line number
+	/**
+	 * returns the line number as a string
+	 * @return
+	 */
 	private String getLineNumber(){
 		return Integer.toString(++lineCount);
 	}
 
-	//converts the lineCount to an address
+	/**
+	 * Generates the hexidecimal memory address
+	 * @return
+	 */
 	private String address() {
 		return String.format("%04X", lineCount-1);
 	}

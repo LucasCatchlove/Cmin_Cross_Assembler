@@ -5,14 +5,24 @@ public class LineStatement implements ILineStatement{
     private String directive;
     private String comment;
 
-    //For Sprint 2 usage: LineStatement with a directive
+    /**
+     * For Sprint 2 usage: Creates LineStatement with a directive
+     * @param label
+     * @param directive
+     * @param comment
+     */
     public LineStatement(String label, String directive, String comment) {
         this.label = label;
         this.directive = directive;
         this.comment = comment;
     }
 
-    //LineStatement with an Instruction
+    /**
+     * Creates LineStatement with an Instruction
+     * @param label
+     * @param instruction
+     * @param comment
+     */
     public LineStatement(String label, Instruction instruction, String comment) {
         this.label = label;
         this.instruction = instruction;

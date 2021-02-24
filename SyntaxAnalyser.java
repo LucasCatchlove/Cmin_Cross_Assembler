@@ -9,6 +9,10 @@ public class SyntaxAnalyser implements  ISyntaxAnalyser {
     private SymbolTable symbolTable;
     private LineStatement lineStatement;
 
+    /**
+     * parametrized constructor
+     * @param symbolTable
+     */
     public SyntaxAnalyser(SymbolTable symbolTable) {
         this.symbolTable = symbolTable;
         intRep = new IR();
@@ -18,8 +22,13 @@ public class SyntaxAnalyser implements  ISyntaxAnalyser {
         return intRep;
     }
 
-    //Used by the Lexical Analyser to send the token/identifier
+
     //tokenLine = [Label, Mnemonic or Directive, Comment] //For other sprints
+
+    /**
+     * Used by the Lexical Analyser to send the token/identifier
+     * @param token
+     */
     public void createLineStatement(Token token) {
 
         //if tokenLine[1] is an Instruction
@@ -31,12 +40,18 @@ public class SyntaxAnalyser implements  ISyntaxAnalyser {
 
     }
 
-    //adds line statement to IR
+    /**
+     * adds line statement to IR
+     */
     private void updateIR() {
         intRep.addLineStatement(lineStatement);
     }
 
-
+    /**
+     * returns Mnemonic object from the symbol table
+     * @param token
+     * @return
+     */
     private Mnemonic parseToken(String token) {
        return symbolTable.get(token); //hashtable or SymbolTable
     }

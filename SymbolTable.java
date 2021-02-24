@@ -37,7 +37,11 @@ public class SymbolTable {
 
     }
 
-    //get method receives a token, and returns the Mnemonic object value related to the token key in the HashMap
+        /**
+         * get method receives a token, and returns the Mnemonic object value related to the token key in the HashMap
+         * @param token
+         * @return
+         */
     public Mnemonic get(String token){
                 return instructions.get(token);
         }
