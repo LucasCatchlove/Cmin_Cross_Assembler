@@ -6,7 +6,6 @@ public class CrossAssembler {
 
         FileReader reader = new FileReader(srcFile);
         SymbolTable symbolTable = new SymbolTable();
-        System.out.println(symbolTable.get("halt"));
         SyntaxAnalyser parser = new SyntaxAnalyser(symbolTable);
         LexicalAnalyser lexer = new LexicalAnalyser(reader, parser);
 

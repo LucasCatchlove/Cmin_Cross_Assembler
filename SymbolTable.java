@@ -2,6 +2,10 @@ import java.util.HashMap;
 
 public class SymbolTable{
 
+        public Mnemonic get(String token){
+                return instructions.get(token);
+        }
+
 	private HashMap<String, Mnemonic> instructions;
 
 	public SymbolTable() {
@@ -33,9 +37,6 @@ public class SymbolTable{
         instructions.put("tge", new Mnemonic("tge", 0x1F));
     }
 
-        public Mnemonic get(String token){
-                return instructions.get(token);
-        }
 
 
 
