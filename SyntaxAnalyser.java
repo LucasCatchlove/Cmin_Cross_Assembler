@@ -20,7 +20,7 @@ public class SyntaxAnalyser implements  ISyntaxAnalyser {
     public void createLineStatement(Token token) {
 
         //if tokenLine[1] is an Instruction
-        if (token.getType() == TokenType.Mnemonic)
+        if (token.getType() == TypeToken.Mnemonic)
             lineStatement = new LineStatement("", new Instruction(parseToken(token.getName()), ""), "");
         //else tokenLine[1] is a Directive
         updateIR();
@@ -35,8 +35,10 @@ public class SyntaxAnalyser implements  ISyntaxAnalyser {
         return symbolTable.get(identifier); //hashtable or SymbolTable
     }
 
-}
+
 
 public IR getIntRep() {
+    return intRep;
+}
 
 }

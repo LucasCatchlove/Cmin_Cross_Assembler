@@ -2,7 +2,7 @@ import com.sun.tools.javac.jvm.Code;
 
 public class CrossAssembler {
     public static void main(String[] args) {
-        String srcFile = args[0];
+        String srcFile = "TestInherentMnemonics.asm";
 
         FileReader reader = new FileReader(srcFile);
         SymbolTable symbolTable = new SymbolTable();

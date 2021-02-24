@@ -26,7 +26,7 @@ public class LexicalAnalyser {
     }
 
     private Token generateToken(StringBuilder sbToken){
-       return new Token(new Position(lineCounter,tokenColumn), sbToken.toString(), TypeToken.Mnemonic);
+       return new Token(new Position(lineCounter,tokenColumn), sbToken.toString(), TokenType.Mnemonic);
     }
 
     void traverseFile(FileReader file){
@@ -63,7 +63,7 @@ public class LexicalAnalyser {
             fin.close();
         }catch(Exception e){System.out.println(e);}
     }
-
+<<<<<<< HEAD
 /*
     public static void main(String[] args) {
         LexicalAnalyser test = new LexicalAnalyser();
@@ -72,6 +72,7 @@ public class LexicalAnalyser {
     }
 
  */
-
+=======
+>>>>>>> 8a1220a18cc1bb7e44d24cac6a4e376b370387da
 }
 

@@ -1,0 +1,1 @@
+public enum TypeToken { Mnemonic, Label, LabelOperand }

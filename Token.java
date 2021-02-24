@@ -1,13 +1,13 @@
 public class Token implements InterfaceToken{
 
     private Position  pos;
-    private TokenType code;
+    private TypeToken type;
     private String    name;
 
-    Token(Position pos, String name, TokenType code) {
+    Token(Position pos, String name, TypeToken type) {
         this.pos = pos;
         this.name = name;
-        this.code = code;
+        this.type = type;
     }
 
 
@@ -22,7 +22,7 @@ public class Token implements InterfaceToken{
     }
 
     @Override
-    public TokenType getCode() {
-        return code;
+    public TypeToken getType() {
+        return type;
     }
 }

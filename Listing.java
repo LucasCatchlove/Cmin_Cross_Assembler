@@ -17,7 +17,7 @@ public class Listing{
 	public void createListingFile(){
 		try{
 			File Listing = new File("Listing.txt");
-			FileWriter writer = new FileWriter("Listing.txt")
+			FileWriter writer = new FileWriter("Listing.txt");
 			writer.write(printHeader());
 			ArrayList<LineStatement> list = intRep.getLineStatementList();
 			for ( LineStatement line : list){
@@ -36,13 +36,13 @@ public class Listing{
 	private String printInstruction(LineStatement ls){
 		String line;
 		String label = ls.getLabel();
-		String instruction = ls.getInstruction();
+		Instruction instruction = ls.getInstruction();
 		String directive = ls.getDirective();
 		String comment = ls.getComment();
 		line = label + " " + instruction + " " + directive + " " + comment;
 		return line;
 	}
-	private String openingLine(){
+	private int openingLine(){
 		return lineCount+1;
 	}
 	private String closingLine(){
