@@ -11,60 +11,66 @@ public class Listing {
 		this.intRep = intRep;
 	}
 
-	public void createListingFile(){
-		try{
+	//Opens the output stream
+	public void openOutputStream(){
+
+		try {
 			FileOutputStream writer = new FileOutputStream("Listing.txt", false);
-			writer.write(printHeader().getBytes());
-			ArrayList<LineStatement> list = intRep.getLineStatementList();
-			for ( LineStatement line : list){
-				writer.write(String.valueOf(openingLine()).getBytes());
-				writer.write(address().getBytes());
-				writer.write(code(line).getBytes());
-				writer.write(printInstruction(line).getBytes());
-				writer.write(closingLine().getBytes());
-			}
+			writeListingFile(writer);
 			writer.close();
-    	} catch (IOException e) {
-    		System.out.println("An error occurred.");
+    	} catch (Exception e) {
+    		System.err.println("An error occurred.");
     		e.printStackTrace();
+    		System.exit(1);
     	}
-	}
-	private String printHeader(){
-		return "Line Addr Code          Label         Mne   Operand       Comments        \n";
+
 	}
 
-	private String printInstruction(LineStatement ls){
-		String line;
+	//Writes the header and contents of the Listing File
+	private void writeListingFile(FileOutputStream writer) throws IOException {
+
+		writer.write(header().getBytes());
+
+		ArrayList<LineStatement> list = intRep.getLineStatementList();
+
+		for (LineStatement lineStatement : list){
+			String[] instruction = separateLineStatement(lineStatement);
+			String line = LineFormatter(getLineNumber(), address(), instruction[0], instruction[1], instruction[2], "", instruction[3]);
+			writer.write(line.getBytes());
+		}
+
+	}
+
+	//Formats the line to look like a table
+	private String LineFormatter(String line, String address, String code, String label, String mne, String operand, String comments) {
+		return String.format("%-6s %-7s %-6s %-20s %-7s %-12s %-20s\n", line, address, code, label, mne, operand, comments);
+	}
+
+	//Returns the header of the Listing File
+	private String header(){
+		return LineFormatter("Line", "Addr", "Code", "Label", "Mne", "Operand", "Comments");
+	}
+
+	//gets the [code, label, mnemonic name, comment] from the lineStatement
+	private String[] separateLineStatement(LineStatement ls){
+
+		String code = String.format("%02X",ls.getInstruction().getMnemonic().getOpCode());
 		String label = ls.getLabel();
-		String instruction = ls.getInstruction().getMnemonic().getMnemonicName();
+		String mnemonicName = ls.getInstruction().getMnemonic().getMnemonicName();
 		//String directive = ls.getDirective();
 		String comment = ls.getComment();
-		line ="           " + label + "              " + instruction + "           " /*+ directive */+ "       "+comment;
-		return line;
+
+		return new String[]{code, label, mnemonicName, comment};
 	}
 
-	private String openingLine(){
-		String TEMP;
-		if(lineCount < 9)
-			TEMP = Integer.toString(lineCount + 1) + " " ;
-		else
-			TEMP = Integer.toString(lineCount + 1);
-		return TEMP;
+	//get the line number
+	private String getLineNumber(){
+		return Integer.toString(++lineCount);
 	}
 
+	//converts the lineCount to an address
 	private String address() {
-		String addr = String.format("%04X", lineCount);
-		return "   " + addr;
-	}
-
-	private String code(LineStatement ls){
-		String code = String.format("%02X",ls.getInstruction().getMnemonic().getOpCode());
-		return "  " + code;
-	}
-
-	private String closingLine(){
-		lineCount++;
-		return "\n";
+		return String.format("%04X", lineCount);
 	}
 
 }
