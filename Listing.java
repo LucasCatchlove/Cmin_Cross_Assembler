@@ -1,5 +1,4 @@
 import javax.sound.sampled.Line;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -16,11 +15,11 @@ public class Listing{
 
 	public void createListingFile(){
 		try{
-			FileOutputStream writer = new FileOutputStream("Listing.txt");
+			FileOutputStream writer = new FileOutputStream("Listing.txt", false);
 			writer.write(printHeader().getBytes());
 			ArrayList<LineStatement> list = intRep.getLineStatementList();
 			for ( LineStatement line : list){
-				writer.write(openingLine());
+				writer.write(String.valueOf(openingLine()).getBytes());
 				writer.write(printInstruction(line).getBytes());
 				writer.write(closingLine().getBytes());
 			}
@@ -31,19 +30,21 @@ public class Listing{
     	}
 	}
 	private String printHeader(){
-		return "Line Addr Code          Label         Mne   Operand       Comments        ";
+		return "Line Addr Code          Label         Mne   Operand       Comments        \n";
 	}
 	private String printInstruction(LineStatement ls){
 		String line;
 		String label = ls.getLabel();
-		String instruction = "placeholder"; //ls.getInstruction().getMnemonic().getMnemonicName();
+		String instruction = ls.getInstruction().getMnemonic().getMnemonicName();
 		String directive = ls.getDirective();
 		String comment = ls.getComment();
-		line = label + " " + instruction + " " + directive + " " + comment;
+		line ="           " + label + "            " + instruction + "           " + directive + "       " + comment;
+		System.out.println(line);
 		return line;
 	}
 	private int openingLine(){
-		return lineCount+1;
+		int TEMP = lineCount+1;
+		return TEMP;
 	}
 	private String closingLine(){
 		lineCount++;
