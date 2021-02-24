@@ -70,7 +70,7 @@ public class Listing {
 
 	//converts the lineCount to an address
 	private String address() {
-		return String.format("%04X", lineCount);
+		return String.format("%04X", lineCount-1);
 	}
 
 }
