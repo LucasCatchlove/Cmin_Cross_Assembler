@@ -19,7 +19,7 @@ public class TestToken {
         System.out.println(token.getName());
 
         System.out.println("Test components.Token getType");
-        System.out.println("components.Mnemonic");
+        System.out.println("Mnemonic");
         System.out.println(token.getType());
 
     }

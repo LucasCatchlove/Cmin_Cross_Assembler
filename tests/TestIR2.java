@@ -29,6 +29,7 @@ public class TestIR2 {
 
         System.out.print(lsl1.get(0) instanceof LineStatement);
         System.out.print(lsl1.get(1) instanceof LineStatement);
+        System.out.println();
 
 
     }
