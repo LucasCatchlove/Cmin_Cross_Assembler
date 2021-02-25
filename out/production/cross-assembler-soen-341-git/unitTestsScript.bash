@@ -26,6 +26,8 @@ javac generators/TestListing2.java
 java generators/TestListing2 >> tests.txt
 javac generators/TestListing3.java 
 java generators/TestListing3 >> tests.txt
+javac generators/TestListing4.java 
+java generators/TestListing4 >> tests.txt
 
 java aunit tests.txt
 echo 'Unit tests completed'

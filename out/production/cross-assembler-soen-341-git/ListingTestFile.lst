@@ -1,0 +1,3 @@
+Line   Addr    Code   Label                Mne     Operand      Comments            
+6      0005    00                          halt                                     
+7      0006    01                          pop                                      

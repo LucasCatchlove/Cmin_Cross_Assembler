@@ -1,14 +1,22 @@
 package generators;
 
 
+import components.IR;
 import components.Instruction;
 import components.LineStatement;
 import components.Mnemonic;
-import components.IR;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.util.Arrays;
+
+import java.io.File;
 
 
 public class TestListing1 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         IR ir1 = new IR();
         IR ir2 = new IR();
         Listing l1 = new Listing(ir1);
@@ -34,6 +42,22 @@ public class TestListing1 {
         System.out.println("Test Listing address");
         System.out.println("0002 0001");
         System.out.println(l1.address()+" "+l2.address());
+
+        System.out.println("Test writeListingFile");
+        System.out.println("true");
+        l1.openOutputStream();
+
+        l1.openOutputStream();
+        Path path1 = FileSystems.getDefault().getPath("Listing.lst");
+        byte[] f1 = Files.readAllBytes(path1);
+        Path path2 = FileSystems.getDefault().getPath("ListingTestFile.lst");
+        byte[] f2 = Files.readAllBytes(path2);
+        System.out.println(Arrays.equals(f2, f1));
+
+
+
+
+
 
 
 
