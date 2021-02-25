@@ -1,6 +1,12 @@
 package components;
 
-public class Instruction {
+import interfaces.IInstruction;
+
+/**
+ * Creates an instruction (an element of a a line statement)
+ * with a mnemonic and option operand
+ */
+public class Instruction implements IInstruction {
 
     private Mnemonic mnemonic;
     private String operand; //String just for this Sprint

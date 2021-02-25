@@ -8,6 +8,9 @@ import components.TypeToken;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/**
+ * Reads the source file character by character and generates tokens for the parser
+ */
 public class LexicalAnalyser implements ILexicalAnalyser {
 
     private int EOL = 10;

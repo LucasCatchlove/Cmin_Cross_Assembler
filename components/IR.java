@@ -4,6 +4,9 @@ import interfaces.IIR;
 
 import java.util.ArrayList;
 
+/**
+ * Creates an intermediate representation in the form of an ArrayList
+ */
 public class IR implements IIR {
 
 	private ArrayList<LineStatement> lineStatementList;

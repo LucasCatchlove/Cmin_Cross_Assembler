@@ -1,8 +1,12 @@
 package components;
 
-import interfaces.InterfaceToken;
+import interfaces.IToken;
 
-public class Token implements InterfaceToken {
+/**
+ * Characters from source file stored in a object to
+ * construct a line statement
+ */
+public class Token implements IToken {
 
     private Position  pos;
     private TypeToken type;

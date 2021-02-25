@@ -1,5 +1,9 @@
 package generators;
 
+/**
+ * generates the executable file and listing file
+ * (currently only the listing file)
+ */
 public class CodeGenerator{
 	private Listing list;
 

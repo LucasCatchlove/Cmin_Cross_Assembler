@@ -2,6 +2,9 @@ package components;
 
 import interfaces.IMnemonic;
 
+/**
+ * class to hold the mnemonic identifier and its opcode
+ */
 public class Mnemonic implements IMnemonic {
 
     private String mnemonicName; //components.Mnemonic Name: "halt",...

@@ -3,6 +3,10 @@ package analysers;
 import components.*;
 import interfaces.ISyntaxAnalyser;
 
+/**
+ * Creates line statements from the tokens passed on from the lexer, and pushes them
+ * to the IR
+ */
 public class SyntaxAnalyser implements ISyntaxAnalyser {
 
     /*

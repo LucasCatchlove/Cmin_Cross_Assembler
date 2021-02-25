@@ -2,6 +2,9 @@ package components;
 
 import interfaces.ILineStatement;
 
+/**
+ * parsed representation of the source code for convenient use by the code generator
+ */
 public class LineStatement implements ILineStatement {
 
     private String label;

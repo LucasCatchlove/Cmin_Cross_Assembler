@@ -1,8 +1,11 @@
 package components;
 
-import interfaces.InterfacePosition;
+import interfaces.IPosition;
 
-public class Position implements InterfacePosition {
+/**
+ * Stores the position in the source file when a token is generated
+ */
+public class Position implements IPosition {
 
     private int lineCounter;
     private int columnCounter;

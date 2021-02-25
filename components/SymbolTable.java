@@ -1,8 +1,14 @@
 package components;
 
+import interfaces.ISymbolTable;
+
 import java.util.HashMap;
 
-public class SymbolTable {
+/**
+ * Stores and allows for retrieval of mnemonic objects based on an
+ * input identifier
+ */
+public class SymbolTable implements ISymbolTable {
 
 	private HashMap<String, Mnemonic> instructions;
 

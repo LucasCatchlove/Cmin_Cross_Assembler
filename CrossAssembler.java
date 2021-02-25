@@ -6,6 +6,9 @@ import components.SymbolTable;
 import generators.CodeGenerator;
 import generators.Listing;
 
+/**
+ * main class for cross assembler
+ */
 public class CrossAssembler {
 
     public static void main(String[] args) {

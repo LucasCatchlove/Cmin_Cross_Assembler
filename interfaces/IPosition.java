@@ -1,6 +1,6 @@
 package interfaces;
 
-public interface InterfacePosition {
+public interface IPosition {
 
     int getLineCounter();
     int getColumnCounter();

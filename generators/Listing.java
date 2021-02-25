@@ -7,6 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Creates the listing file  (.lst)
+ */
 public class Listing {
 
 	private int lineCount = 0;
