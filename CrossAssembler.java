@@ -1,3 +1,10 @@
+import analysers.FileReader;
+import analysers.LexicalAnalyser;
+import analysers.SyntaxAnalyser;
+import components.IR;
+import components.SymbolTable;
+import generators.CodeGenerator;
+import generators.Listing;
 
 public class CrossAssembler {
 
@@ -10,11 +17,11 @@ public class CrossAssembler {
         //creation of symbol table
         SymbolTable symbolTable = new SymbolTable();
 
-        //creation of line IR and subsequent line statements
+        //creation of line components.IR and subsequent line statements
         SyntaxAnalyser parser = new SyntaxAnalyser(symbolTable);
         LexicalAnalyser lexer = new LexicalAnalyser(reader, parser);
 
-        //creation of objects used to traverse IR
+        //creation of objects used to traverse components.IR
         IR intRep = parser.getIntRep();
         Listing list = new Listing(intRep);
 
