@@ -43,7 +43,7 @@ public class TestListing1 {
         System.out.println("0002 0001");
         System.out.println(l1.address()+" "+l2.address());
 
-        System.out.println("Test writeListingFile");
+        System.out.println("Test writeListingFile & openOutputStream");
         System.out.println("true");
         l1.openOutputStream();
 
