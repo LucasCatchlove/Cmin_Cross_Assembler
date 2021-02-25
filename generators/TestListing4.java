@@ -23,6 +23,7 @@ public class TestListing4 {
         for (String s : testStr1) System.out.print(s);
         String[] testStr2 = l1.separateLineStatement(ls2);
         for (String s : testStr2) System.out.print(s);
+        System.out.println();
 
 
 

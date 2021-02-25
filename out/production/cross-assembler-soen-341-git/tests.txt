@@ -46,7 +46,7 @@ Test Listing getLineNumber
 Test Listing address
 0002 0001
 0002 0001
-Test writeListingFile
+Test writeListingFile & openOutputStream
 true
 true
 Test header
@@ -64,3 +64,12 @@ Test Lineformatter(3)
 Test separateLineStatement
 00halt01pop
 00halt01pop
+Test parseToken
+div halt pop
+div halt pop
+Test createLineStatement & createIR (method call within createLineStatement)
+div halt pop
+div halt pop
+Test getIntRep
+true true
+true true

@@ -65,4 +65,11 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
        return symbolTable.get(token); //hashtable or components.SymbolTable
     }
 
+    /**
+     * getter for testing purposes
+     * @return LineStatement object
+     */
+    LineStatement getLineStatement() {
+        return lineStatement;
+    }
 }
