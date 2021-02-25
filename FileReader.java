@@ -1,6 +1,6 @@
 import java.io.File;
 
-class FileReader implements IFileReader {
+public class FileReader implements IFileReader {
 
     private File file;
 

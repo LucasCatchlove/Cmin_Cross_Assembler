@@ -1,4 +1,4 @@
-public class Token implements InterfaceToken{
+public class Token implements InterfaceToken {
 
     private Position  pos;
     private TypeToken type;

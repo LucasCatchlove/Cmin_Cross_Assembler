@@ -1,0 +1,6 @@
+Test SyntaxAnalyser getIntRep
+true
+true
+Test SyntaxAnalyser createLineStatement
+[dec 12]
+[dec 12]

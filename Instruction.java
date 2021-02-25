@@ -21,4 +21,8 @@ public class Instruction {
         return operand;
     }
 
+    public String toString() {
+        return "Mnemonic: (" + mnemonic + "), Operand: " + operand;
+    }
+
 }

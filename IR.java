@@ -9,6 +9,8 @@ public class IR implements IIR {
 	}
 
 	public LineStatement getLineStatement(int index) {
+		if (index >= lineStatementList.size())
+			return null;
 		return lineStatementList.get(index);
 	}
 

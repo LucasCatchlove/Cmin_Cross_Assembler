@@ -21,7 +21,9 @@ public class Mnemonic implements IMnemonic {
         return opCode;
     }
 
-
+    public String toString() {
+        return "Name: " + mnemonicName + ", Opcode: " + String.format("%02X", opCode);
+    }
 
 }
 

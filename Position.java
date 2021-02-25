@@ -21,4 +21,8 @@ public class Position implements InterfacePosition {
         return columnCounter;
     }
 
+    public String toString() {
+        return "(" + lineCounter + ", " + columnCounter + ")";
+    }
+
 }
