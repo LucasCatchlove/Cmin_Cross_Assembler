@@ -36,7 +36,7 @@ public class LexicalAnalyser implements ILexicalAnalyser {
      * Opens the input stream and calls for the traverseFile()
      * @param file
      */
-    private void openStream(FileReader file) {
+    void openStream(FileReader file) {
 
         try {
             FileInputStream fin = new FileInputStream(file.getFileName());
@@ -55,7 +55,7 @@ public class LexicalAnalyser implements ILexicalAnalyser {
      * @param fin
      * @throws IOException
      */
-    private void traverseFile(FileInputStream fin) throws IOException {
+    void traverseFile(FileInputStream fin) throws IOException {
 
         int i = 0;
         StringBuilder sbToken = new StringBuilder();
@@ -94,7 +94,7 @@ public class LexicalAnalyser implements ILexicalAnalyser {
      * @param sbToken
      * @return
      */
-    private Token generateToken(StringBuilder sbToken) {
+    Token generateToken(StringBuilder sbToken) {
         return new Token(new Position(lineCounter,tokenColumn), sbToken.toString(), TypeToken.Mnemonic);
     }
 

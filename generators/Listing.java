@@ -41,7 +41,7 @@ public class Listing {
 	 * @param writer
 	 * @throws IOException
 	 */
-	private void writeListingFile(FileOutputStream writer) throws IOException {
+	void writeListingFile(FileOutputStream writer) throws IOException {
 
 		writer.write(header().getBytes());
 
@@ -66,7 +66,7 @@ public class Listing {
 	 * @param comments
 	 * @return
 	 */
-	private String LineFormatter(String line, String address, String code, String label, String mne, String operand, String comments) {
+	String LineFormatter(String line, String address, String code, String label, String mne, String operand, String comments) {
 		return String.format("%-6s %-7s %-6s %-20s %-7s %-12s %-20s\n", line, address, code, label, mne, operand, comments);
 	}
 
@@ -74,7 +74,7 @@ public class Listing {
 	 * Returns the header of the generators.Listing File
 	 * @return returns the header to the listing file
 	 */
-	private String header(){
+	String header(){
 		return LineFormatter("Line", "Addr", "Code", "Label", "Mne", "Operand", "Comments");
 	}
 
@@ -83,7 +83,7 @@ public class Listing {
 	 * @param ls
 	 * @return
 	 */
-	private String[] separateLineStatement(LineStatement ls){
+	String[] separateLineStatement(LineStatement ls){
 
 		String code = String.format("%02X",ls.getInstruction().getMnemonic().getOpCode());
 		String label = ls.getLabel();
@@ -98,7 +98,7 @@ public class Listing {
 	 * returns the line number as a string
 	 * @return
 	 */
-	private String getLineNumber(){
+	String getLineNumber(){
 		return Integer.toString(++lineCount);
 	}
 
@@ -106,7 +106,7 @@ public class Listing {
 	 * Generates the hexidecimal memory address
 	 * @return
 	 */
-	private String address() {
+	String address() {
 		return String.format("%04X", lineCount-1);
 	}
 

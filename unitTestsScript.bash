@@ -20,5 +20,7 @@ javac tests/TestIR2.java
 java tests/TestIR2 >> tests.txt
 javac tests/TestFileReader.java
 java tests/TestFileReader  >> tests.txt
+javac generators/TestListing1.java 
+java generators/TestListing1 >> tests.txt
 java aunit tests.txt
 echo 'Unit tests completed'
