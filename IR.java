@@ -2,7 +2,11 @@ import java.util.ArrayList;
 
 public class IR implements IIR {
 
-	private ArrayList<LineStatement> lineStatementList = new ArrayList<>();
+	private ArrayList<LineStatement> lineStatementList;
+
+	public IR() {
+		lineStatementList = new ArrayList<LineStatement>();
+	}
 	
 	public void addLineStatement(LineStatement lineStatement) {
 		lineStatementList.add(lineStatement);
