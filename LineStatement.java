@@ -45,4 +45,8 @@ public class LineStatement implements ILineStatement{
         return comment;
     }
 
+    public String toString() {
+        return "["+getInstruction().getMnemonic().getMnemonicName() + " " + String.format("%02X",getInstruction().getMnemonic().getOpCode())+"]";
+    }
+
 }
