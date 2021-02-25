@@ -52,7 +52,7 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
     /**
      * adds line statement to components.IR
      */
-    private void updateIR() {
+    void updateIR() {
         intRep.addLineStatement(lineStatement);
     }
 
@@ -61,7 +61,7 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
      * @param token
      * @return
      */
-    private Mnemonic parseToken(String token) {
+    Mnemonic parseToken(String token) {
        return symbolTable.get(token); //hashtable or components.SymbolTable
     }
 
