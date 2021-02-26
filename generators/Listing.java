@@ -3,6 +3,7 @@ package generators;
 import components.IR;
 import components.LineStatement;
 
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Creates the listing file  (.lst)
  */
-public class Listing {
+public class Listing implements IListing {
 
 	private int lineCount = 0;
 	private IR intRep;
