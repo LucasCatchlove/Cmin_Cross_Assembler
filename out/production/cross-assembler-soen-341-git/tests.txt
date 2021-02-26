@@ -1,0 +1,69 @@
+Test components.SymbolTable
+Name: pop, Opcode: 01; Name: halt, Opcode: 00
+Name: pop, Opcode: 01; Name: halt, Opcode: 00
+Test components.Position getLineCounter
+2
+2
+Test components.Position getColumnCounter
+1
+1
+Test components.Mnemonic getMnemonicName
+or tlt tle
+or tlt tle
+Test components.Mnemonic getOpCode
+0E 1C 1E
+0E 1C 1E
+Test components.LineStatement getLabel
+
+
+Test components.LineStatement getInstruction
+components.Mnemonic: (Name: mul, Opcode: 15), Operand: 
+components.Mnemonic: (Name: mul, Opcode: 15), Operand: 
+Test components.LineStatement getComment
+
+
+Test components.Instruction getMnemonic
+Name: teq, Opcode: 1A Name: add, Opcode: 0C Name: sub, Opcode: 0D
+Name: teq, Opcode: 1A Name: add, Opcode: 0C Name: sub, Opcode: 0D
+Test IR1
+[halt 00][pop 01]
+[halt 00][pop 01]
+Test IR2
+truetrue
+truetrue
+Test analysers.FileReader getFileName
+helloworld.txt
+helloworld.txt
+Test Listing getLineNumber
+3 2
+3 2
+Test Listing address
+0002 0001
+0002 0001
+Test writeListingFile & openOutputStream
+true
+true
+Test header
+Line   Addr    Code   Label                Mne     Operand      Comments            
+Line   Addr    Code   Label                Mne     Operand      Comments            
+Test Lineformatter(1)
+1      0000    00                          halt                                     
+1      0000    00                          halt                                     
+Test Lineformatter(2)
+2      0001    01                          pop                                      
+2      0001    01                          pop                                      
+Test Lineformatter(3)
+3      0002    02                          dud                                      
+3      0002    02                          dud                                      
+Test separateLineStatement
+00halt01pop
+00halt01pop
+Test parseToken
+div halt pop
+div halt pop
+Test createLineStatement & createIR (method call within createLineStatement)
+div halt pop
+div halt pop
+Test getIntRep
+true true
+true true

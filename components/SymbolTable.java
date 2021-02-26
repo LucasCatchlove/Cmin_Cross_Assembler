@@ -19,7 +19,7 @@ public class SymbolTable implements ISymbolTable {
 
         instructions.put("halt", new Mnemonic("halt", 0x00));
         instructions.put("pop", new Mnemonic("pop", 0x01));
-        instructions.put("dup", new Mnemonic("dud", 0x02));
+        instructions.put("dup", new Mnemonic("dup", 0x02));
         instructions.put("exit", new Mnemonic("exit", 0x03));
         instructions.put("ret", new Mnemonic("ret", 0x04));
         instructions.put("not", new Mnemonic("not", 0x0C));

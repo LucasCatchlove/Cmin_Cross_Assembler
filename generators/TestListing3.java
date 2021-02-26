@@ -15,8 +15,8 @@ public class TestListing3 {
         System.out.println( "2      0001    01                          pop                                      ");
         System.out.print(l3.LineFormatter("2", "0001", "01", "", "pop", "", ""));
         System.out.println("Test Lineformatter(3)");
-        System.out.println("3      0002    02                          dud                                      ");
-        System.out.print(l3.LineFormatter("3", "0002", "02", "", "dud", "", ""));
+        System.out.println("3      0002    02                          dup                                      ");
+        System.out.print(l3.LineFormatter("3", "0002", "02", "", "dup", "", ""));
 
 
 
