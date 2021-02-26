@@ -30,6 +30,9 @@ javac analysers/TestSyntaxAnalyser1.java
 java analysers/TestSyntaxAnalyser1 >> tests.txt
 javac analysers/TestSyntaxAnalyser2.java 
 java analysers/TestSyntaxAnalyser2 >> tests.txt
+javac analysers/TestLexicalAnalyser1.java 
+java analysers/TestLexicalAnalyser1 >> tests.txt
+
 
 java aunit tests.txt
 echo 'Unit tests completed'
