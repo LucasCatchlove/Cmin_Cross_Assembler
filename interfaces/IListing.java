@@ -1,4 +1,4 @@
-package generators;
+package interfaces;
 
 public interface IListing {
 
