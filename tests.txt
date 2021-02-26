@@ -2,11 +2,11 @@ Test components.SymbolTable
 Name: pop, Opcode: 01; Name: halt, Opcode: 00
 Name: pop, Opcode: 01; Name: halt, Opcode: 00
 Test components.Position getLineCounter
-2
-2
+2 3 9
+2 3 9
 Test components.Position getColumnCounter
-1
-1
+1 8 3
+1 8 3
 Test components.Mnemonic getMnemonicName
 or tlt tle
 or tlt tle
@@ -67,3 +67,6 @@ div halt pop
 Test getIntRep
 true true
 true true
+Test Lexical Analyser openStream and traverseFile
+[xor 0F], [rem 17]
+[xor 0F], [rem 17]

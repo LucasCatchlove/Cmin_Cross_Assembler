@@ -13,7 +13,8 @@ public class TestSyntaxAnalyser2 {
         System.out.println("true true");
         System.out.print(sa2.getIntRep() instanceof IR);
         System.out.print(" ");
-        System.out.print(sa3.getIntRep() instanceof IR);
+        System.out.println(sa3.getIntRep() instanceof IR);
+
 
     }
 }
