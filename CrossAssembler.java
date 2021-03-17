@@ -6,6 +6,8 @@ import components.SymbolTable;
 import generators.CodeGenerator;
 import generators.Listing;
 
+import java.io.FileInputStream;
+
 /**
  * main class for cross assembler
  */
@@ -21,8 +23,8 @@ public class CrossAssembler {
         SymbolTable symbolTable = new SymbolTable();
 
         //creation of line components.IR and subsequent line statements
-        SyntaxAnalyser parser = new SyntaxAnalyser(symbolTable);
-        LexicalAnalyser lexer = new LexicalAnalyser(reader, parser);
+        LexicalAnalyser lexer = new LexicalAnalyser(reader);
+        SyntaxAnalyser parser = new SyntaxAnalyser(symbolTable, lexer);
 
         //creation of objects used to traverse components.IR
         IR intRep = parser.getIntRep();

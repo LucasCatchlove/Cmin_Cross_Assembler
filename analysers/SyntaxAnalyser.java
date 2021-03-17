@@ -17,14 +17,30 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
     private IR intRep;
     private SymbolTable symbolTable;
     private LineStatement lineStatement;
+    private LexicalAnalyser lexer;
 
     /**
      * parametrized constructor
      * @param symbolTable
      */
-    public SyntaxAnalyser(SymbolTable symbolTable) {
+    public SyntaxAnalyser(SymbolTable symbolTable, LexicalAnalyser lexer) {
         this.symbolTable = symbolTable;
+        this.lexer = lexer;
         intRep = new IR();
+        this.receiveToken();
+    }
+
+    private void receiveToken() {
+        try {
+            int i;
+            while(!lexer.isEOFReached()){
+                this.createLineStatement(lexer.getToken());
+                lexer.traverseFile();
+            }
+        } catch(Exception e){
+            System.err.println(e);
+            System.exit(1);
+        }
     }
 
     public IR getIntRep() {

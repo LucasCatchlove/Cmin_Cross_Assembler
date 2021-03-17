@@ -5,7 +5,6 @@ import components.Token;
 import components.Position;
 import components.TypeToken;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
@@ -20,56 +19,53 @@ public class LexicalAnalyser implements ILexicalAnalyser {
     private int lineCounter = 1;
     private int columnCounter = 0;
     private int tokenColumn = 0;
-    private SyntaxAnalyser parser;
+    private boolean isEOFReached = false;
+
+    private FileReader reader;
+    private Token token;
+
+    public Token getToken() {
+        return token;
+    }
+
+    public boolean isEOFReached() {
+        return isEOFReached;
+    }
 
     /**
      * parametrized constructor that also opens the .asm for tokenizing
      * @param reader
-     * @param parser
      */
-    public LexicalAnalyser(FileReader reader, SyntaxAnalyser parser) {
-        this.parser = parser;
-        this.openStream(reader);
-    }
-
-    /**
-     * Opens the input stream and calls for the traverseFile()
-     * @param file
-     */
-    void openStream(FileReader file) {
-
+    public LexicalAnalyser(FileReader reader) {
+        this.reader = reader;
         try {
-            FileInputStream fin = new FileInputStream(file.getFileName());
-            traverseFile(fin);
-            fin.close();
+            traverseFile();
         } catch(Exception e){
-            System.err.println(e);
-            System.exit(1);
+        System.err.println(e);
+        System.exit(1);
         }
-
     }
 
     /**
      * Traverse the file byte by byte and collect them in a StringBuilder;
      * when a space or EOL is reached, the StringBuilder is sent to the generateToken() then the token is sent to createLineStatement
-     * @param fin
      * @throws IOException
      */
-    void traverseFile(FileInputStream fin) throws IOException {
+    public void traverseFile() throws IOException {
 
         int i = 0;
         StringBuilder sbToken = new StringBuilder();
-
-        while((i=fin.read()) != EOF) {
+        while((i= reader.getNextFin()) != EOF) {
 
             columnCounter++;
 
             if(i == EOL || i == spaces || i == carriageReturn) {
 
                 if(sbToken.length() >= 1) {
-                    Token token = generateToken(sbToken);
-                    parser.createLineStatement(token);
+                    token = generateToken(sbToken);
+//                    parser.createLineStatement(token);
                     sbToken.setLength(0);
+                    break;
                 }
 
                 if(i == EOL){
@@ -85,6 +81,10 @@ public class LexicalAnalyser implements ILexicalAnalyser {
             if(sbToken.length() == 1)
                 tokenColumn = columnCounter;
 
+        }
+
+        if (i == -1) {
+            isEOFReached = true;
         }
 
     }
