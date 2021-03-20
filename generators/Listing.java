@@ -28,7 +28,7 @@ public class Listing implements IListing {
 	public void openOutputStream(){
 
 		try {
-			FileOutputStream writer = new FileOutputStream("Listing.lst", false);
+			FileOutputStream writer = new FileOutputStream("Sprint Listing/Listing.lst", false);
 			writeListingFile(writer);
 			writer.close();
     	} catch (Exception e) {

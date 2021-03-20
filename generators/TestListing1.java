@@ -12,8 +12,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.util.Arrays;
 
-import java.io.File;
-
 
 public class TestListing1 {
     public static void main(String[] args) throws IOException {
@@ -48,7 +46,7 @@ public class TestListing1 {
         l1.openOutputStream();
 
         l1.openOutputStream();
-        Path path1 = FileSystems.getDefault().getPath("Listing.lst");
+        Path path1 = FileSystems.getDefault().getPath("Sprint Listing/Listing.lst");
         byte[] f1 = Files.readAllBytes(path1);
         Path path2 = FileSystems.getDefault().getPath("ListingTestFile.lst");
         byte[] f2 = Files.readAllBytes(path2);

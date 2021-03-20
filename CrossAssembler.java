@@ -6,8 +6,6 @@ import components.SymbolTable;
 import generators.CodeGenerator;
 import generators.Listing;
 
-import java.io.FileInputStream;
-
 /**
  * main class for cross assembler
  */
@@ -16,7 +14,7 @@ public class CrossAssembler {
     public static void main(String[] args) {
 
         //opens input file
-        String srcFile = "TestImmediate.asm";
+        String srcFile = "Sprint Listing/TestImmediate.asm";
         FileReader reader = new FileReader(srcFile);
 
         //creation of symbol table
