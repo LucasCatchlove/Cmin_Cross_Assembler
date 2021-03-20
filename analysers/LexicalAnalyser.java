@@ -73,7 +73,7 @@ public class LexicalAnalyser implements ILexicalAnalyser {
             //Empty the tokenLine
             tokenLine = new Token[4];
 
-            while((i= reader.getNextFin()) != EOL) {
+            do {
 
                 columnCounter++;
 
@@ -108,7 +108,7 @@ public class LexicalAnalyser implements ILexicalAnalyser {
 
                 sbToken.append((char)i);
 
-            }
+            } while((i= reader.getNextFin()) != EOL);
 
             //Send generate a comment token
             //Always at tokenLine[7]
