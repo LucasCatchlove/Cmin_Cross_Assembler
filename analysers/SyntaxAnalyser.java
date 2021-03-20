@@ -56,10 +56,6 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
      */
     public void createLineStatement(Token[] tokenLine) {
 
-
-        //TODO: Add the Stack, Immediate, Relative  Addressing Mode for the Mnemonic in the SymbolTable **OK**
-        //TODO: Add line and address(depends if Instruction is null or not) to lineStatement
-
         //if there is no Mnemonic
         if (tokenLine[1] == null) {
             lineStatement = new LineStatement("", null, (tokenLine[3]==null ? "": tokenLine[3].getName()));
