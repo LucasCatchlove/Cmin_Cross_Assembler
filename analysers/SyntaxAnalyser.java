@@ -79,7 +79,7 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 //            }
 
             //Creating the LineStatement
-            lineStatement = new LineStatement((tokenLine[0]==null? "": tokenLine[0].getName()), new Instruction(parseToken(tokenLine[1].getName()), tokenLine[2]==null? "": tokenLine[2].getName()), (tokenLine[3]==null ? "": tokenLine[3].getName()));
+            lineStatement = new LineStatement((tokenLine[0]==null? "": tokenLine[0].getName()), new Instruction(parseToken(tokenLine[1].getName(), tokenLine[2]==null? -1: Integer.parseInt(tokenLine[2].getName())), tokenLine[2]==null? "": tokenLine[2].getName()), (tokenLine[3]==null ? "": tokenLine[3].getName()));
         }
 
         //if tokenLine[1] is a Directive //For other sprints
@@ -100,9 +100,22 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
      * @param token
      * @return
      */
-    Mnemonic parseToken(String token) {
+    Mnemonic parseToken(String token, int operand) {
         //TODO: Check if token should have an operand. To do so, Add true/false (or a range/null) to Mnemonic constructor, and change SymbolTable
-       return symbolTable.get(token); //hashtable or components.SymbolTable
+
+        Mnemonic mnemonic = symbolTable.get(token);
+
+        if (mnemonic.hasOpCodeRange()) {
+            int opCode;
+            if (operand < 0) {
+                opCode = mnemonic.getEndOpCode() + operand;
+                System.out.println(mnemonic.getEndOpCode());
+            } else {
+                opCode = mnemonic.getOpCode() + operand;
+            }
+            mnemonic = new Mnemonic(mnemonic.getMnemonicName(), opCode);
+        }
+        return mnemonic; //hashtable or components.SymbolTable
     }
 
     /**
