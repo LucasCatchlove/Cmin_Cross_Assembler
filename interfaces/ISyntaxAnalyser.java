@@ -6,6 +6,6 @@ import components.Token;
 public interface ISyntaxAnalyser {
 
     IR getIntRep();
-    void createLineStatement(Token token);
+    void createLineStatement(Token[] tokenLine);
 
 }

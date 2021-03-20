@@ -18,11 +18,11 @@ public class LineStatement implements ILineStatement {
      * @param directive
      * @param comment
      */
-    public LineStatement(String label, String directive, String comment) {
-        this.label = label;
-        this.directive = directive;
-        this.comment = comment;
-    }
+//    public LineStatement(String label, String directive, String comment) {
+//        this.label = label;
+//        this.directive = directive;
+//        this.comment = comment;
+//    }
 
     /**
      * Creates components.LineStatement with an components.Instruction

@@ -16,7 +16,7 @@ public class CrossAssembler {
     public static void main(String[] args) {
 
         //opens input file
-        String srcFile = "TestInherentMnemonics.asm";
+        String srcFile = "TestImmediate.asm";
         FileReader reader = new FileReader(srcFile);
 
         //creation of symbol table

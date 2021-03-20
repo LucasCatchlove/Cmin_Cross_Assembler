@@ -34,7 +34,7 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
         try {
             int i;
             while(!lexer.isEOFReached()){
-                this.createLineStatement(lexer.getToken());
+                this.createLineStatement(lexer.getTokenLine());
                 lexer.traverseFile();
             }
         } catch(Exception e){
@@ -48,19 +48,46 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
     }
 
 
-    //tokenLine = [Label, components.Mnemonic or Directive, Comment] //For other sprints
+    //tokenLine = [Label, Mnemonic, Operand, Comment]
 
     /**
-     * Used by the Lexical Analyser to send the token/identifier
-     * @param token
+     * Used by the Lexical Analyser to send the token/identifier TODO: CHANGE
+     * @param tokenLine
      */
-    public void createLineStatement(Token token) {
+    public void createLineStatement(Token[] tokenLine) {
 
-        //if tokenLine[1] is an components.Instruction
-        if (token.getType() == TypeToken.Mnemonic) {
-            lineStatement = new LineStatement("", new Instruction(parseToken(token.getName()), ""), "");
+
+        //TODO: Add the Stack, Immediate, Relative  Addressing Mode for the Mnemonic in the SymbolTable **OK**
+        //TODO: Add line and address(depends if Instruction is null or not) to lineStatement
+
+        //if there is no Mnemonic
+        if (tokenLine[1] == null) {
+            lineStatement = new LineStatement("", null, (tokenLine[3]==null ? "": tokenLine[3].getName()));
         }
-        //else tokenLine[1] is a Directive
+
+        //if tokenLine[1] is an Instruction
+        if (tokenLine[1] != null && tokenLine[1].getType() == TypeToken.Mnemonic) {
+
+            //TODO: ERRORS
+//            if (mnemonic should have operand, but tokenLine[3] == null) {
+//                //error
+//            }
+//
+//            if (tokenLine[2] != null) {
+//                if (mnemonic operand is outOfBound) {
+//                //error
+//                }
+//                if (mnemonic should not have operand) {
+//                    //error
+//                }
+//            }
+
+            //Creating the LineStatement
+            lineStatement = new LineStatement((tokenLine[0]==null? "": tokenLine[0].getName()), new Instruction(parseToken(tokenLine[1].getName()), tokenLine[2]==null? "": tokenLine[2].getName()), (tokenLine[3]==null ? "": tokenLine[3].getName()));
+        }
+
+        //if tokenLine[1] is a Directive //For other sprints
+
         updateIR();
 
     }
@@ -78,6 +105,7 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
      * @return
      */
     Mnemonic parseToken(String token) {
+        //TODO: Check if token should have an operand. To do so, Add true/false (or a range/null) to Mnemonic constructor, and change SymbolTable
        return symbolTable.get(token); //hashtable or components.SymbolTable
     }
 

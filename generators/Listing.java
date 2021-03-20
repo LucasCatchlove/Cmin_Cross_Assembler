@@ -87,6 +87,16 @@ public class Listing implements IListing {
 	 */
 	String[] separateLineStatement(LineStatement ls){
 
+		if (ls.getInstruction() == null || ls.getInstruction().getMnemonic() == null) {
+			String code = "";
+			String label = ls.getLabel();
+			String mnemonicName = "";
+			//String directive = ls.getDirective();
+			String comment = ls.getComment();
+
+			return new String[]{code, label, mnemonicName, comment};
+		}
+
 		String code = String.format("%02X",ls.getInstruction().getMnemonic().getOpCode());
 		String label = ls.getLabel();
 		String mnemonicName = ls.getInstruction().getMnemonic().getMnemonicName();

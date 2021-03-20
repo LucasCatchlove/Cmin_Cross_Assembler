@@ -17,6 +17,7 @@ public class SymbolTable implements ISymbolTable {
 
         instructions = new HashMap<>();
 
+        //Stack or Inherent Addressing
         instructions.put("halt", new Mnemonic("halt", 0x00));
         instructions.put("pop", new Mnemonic("pop", 0x01));
         instructions.put("dup", new Mnemonic("dup", 0x02));
@@ -42,6 +43,13 @@ public class SymbolTable implements ISymbolTable {
         instructions.put("tgt", new Mnemonic("tgt", 0x1D));
         instructions.put("tle", new Mnemonic("tle", 0x1E));
         instructions.put("tge", new Mnemonic("tge", 0x1F));
+
+        //Immediate Addressing
+        instructions.put("enter.u5", new Mnemonic("enter.u5", 0x70, 0x8F));
+        instructions.put("ldc.i3", new Mnemonic("ldc.i3", 0x90, 0x97));
+        instructions.put("addv.i3", new Mnemonic("addv.i3", 0x98, 0x9F));
+        instructions.put("ldv.u3", new Mnemonic("ldv.u3", 0xA0, 0xA7));
+        instructions.put("stv.u3", new Mnemonic("stv.u3", 0xA8, 0xAF));
 
     }
 
