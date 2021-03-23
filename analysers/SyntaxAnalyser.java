@@ -14,7 +14,6 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
     private ArrayList<components.LineStatement> components.IR = new ArrayList<>();
      */
 
-    private IR intRep;
     private SymbolTable symbolTable;
     private LineStatement lineStatement;
     private LexicalAnalyser lexer;
@@ -26,73 +25,54 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
     public SyntaxAnalyser(SymbolTable symbolTable, LexicalAnalyser lexer) {
         this.symbolTable = symbolTable;
         this.lexer = lexer;
-        intRep = new IR();
-        this.receiveToken();
     }
 
-    private void receiveToken() {
-        try {
-            int i;
-            while(!lexer.isEOFReached()){
-                this.createLineStatement(lexer.getTokenLine());
-                lexer.traverseFile();
+    public IR parse() {
+
+        IR intRep = new IR();
+
+        Token token = lexer.scan();
+        Token mnemonicToken = null;
+        Token operandToken = null;
+        LineStatement lineStatement = new LineStatement();
+
+        while (token.getType() != TypeToken.EOF) {
+
+            System.out.println(token.getName());
+            switch (token.getType()) {
+
+                case EOL:
+                    //create line statement and send to IR
+                    lineStatement.setInstruction(new Instruction(mnemonicToken != null? parseToken(mnemonicToken.getName()): null, operandToken != null? operandToken.getName(): null));
+                    intRep.addLineStatement(lineStatement);
+                    lineStatement = new LineStatement();
+                    mnemonicToken = null;
+                    operandToken = null;
+                    break;
+                case Label:
+                    //Save label;
+                    lineStatement.setLabel(token.getName());
+                    break;
+                case Mnemonic:
+                    mnemonicToken = token;
+                    break;
+                case Operand:
+                    //Test if operand is needed or not? or if outofbound
+                    operandToken = token;
+                    break;
+                case Comment:
+                    lineStatement.setComment(token.getName());
+                    break;
+                //case Invalid:
+
             }
-        } catch(Exception e){
-            System.err.println(e);
-            System.exit(1);
-        }
-    }
 
-    public IR getIntRep() {
+            token = lexer.scan();
+
+        }
+
         return intRep;
-    }
 
-
-    //tokenLine = [Label, Mnemonic, Operand, Comment]
-
-    /**
-     * Used by the Lexical Analyser to send the token/identifier TODO: CHANGE
-     * @param tokenLine
-     */
-    public void createLineStatement(Token[] tokenLine) {
-
-        //if there is no Mnemonic
-        if (tokenLine[1] == null) {
-            lineStatement = new LineStatement("", null, (tokenLine[3]==null ? "": tokenLine[3].getName()));
-        }
-
-        //if tokenLine[1] is an Instruction
-        if (tokenLine[1] != null && tokenLine[1].getType() == TypeToken.Mnemonic) {
-
-            //TODO: ERRORS
-//            if (mnemonic should have operand, but tokenLine[3] == null) {
-//                //error
-//            }
-//
-//            if (tokenLine[2] != null) {
-//                if (mnemonic operand is outOfBound) {
-//                //error
-//                }
-//                if (mnemonic should not have operand) {
-//                    //error
-//                }
-//            }
-
-            //Creating the LineStatement
-            lineStatement = new LineStatement((tokenLine[0]==null? "": tokenLine[0].getName()), new Instruction(parseToken(tokenLine[1].getName(), tokenLine[2]==null? -1: Integer.parseInt(tokenLine[2].getName())), tokenLine[2]==null? "": tokenLine[2].getName()), (tokenLine[3]==null ? "": tokenLine[3].getName()));
-        }
-
-        //if tokenLine[1] is a Directive //For other sprints
-
-        updateIR();
-
-    }
-
-    /**
-     * adds line statement to components.IR
-     */
-    void updateIR() {
-        intRep.addLineStatement(lineStatement);
     }
 
     /**
@@ -100,22 +80,10 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
      * @param token
      * @return
      */
-    Mnemonic parseToken(String token, int operand) {
+    Mnemonic parseToken(String token) {
         //TODO: Check if token should have an operand. To do so, Add true/false (or a range/null) to Mnemonic constructor, and change SymbolTable
 
-        Mnemonic mnemonic = symbolTable.get(token);
-
-        if (mnemonic.hasOpCodeRange()) {
-            int opCode;
-            if (operand < 0) {
-                opCode = mnemonic.getEndOpCode() + operand;
-                System.out.println(mnemonic.getEndOpCode());
-            } else {
-                opCode = mnemonic.getOpCode() + operand;
-            }
-            mnemonic = new Mnemonic(mnemonic.getMnemonicName(), opCode);
-        }
-        return mnemonic; //hashtable or components.SymbolTable
+        return symbolTable.get(token); //hashtable or components.SymbolTable
     }
 
     /**

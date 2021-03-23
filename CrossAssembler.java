@@ -25,7 +25,7 @@ public class CrossAssembler {
         SyntaxAnalyser parser = new SyntaxAnalyser(symbolTable, lexer);
 
         //creation of objects used to traverse components.IR
-        IR intRep = parser.getIntRep();
+        IR intRep = parser.parse();
         Listing list = new Listing(intRep);
 
         //generates .lst file

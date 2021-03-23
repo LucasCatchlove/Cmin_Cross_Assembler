@@ -24,6 +24,12 @@ public class LineStatement implements ILineStatement {
 //        this.comment = comment;
 //    }
 
+    public LineStatement() {
+        this.label = null;
+        this.instruction = null;
+        this.comment = null;
+    }
+
     /**
      * Creates components.LineStatement with an components.Instruction
      * @param label
@@ -33,6 +39,22 @@ public class LineStatement implements ILineStatement {
     public LineStatement(String label, Instruction instruction, String comment) {
         this.label = label;
         this.instruction = instruction;
+        this.comment = comment;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public void setInstruction(Instruction instruction) {
+        this.instruction = instruction;
+    }
+
+//    public void setDirective(String directive) {
+//        this.directive = directive;
+//    }
+
+    public void setComment(String comment) {
         this.comment = comment;
     }
 

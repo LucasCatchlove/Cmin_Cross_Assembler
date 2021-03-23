@@ -18,38 +18,38 @@ public class SymbolTable implements ISymbolTable {
         instructions = new HashMap<>();
 
         //Stack or Inherent Addressing
-        instructions.put("halt", new Mnemonic("halt", 0x00));
-        instructions.put("pop", new Mnemonic("pop", 0x01));
-        instructions.put("dup", new Mnemonic("dup", 0x02));
-        instructions.put("exit", new Mnemonic("exit", 0x03));
-        instructions.put("ret", new Mnemonic("ret", 0x04));
-        instructions.put("not", new Mnemonic("not", 0x0C));
-        instructions.put("and", new Mnemonic("and", 0x0D));
-        instructions.put("or", new Mnemonic("or", 0x0E));
-        instructions.put("xor", new Mnemonic("xor", 0x0F));
-        instructions.put("neg", new Mnemonic("neg", 0x10));
-        instructions.put("inc", new Mnemonic("inc", 0x11));
-        instructions.put("dec", new Mnemonic("dec", 0x12));
-        instructions.put("add", new Mnemonic("add", 0x13));
-        instructions.put("sub", new Mnemonic("sub", 0x14));
-        instructions.put("mul", new Mnemonic("mul", 0x15));
-        instructions.put("div", new Mnemonic("div", 0x16));
-        instructions.put("rem", new Mnemonic("rem", 0x17));
-        instructions.put("shl", new Mnemonic("shl", 0x18));
-        instructions.put("shr", new Mnemonic("shr", 0x19));
-        instructions.put("teq", new Mnemonic("teq", 0x1A));
-        instructions.put("tne", new Mnemonic("tne", 0x1B));
-        instructions.put("tlt", new Mnemonic("tlt", 0x1C));
-        instructions.put("tgt", new Mnemonic("tgt", 0x1D));
-        instructions.put("tle", new Mnemonic("tle", 0x1E));
-        instructions.put("tge", new Mnemonic("tge", 0x1F));
+        instructions.put("halt", new Mnemonic("halt", 0x00, MnemonicType.Inherent));
+        instructions.put("pop", new Mnemonic("pop", 0x01, MnemonicType.Inherent));
+        instructions.put("dup", new Mnemonic("dup", 0x02, MnemonicType.Inherent));
+        instructions.put("exit", new Mnemonic("exit", 0x03, MnemonicType.Inherent));
+        instructions.put("ret", new Mnemonic("ret", 0x04, MnemonicType.Inherent));
+        instructions.put("not", new Mnemonic("not", 0x0C, MnemonicType.Inherent));
+        instructions.put("and", new Mnemonic("and", 0x0D, MnemonicType.Inherent));
+        instructions.put("or", new Mnemonic("or", 0x0E, MnemonicType.Inherent));
+        instructions.put("xor", new Mnemonic("xor", 0x0F, MnemonicType.Inherent));
+        instructions.put("neg", new Mnemonic("neg", 0x10, MnemonicType.Inherent));
+        instructions.put("inc", new Mnemonic("inc", 0x11, MnemonicType.Inherent));
+        instructions.put("dec", new Mnemonic("dec", 0x12, MnemonicType.Inherent));
+        instructions.put("add", new Mnemonic("add", 0x13, MnemonicType.Inherent));
+        instructions.put("sub", new Mnemonic("sub", 0x14, MnemonicType.Inherent));
+        instructions.put("mul", new Mnemonic("mul", 0x15, MnemonicType.Inherent));
+        instructions.put("div", new Mnemonic("div", 0x16, MnemonicType.Inherent));
+        instructions.put("rem", new Mnemonic("rem", 0x17, MnemonicType.Inherent));
+        instructions.put("shl", new Mnemonic("shl", 0x18, MnemonicType.Inherent));
+        instructions.put("shr", new Mnemonic("shr", 0x19, MnemonicType.Inherent));
+        instructions.put("teq", new Mnemonic("teq", 0x1A, MnemonicType.Inherent));
+        instructions.put("tne", new Mnemonic("tne", 0x1B, MnemonicType.Inherent));
+        instructions.put("tlt", new Mnemonic("tlt", 0x1C, MnemonicType.Inherent));
+        instructions.put("tgt", new Mnemonic("tgt", 0x1D, MnemonicType.Inherent));
+        instructions.put("tle", new Mnemonic("tle", 0x1E, MnemonicType.Inherent));
+        instructions.put("tge", new Mnemonic("tge", 0x1F, MnemonicType.Inherent));
 
         //Immediate Addressing
-        instructions.put("enter.u5", new Mnemonic("enter.u5", 0x70, 0x8F));
-        instructions.put("ldc.i3", new Mnemonic("ldc.i3", 0x90, 0x97));
-        instructions.put("addv.u3", new Mnemonic("addv.u3", 0x98, 0x9F));
-        instructions.put("ldv.u3", new Mnemonic("ldv.u3", 0xA0, 0xA7));
-        instructions.put("stv.u3", new Mnemonic("stv.u3", 0xA8, 0xAF));
+        instructions.put("enter.u5", new Mnemonic("enter.u5", 0x70, MnemonicType.Immediate));
+        instructions.put("ldc.i3", new Mnemonic("ldc.i3", 0x90, MnemonicType.Immediate));
+        instructions.put("addv.u3", new Mnemonic("addv.u3", 0x98, MnemonicType.Immediate));
+        instructions.put("ldv.u3", new Mnemonic("ldv.u3", 0xA0, MnemonicType.Immediate));
+        instructions.put("stv.u3", new Mnemonic("stv.u3", 0xA8, MnemonicType.Immediate));
 
     }
 

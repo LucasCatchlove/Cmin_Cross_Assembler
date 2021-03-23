@@ -30,8 +30,17 @@ public class FileReader implements IFileReader {
         return file;
     }
 
-    public int getNextFin() throws IOException {
-        return fin.read();
+    public int getNextFin() {
+
+        int nextByte = -1;
+
+        try {
+            nextByte = fin.read();
+        } catch (Exception err) {
+            System.err.println("Error: " + err);
+        }
+
+        return nextByte;
     }
 
 }

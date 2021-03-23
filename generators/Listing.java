@@ -102,9 +102,9 @@ public class Listing implements IListing {
 		}
 
 		String label = ls.getLabel();
-		String mnemonicName = ls.getInstruction().getMnemonic().getMnemonicName();
+		String mnemonicName = ls.getInstruction().getMnemonic() != null? ls.getInstruction().getMnemonic().getMnemonicName(): "";
 		String operand = ls.getInstruction().getOperand();
-		String machineCode = String.format("%02X",ls.getInstruction().getMnemonic().getOpCode());
+		String machineCode = String.format("%02X",ls.getInstruction().getMnemonic() != null? ls.getInstruction().getMnemonic().getOpCode(): null);
 		//String directive = ls.getDirective();
 		String comment = ls.getComment();
 
