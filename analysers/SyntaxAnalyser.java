@@ -45,10 +45,7 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
                 case EOL:
                     //create line statement and send to IR
 
-                    if (mnemonic != null && mnemonic.getType() == MnemonicType.Immediate && operandToken == null) {
-                        errRep.recordError(new ErrorMsg("An immediate instruction requires an operand (number or label).", token.getPosition()));
-                    }
-                    lineStatement.setInstruction(new Instruction(mnemonic, operandToken != null? operandToken.getName(): null));
+                    lineStatement.setInstruction(new Instruction(checkOperand(mnemonic, operandToken), operandToken != null? operandToken.getName(): null));
 
                     lineStatement.setComment(token.getName());
                     intRep.addLineStatement(lineStatement);
@@ -56,14 +53,20 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
                     mnemonic = null;
                     operandToken = null;
                     break;
+
                 case Label:
+
                     //Save label;
                     lineStatement.setLabel(token.getName());
                     break;
+
                 case Mnemonic:
+
                     mnemonic = parseToken(token);
                     break;
+
                 case Operand:
+
                     //Test if operand is needed or not? or if outofbound
                     if (mnemonic == null) {
                         errRep.recordError(new ErrorMsg("Cannot have an operand without a mnemonic.", token.getPosition()));
@@ -72,6 +75,7 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
                     }
                     operandToken = token;
                     break;
+
                 //case Invalid:
 
             }
@@ -95,10 +99,67 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
         IMnemonic mnemonic = symbolTable.get(token.getName());
 
         if (mnemonic == null) {
+
             errRep.recordError(new ErrorMsg("Invalid mnemonic or directive.", token.getPosition()));
+
         }
 
         return mnemonic; //hashtable or components.SymbolTable
+    }
+
+    private IMnemonic checkOperand(IMnemonic mnemonic, Token operandToken) {
+
+        if (mnemonic == null && operandToken == null) {
+            return null;
+        }
+
+        if (mnemonic != null && mnemonic.getType() == MnemonicType.Immediate && operandToken == null) {
+            errRep.recordError(new ErrorMsg("An immediate instruction requires an operand (number or label).", operandToken.getPosition()));
+            return mnemonic;
+        }
+
+        if (mnemonic.getType() != MnemonicType.Inherent) {
+
+            String mnemonicName = mnemonic.getMnemonicName();
+            char mncSignChar = mnemonicName.charAt(mnemonicName.length()-2);
+            int mncBitInt = Integer.parseInt(String.valueOf(mnemonicName.charAt(mnemonicName.length()-1)));
+
+            int range = (int) Math.pow(2, mncBitInt);
+
+            int start;
+            int end;
+            String mncSignStr;
+
+            if (mncSignChar == 'u') { //Unsigned Bit; char is u
+                start = 0;
+                end = range-1;
+                mncSignStr = "unsigned";
+            } else { //Signed Bit; char is i
+                start = -range/2;
+                end = range/2 -1;
+                mncSignStr = "signed";
+            }
+
+            int operandInt = Integer.parseInt(operandToken.getName());
+
+            //Checking for OutofBound Range
+            if (operandInt < start || operandInt > end) {
+                errRep.recordError(new ErrorMsg("The immediate instruction '" + mnemonicName + "' must have a " + mncBitInt + "-bit " + mncSignStr + " operand number from " + start + " to " + end + ".", operandToken.getPosition()));
+                return mnemonic;
+            }
+
+            int newOpCode;
+
+            if (operandInt >= 0)
+                newOpCode = operandInt + mnemonic.getOpCode();
+            else
+                newOpCode = operandInt + range + mnemonic.getOpCode();
+
+            return new Mnemonic(mnemonicName, newOpCode, mnemonic.getType());
+        }
+
+        return mnemonic;
+
     }
 
 //    /**
