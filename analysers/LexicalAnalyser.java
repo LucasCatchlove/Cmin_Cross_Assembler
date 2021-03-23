@@ -63,11 +63,7 @@ public class LexicalAnalyser implements ILexicalAnalyser {
 
             } while((i = reader.getNextFin()) != EOL);
 
-            if (isComment) {
-                return generateToken(sbToken);
-            }
-
-            return new Token(new Position(lineCounter,tokenColumn), "", TypeToken.EOL);
+            return new Token(new Position(lineCounter,tokenColumn), sbToken.toString(), TypeToken.EOL);
         }
 
         return new Token(new Position(lineCounter,tokenColumn), "", TypeToken.EOF);

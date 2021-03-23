@@ -44,6 +44,7 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
                 case EOL:
                     //create line statement and send to IR
                     lineStatement.setInstruction(new Instruction(mnemonicToken != null? parseToken(mnemonicToken.getName()): null, operandToken != null? operandToken.getName(): null));
+                    lineStatement.setComment(token.getName());
                     intRep.addLineStatement(lineStatement);
                     lineStatement = new LineStatement();
                     mnemonicToken = null;
@@ -59,9 +60,6 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
                 case Operand:
                     //Test if operand is needed or not? or if outofbound
                     operandToken = token;
-                    break;
-                case Comment:
-                    lineStatement.setComment(token.getName());
                     break;
                 //case Invalid:
 
