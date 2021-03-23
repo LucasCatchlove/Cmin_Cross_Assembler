@@ -4,7 +4,7 @@ import components.Mnemonic;
 
 public interface IInstruction {
 
-    public Mnemonic getMnemonic();
+    public IMnemonic getMnemonic();
 
     public String getOperand();
 }

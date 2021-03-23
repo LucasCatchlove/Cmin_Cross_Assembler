@@ -1,6 +1,7 @@
 package components;
 
 import interfaces.IInstruction;
+import interfaces.IMnemonic;
 
 /**
  * Creates an instruction (an element of a a line statement)
@@ -8,7 +9,7 @@ import interfaces.IInstruction;
  */
 public class Instruction implements IInstruction {
 
-    private Mnemonic mnemonic;
+    private IMnemonic mnemonic;
     private String operand; //String just for this Sprint
 
     /**
@@ -16,12 +17,12 @@ public class Instruction implements IInstruction {
      * @param mnemonic
      * @param operand
      */
-    public Instruction(Mnemonic mnemonic, String operand) {
+    public Instruction(IMnemonic mnemonic, String operand) {
         this.mnemonic = mnemonic;
         this.operand = operand;
     }
 
-    public Mnemonic getMnemonic() {
+    public IMnemonic getMnemonic() {
         return mnemonic;
     }
 

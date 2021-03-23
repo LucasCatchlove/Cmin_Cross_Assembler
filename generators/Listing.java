@@ -2,6 +2,7 @@ package generators;
 
 import components.IR;
 import components.LineStatement;
+import interfaces.IIR;
 import interfaces.IListing;
 
 
@@ -16,9 +17,9 @@ public class Listing implements IListing {
 
 	private int lineCount = 0;
 	private int addrCount = 0;
-	private IR intRep;
+	private IIR intRep;
 
-	public Listing(IR intRep) {
+	public Listing(IIR intRep) {
 		this.intRep = intRep;
 	}
 

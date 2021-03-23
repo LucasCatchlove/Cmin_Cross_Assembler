@@ -1,7 +1,8 @@
 package analysers;
 
 import components.*;
-import interfaces.ISyntaxAnalyser;
+import interfaces.*;
+import errorReporters.*;
 
 /**
  * Creates line statements from the tokens passed on from the lexer, and pushes them
@@ -14,40 +15,45 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
     private ArrayList<components.LineStatement> components.IR = new ArrayList<>();
      */
 
-    private SymbolTable symbolTable;
-    private LineStatement lineStatement;
-    private LexicalAnalyser lexer;
+    private ISymbolTable symbolTable;
+    private ILexicalAnalyser lexer;
+    private IErrorReporter errRep;
 
     /**
      * parametrized constructor
      * @param symbolTable
      */
-    public SyntaxAnalyser(SymbolTable symbolTable, LexicalAnalyser lexer) {
+    public SyntaxAnalyser(ISymbolTable symbolTable, ILexicalAnalyser lexer, IErrorReporter errRep) {
         this.symbolTable = symbolTable;
         this.lexer = lexer;
+        this.errRep = errRep;
     }
 
-    public IR parse() {
+    public IIR parse() {
 
         IR intRep = new IR();
 
         Token token = lexer.scan();
-        Token mnemonicToken = null;
+        IMnemonic mnemonic = null;
         Token operandToken = null;
         LineStatement lineStatement = new LineStatement();
 
         while (token.getType() != TypeToken.EOF) {
 
-            System.out.println(token.getName());
             switch (token.getType()) {
 
                 case EOL:
                     //create line statement and send to IR
-                    lineStatement.setInstruction(new Instruction(mnemonicToken != null? parseToken(mnemonicToken.getName()): null, operandToken != null? operandToken.getName(): null));
+
+                    if (mnemonic != null && mnemonic.getType() == MnemonicType.Immediate && operandToken == null) {
+                        errRep.recordError(new ErrorMsg("An immediate instruction requires an operand (number or label).", token.getPosition()));
+                    }
+                    lineStatement.setInstruction(new Instruction(mnemonic, operandToken != null? operandToken.getName(): null));
+
                     lineStatement.setComment(token.getName());
                     intRep.addLineStatement(lineStatement);
                     lineStatement = new LineStatement();
-                    mnemonicToken = null;
+                    mnemonic = null;
                     operandToken = null;
                     break;
                 case Label:
@@ -55,10 +61,15 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
                     lineStatement.setLabel(token.getName());
                     break;
                 case Mnemonic:
-                    mnemonicToken = token;
+                    mnemonic = parseToken(token);
                     break;
                 case Operand:
                     //Test if operand is needed or not? or if outofbound
+                    if (mnemonic == null) {
+                        errRep.recordError(new ErrorMsg("Cannot have an operand without a mnemonic.", token.getPosition()));
+                    } else if (mnemonic.getType() == MnemonicType.Inherent) {
+                        errRep.recordError(new ErrorMsg("An inherent instruction has no operand.", token.getPosition()));
+                    }
                     operandToken = token;
                     break;
                 //case Invalid:
@@ -78,17 +89,23 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
      * @param token
      * @return
      */
-    Mnemonic parseToken(String token) {
+    IMnemonic parseToken(Token token) {
         //TODO: Check if token should have an operand. To do so, Add true/false (or a range/null) to Mnemonic constructor, and change SymbolTable
 
-        return symbolTable.get(token); //hashtable or components.SymbolTable
+        IMnemonic mnemonic = symbolTable.get(token.getName());
+
+        if (mnemonic == null) {
+            errRep.recordError(new ErrorMsg("Invalid mnemonic or directive.", token.getPosition()));
+        }
+
+        return mnemonic; //hashtable or components.SymbolTable
     }
 
-    /**
-     * getter for testing purposes
-     * @return LineStatement object
-     */
-    LineStatement getLineStatement() {
-        return lineStatement;
-    }
+//    /**
+//     * getter for testing purposes
+//     * @return LineStatement object
+//     */
+//    LineStatement getLineStatement() {
+//        return lineStatement;
+//    }
 }

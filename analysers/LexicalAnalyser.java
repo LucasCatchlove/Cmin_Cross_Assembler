@@ -1,5 +1,7 @@
 package analysers;
 
+import errorReporters.IErrorReporter;
+import interfaces.IFileReader;
 import interfaces.ILexicalAnalyser;
 import components.Token;
 import components.Position;
@@ -18,12 +20,13 @@ public class LexicalAnalyser implements ILexicalAnalyser {
     private int carriageReturn = 13;
     private int semiColon = 59;
 
-    private int lineCounter = 0;
+    private int lineCounter = 1;
     private int columnCounter = 0;
     private int tokenColumn = 0;
     private boolean isEOFReached = false;
 
-    private FileReader reader;
+    private IFileReader reader;
+    private IErrorReporter errRep;
 
     public boolean isEOFReached() {
         return isEOFReached;
@@ -33,8 +36,9 @@ public class LexicalAnalyser implements ILexicalAnalyser {
      * parametrized constructor that also opens the .asm for tokenizing
      * @param reader
      */
-    public LexicalAnalyser(FileReader reader) {
+    public LexicalAnalyser(IFileReader reader, IErrorReporter errRep) {
         this.reader = reader;
+        this.errRep = errRep;
     }
 
     public Token scan() {
@@ -49,9 +53,11 @@ public class LexicalAnalyser implements ILexicalAnalyser {
 
             do {
 
+                //Starting the Comment part
                 if ((char)i == ';')
                     isComment = true;
 
+                //Skip the spaces for all except for the Comment part
                 if (i != spaces || isComment) {
                     sbToken.append((char)i);
                 } else if (sbToken.length() < 1) {
@@ -63,7 +69,7 @@ public class LexicalAnalyser implements ILexicalAnalyser {
 
             } while((i = reader.getNextFin()) != EOL);
 
-            return new Token(new Position(lineCounter,tokenColumn), sbToken.toString(), TypeToken.EOL);
+            return new Token(new Position(lineCounter++,tokenColumn), sbToken.toString(), TypeToken.EOL);
         }
 
         return new Token(new Position(lineCounter,tokenColumn), "", TypeToken.EOF);

@@ -5,7 +5,6 @@ import components.Token;
 
 public interface ISyntaxAnalyser {
 
-//    IR getIntRep();
-//    void createLineStatement(Token[] tokenLine);
+    public IIR parse();
 
 }

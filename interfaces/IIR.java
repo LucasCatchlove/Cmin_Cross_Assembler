@@ -2,6 +2,8 @@ package interfaces;
 
 import components.LineStatement;
 
+import java.util.ArrayList;
+
 public interface IIR {
 
 	/**
@@ -16,5 +18,6 @@ public interface IIR {
 	 * @return
 	 */
 	LineStatement getLineStatement(int index);
+	public ArrayList<LineStatement> getLineStatementList();
 
 }

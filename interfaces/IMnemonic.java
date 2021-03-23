@@ -1,5 +1,7 @@
 package interfaces;
 
+import components.MnemonicType;
+
 public interface IMnemonic {
 
 
@@ -7,6 +9,6 @@ public interface IMnemonic {
 
     int getOpCode();
 
-
+    public MnemonicType getType();
 
 }

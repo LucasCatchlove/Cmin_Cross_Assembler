@@ -1,10 +1,13 @@
 import analysers.FileReader;
 import analysers.LexicalAnalyser;
 import analysers.SyntaxAnalyser;
+import errorReporters.*;
 import components.IR;
 import components.SymbolTable;
+import errorReporters.IErrorReporter;
 import generators.CodeGenerator;
 import generators.Listing;
+import interfaces.*;
 
 /**
  * main class for cross assembler
@@ -15,18 +18,25 @@ public class CrossAssembler {
 
         //opens input file
         String srcFile = "Sprint Listing/TestImmediate.asm";
-        FileReader reader = new FileReader(srcFile);
+        IFileReader reader = new FileReader(srcFile);
+
+        //Creation of Error Reporter
+        IErrorReporter errRep = new ErrorReporter(srcFile);
 
         //creation of symbol table
-        SymbolTable symbolTable = new SymbolTable();
+        ISymbolTable symbolTable = new SymbolTable();
 
         //creation of line components.IR and subsequent line statements
-        LexicalAnalyser lexer = new LexicalAnalyser(reader);
-        SyntaxAnalyser parser = new SyntaxAnalyser(symbolTable, lexer);
+        ILexicalAnalyser lexer = new LexicalAnalyser(reader, errRep);
+        ISyntaxAnalyser parser = new SyntaxAnalyser(symbolTable, lexer, errRep);
 
         //creation of objects used to traverse components.IR
-        IR intRep = parser.parse();
-        Listing list = new Listing(intRep);
+        IIR intRep = parser.parse();
+        IListing list = new Listing(intRep);
+
+        if (!errRep.isEmpty()) {
+            errRep.reportErrors();
+        }
 
         //generates .lst file
         CodeGenerator codeGenerator = new CodeGenerator(list);
