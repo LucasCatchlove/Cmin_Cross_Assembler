@@ -28,10 +28,6 @@ public class LexicalAnalyser implements ILexicalAnalyser {
     private IFileReader reader;
     private IErrorReporter errRep;
 
-    public boolean isEOFReached() {
-        return isEOFReached;
-    }
-
     /**
      * parametrized constructor that also opens the .asm for tokenizing
      * @param reader
@@ -51,26 +47,23 @@ public class LexicalAnalyser implements ILexicalAnalyser {
 
         while ((i = reader.getNextFin()) != EOF) {
 
+            while(i != EOL) {
 
+                //Starting the Comment part
+                if ((char)i == ';')
+                    isComment = true;
 
-
-                while(i != EOL) {
-
-                    //Starting the Comment part
-                    if ((char)i == ';')
-                        isComment = true;
-
-                    //Skip the spaces for all except for the Comment part
-                    if ((i != spaces && i != carriageReturn) || isComment ) {
-                        sbToken.append((char)i);
-                    } else if (sbToken.length() < 1) {
-                        //To skip empty spaces
-                        return scan();
-                    } else {
-                        return generateToken(sbToken);
-                    }
-                    i = reader.getNextFin();
+                //Skip the spaces for all except for the Comment part
+                if ((i != spaces && i != carriageReturn) || isComment ) {
+                    sbToken.append((char)i);
+                } else if (sbToken.length() < 1) {
+                    //To skip empty spaces
+                    return scan();
+                } else {
+                    return generateToken(sbToken);
                 }
+                i = reader.getNextFin();
+            }
 
             return new Token(new Position(lineCounter++,tokenColumn), sbToken.toString(), TypeToken.EOL);
         }

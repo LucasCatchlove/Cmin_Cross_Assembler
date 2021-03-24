@@ -130,38 +130,76 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
             char mncSignChar = mnemonicName.charAt(mnemonicName.length()-2);
             int mncBitInt = Integer.parseInt(String.valueOf(mnemonicName.charAt(mnemonicName.length()-1)));
 
-            int range = (int) Math.pow(2, mncBitInt);
-
-            int start;
-            int end;
-            String mncSignStr;
-
-            if (mncSignChar == 'u') { //Unsigned Bit; char is u
-                start = 0;
-                end = range-1;
-                mncSignStr = "unsigned";
-            } else { //Signed Bit; char is i
-                start = -range/2;
-                end = range/2 -1;
-                mncSignStr = "signed";
-            }
-
             int operandInt = Integer.parseInt(operandToken.getName());
 
-            //Checking for OutofBound Range
-            if (operandInt < start || operandInt > end) {
-                errRep.recordError(new ErrorMsg("The immediate instruction '" + mnemonicName + "' must have a " + mncBitInt + "-bit " + mncSignStr + " operand number from " + start + " to " + end + ".", operandToken.getPosition()));
-                return mnemonic;
+            Range range = new Range(mncSignChar, mncBitInt);
+
+            int opcode = mnemonic.getOpCode();
+
+            switch (mncBitInt) {
+
+                case 5:
+                    opcode = (operandInt > 15) ? opcode : 0x80;
+
+                    if (operandInt < range.getStart() || operandInt > range.getEnd()) {
+                        errRep.recordError(new ErrorMsg("The immediate instruction '" + mnemonicName + "' must have a " + mncBitInt + "-bit " + range.getMncSignStr() + " operand number from " + range.getStart() + " to " + range.getEnd() + ".", operandToken.getPosition()));
+                        opcode = opcode | (operandInt & 0x1F); //Bitmask
+                        return new Mnemonic(mnemonicName, opcode, mnemonic.getType());
+                    }
+
+                    opcode = opcode | operandInt;
+                    break;
+
+                case 3:
+
+                    if (operandInt < range.getStart() || operandInt > range.getEnd()) {
+                        errRep.recordError(new ErrorMsg("The immediate instruction '" + mnemonicName + "' must have a " + mncBitInt + "-bit " + range.getMncSignStr() + " operand number from " + range.getStart() + " to " + range.getEnd() + ".", operandToken.getPosition()));
+                        opcode = opcode | (operandInt & 0x07); //Bitmask
+                        return new Mnemonic(mnemonicName, opcode, mnemonic.getType());
+                    }
+
+                    if (mncSignChar == 'i' && operandInt < 0) {
+                        operandInt = (~Math.abs(operandInt) & 0x07) + 1;
+                    }
+                    opcode = opcode | operandInt;
+                    break;
+
             }
 
-            int newOpCode;
+            return new Mnemonic(mnemonicName, opcode, mnemonic.getType());
 
-            if (operandInt >= 0)
-                newOpCode = operandInt + mnemonic.getOpCode();
-            else
-                newOpCode = operandInt + range + mnemonic.getOpCode();
-
-            return new Mnemonic(mnemonicName, newOpCode, mnemonic.getType());
+//            int range = (int) Math.pow(2, mncBitInt);
+//
+//            int start;
+//            int end;
+//            String mncSignStr;
+//
+//            if (mncSignChar == 'u') { //Unsigned Bit; char is u
+//                start = 0;
+//                end = range-1;
+//                mncSignStr = "unsigned";
+//            } else { //Signed Bit; char is i
+//                start = -range/2;
+//                end = range/2 -1;
+//                mncSignStr = "signed";
+//            }
+//
+//            int operandInt = Integer.parseInt(operandToken.getName());
+//
+//            //Checking for OutofBound Range
+//            if (operandInt < start || operandInt > end) {
+//                errRep.recordError(new ErrorMsg("The immediate instruction '" + mnemonicName + "' must have a " + mncBitInt + "-bit " + mncSignStr + " operand number from " + start + " to " + end + ".", operandToken.getPosition()));
+//                return mnemonic;
+//            }
+//
+//            int newOpCode;
+//
+//            if (operandInt >= 0)
+//                newOpCode = operandInt + mnemonic.getOpCode();
+//            else
+//                newOpCode = operandInt + range + mnemonic.getOpCode();
+//
+//            return new Mnemonic(mnemonicName, newOpCode, mnemonic.getType());
         }
 
         return mnemonic;
