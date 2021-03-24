@@ -115,7 +115,7 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 
     private IMnemonic checkOperand(IMnemonic mnemonic, Token operandToken) {
 
-        if (mnemonic == null && operandToken == null) {
+        if (mnemonic == null || operandToken == null) {
             return null;
         }
 
