@@ -37,7 +37,7 @@
             ldc.i3  1        ; OK, number <i3> [-4..3]. 
             ldc.i3  2        ; OK, number <i3> [-4..3]. 
             ldc.i3  3        ; OK, number <i3> [-4..3].
-            ldc.i3  -5       ; OK, number <i3> [-4..3].
+            ldc.i3  -4       ; OK, number <i3> [-4..3].
             ldc.i3  -3       ; OK, number <i3> [-4..3]. 
             ldc.i3  -2       ; OK, number <i3> [-4..3]. 
             ldc.i3  -1       ; OK, number <i3> [-4..3]. 

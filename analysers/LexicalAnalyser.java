@@ -51,23 +51,26 @@ public class LexicalAnalyser implements ILexicalAnalyser {
 
         while ((i = reader.getNextFin()) != EOF) {
 
-            do {
 
-                //Starting the Comment part
-                if ((char)i == ';')
-                    isComment = true;
 
-                //Skip the spaces for all except for the Comment part
-                if (i != spaces || isComment) {
-                    sbToken.append((char)i);
-                } else if (sbToken.length() < 1) {
-                    //To skip empty spaces
-                    return scan();
-                } else {
-                    return generateToken(sbToken);
+
+                while(i != EOL) {
+
+                    //Starting the Comment part
+                    if ((char)i == ';')
+                        isComment = true;
+
+                    //Skip the spaces for all except for the Comment part
+                    if ((i != spaces && i != carriageReturn) || isComment ) {
+                        sbToken.append((char)i);
+                    } else if (sbToken.length() < 1) {
+                        //To skip empty spaces
+                        return scan();
+                    } else {
+                        return generateToken(sbToken);
+                    }
+                    i = reader.getNextFin();
                 }
-
-            } while((i = reader.getNextFin()) != EOL);
 
             return new Token(new Position(lineCounter++,tokenColumn), sbToken.toString(), TypeToken.EOL);
         }

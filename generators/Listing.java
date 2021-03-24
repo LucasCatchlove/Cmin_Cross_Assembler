@@ -54,7 +54,7 @@ public class Listing implements IListing {
 		for (LineStatement lineStatement : list){
 			String[] instruction = separateLineStatement(lineStatement);
 			String line = LineFormatter(getLineNumber(), address(), instruction[0], instruction[1], instruction[2], instruction[3], instruction[4]);
-			if (instruction[2] != "")
+			if (!instruction[2].equals(""))
 				addrCount++;
 			writer.write(line.getBytes());
 		}
@@ -91,16 +91,7 @@ public class Listing implements IListing {
 	 */
 	String[] separateLineStatement(LineStatement ls){
 
-		if (ls.getInstruction() == null) {
-			String machineCode = "";
-			String label = ls.getLabel();
-			String mnemonicName = "";
-			String operand = "";
-			//String directive = ls.getDirective();
-			String comment = ls.getComment();
 
-			return new String[]{machineCode, label, mnemonicName, operand, comment};
-		}
 
 		String label = ls.getLabel() == null ? "": ls.getLabel();
 		String mnemonicName = ls.getInstruction().getMnemonic() != null? ls.getInstruction().getMnemonic().getMnemonicName(): "";
