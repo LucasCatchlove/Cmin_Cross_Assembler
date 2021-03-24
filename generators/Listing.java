@@ -91,13 +91,18 @@ public class Listing implements IListing {
 	 */
 	String[] separateLineStatement(LineStatement ls){
 
+		if(ls.getDirective() != null) {
+			String label = ls.getLabel() == null ? "": ls.getLabel();
+			String machineCode = "";
+			String comment = ls.getComment();
 
+			return new String[]{machineCode, label, ls.getDirective(), "", comment};
+		}
 
 		String label = ls.getLabel() == null ? "": ls.getLabel();
 		String mnemonicName = ls.getInstruction().getMnemonic() != null? ls.getInstruction().getMnemonic().getMnemonicName(): "";
 		String operand = ls.getInstruction().getOperand() != null ? ls.getInstruction().getOperand(): "";
 		String machineCode = ls.getInstruction().getMnemonic() != null ? String.format("%02X", ls.getInstruction().getMnemonic().getOpCode()): "";
-		//String directive = ls.getDirective();
 		String comment = ls.getComment();
 
 		return new String[]{machineCode, label, mnemonicName, operand, comment};

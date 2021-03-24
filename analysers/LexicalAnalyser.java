@@ -162,6 +162,9 @@ public class LexicalAnalyser implements ILexicalAnalyser {
      */
     Token generateToken(StringBuilder sbToken) {
 
+        if(sbToken.toString().equals(".cstring"))
+            return new Token(new Position(lineCounter,tokenColumn), sbToken.toString(), TypeToken.Directive);
+
         if (tokenColumn == 1) {
             //label
             return new Token(new Position(lineCounter,tokenColumn), sbToken.toString(), TypeToken.Label);

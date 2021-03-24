@@ -1,71 +1,3 @@
 Line   Addr    Machine Code    Label                Assembly Code   Operand      Comments                 
 1      0000                                                                      ; TestImmediate.asm - Test immediate instructions.
-2      0000                                                                                              
-3      0000                                                                                enter.u5  0        ; OK, number <u5> [0..31].
-4      0000                                                                                enter.u5  1        ; OK, number <u5> [0..31].
-5      0000                                                                                enter.u5  2        ; OK, number <u5> [0..31].
-6      0000                                                                                enter.u5  3        ; OK, number <u5> [0..31].           
-7      0000                                                                                enter.u5  4        ; OK, number <u5> [0..31].           
-8      0000                                                                                enter.u5  5        ; OK, number <u5> [0..31].           
-9      0000                                                                                enter.u5  6        ; OK, number <u5> [0..31].           
-10     0000                                                                                enter.u5  7        ; OK, number <u5> [0..31].           
-11     0000                                                                                enter.u5  8        ; OK, number <u5> [0..31].           
-12     0000                                                                                enter.u5  9        ; OK, number <u5> [0..31].           
-13     0000                                                                                enter.u5  10       ; OK, number <u5> [0..31].           
-14     0000                                                                                enter.u5  11       ; OK, number <u5> [0..31].           
-15     0000                                                                                enter.u5  12       ; OK, number <u5> [0..31].           
-16     0000                                                                                enter.u5  13       ; OK, number <u5> [0..31].           
-17     0000                                                                                enter.u5  14       ; OK, number <u5> [0..31].           
-18     0000                                                                                enter.u5  15       ; OK, number <u5> [0..31].           
-19     0000                                                                                enter.u5  16       ; OK, number <u5> [0..31].
-20     0000                                                                                enter.u5  17       ; OK, number <u5> [0..31].
-21     0000                                                                                enter.u5  18       ; OK, number <u5> [0..31].           
-22     0000                                                                                enter.u5  19       ; OK, number <u5> [0..31].           
-23     0000                                                                                enter.u5  20       ; OK, number <u5> [0..31].           
-24     0000                                                                                enter.u5  21       ; OK, number <u5> [0..31].           
-25     0000                                                                                enter.u5  22       ; OK, number <u5> [0..31].           
-26     0000                                                                                enter.u5  23       ; OK, number <u5> [0..31].           
-27     0000                                                                                enter.u5  24       ; OK, number <u5> [0..31].           
-28     0000                                                                                enter.u5  25       ; OK, number <u5> [0..31].           
-29     0000                                                                                enter.u5  26       ; OK, number <u5> [0..31].           
-30     0000                                                                                enter.u5  27       ; OK, number <u5> [0..31].           
-31     0000                                                                                enter.u5  28       ; OK, number <u5> [0..31].           
-32     0000                                                                                enter.u5  29       ; OK, number <u5> [0..31].           
-33     0000                                                                                enter.u5  30       ; OK, number <u5> [0..31].           
-34     0000                                                                                enter.u5  31       ; OK, number <u5> [0..31].           
-35     0000                                                                                              
-36     0000                                                                                  ldc.i3  0        ; OK, number <i3> [-4..3]. 
-37     0000                                                                                  ldc.i3  1        ; OK, number <i3> [-4..3]. 
-38     0000                                                                                  ldc.i3  2        ; OK, number <i3> [-4..3]. 
-39     0000                                                                                  ldc.i3  3        ; OK, number <i3> [-4..3].
-40     0000                                                                                  ldc.i3  -4       ; OK, number <i3> [-4..3].
-41     0000                                                                                  ldc.i3  -3       ; OK, number <i3> [-4..3]. 
-42     0000                                                                                  ldc.i3  -2       ; OK, number <i3> [-4..3]. 
-43     0000                                                                                  ldc.i3  -1       ; OK, number <i3> [-4..3]. 
-44     0000                                                                                              
-45     0000                                                                                 addv.u3  0        ; OK, number <u3> [0..7].           
-46     0000                                                                                 addv.u3  1        ; OK, number <u3> [0..7].    
-47     0000                                                                                 addv.u3  2        ; OK, number <u3> [0..7].    
-48     0000                                                                                 addv.u3  3        ; OK, number <u3> [0..7].    
-49     0000                                                                                 addv.u3  4        ; OK, number <u3> [0..7].    
-50     0000                                                                                 addv.u3  5        ; OK, number <u3> [0..7].    
-51     0000                                                                                 addv.u3  6        ; OK, number <u3> [0..7].    
-52     0000                                                                                 addv.u3  7        ; OK, number <u3> [0..7].    
-53     0000                                                                                              
-54     0000                                                                                  ldv.u3  0        ; OK, number <u3> [0..7].           
-55     0000                                                                                  ldv.u3  1        ; OK, number <u3> [0..7].    
-56     0000                                                                                  ldv.u3  2        ; OK, number <u3> [0..7].    
-57     0000                                                                                  ldv.u3  3        ; OK, number <u3> [0..7].    
-58     0000                                                                                  ldv.u3  4        ; OK, number <u3> [0..7].    
-59     0000                                                                                  ldv.u3  5        ; OK, number <u3> [0..7].    
-60     0000                                                                                  ldv.u3  6        ; OK, number <u3> [0..7].    
-61     0000                                                                                  ldv.u3  7        ; OK, number <u3> [0..7].    
-62     0000                                                                                              
-63     0000                                                                                  stv.u3  0        ; OK, number <u3> [0..7].           
-64     0000                                                                                  stv.u3  1        ; OK, number <u3> [0..7].    
-65     0000                                                                                  stv.u3  2        ; OK, number <u3> [0..7].    
-66     0000                                                                                  stv.u3  3        ; OK, number <u3> [0..7].    
-67     0000                                                                                  stv.u3  4        ; OK, number <u3> [0..7].    
-68     0000                                                                                  stv.u3  5        ; OK, number <u3> [0..7].    
-69     0000                                                                                  stv.u3  6        ; OK, number <u3> [0..7].    
-70     0000                                                                                  stv.u3  7        ; OK, number <u3> [0..7].    
+2      0000                                                                                               

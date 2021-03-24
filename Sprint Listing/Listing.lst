@@ -1,7 +1,7 @@
 Line   Addr    Machine Code    Label                Assembly Code   Operand      Comments                 
 1      0000                                                                      ; TestImmediate.asm - Test immediate instructions.
 2      0000                                                                                               
-3      0000    70                                   enter.u5        0            ; OK, number <u5> [0..31].
+3      0000                                         .cstring                     ; OK, number <u5> [0..31].
 4      0001    71                                   enter.u5        1            ; OK, number <u5> [0..31].
 5      0002    72                                   enter.u5        2            ; OK, number <u5> [0..31].
 6      0003    73                                   enter.u5        3            ; OK, number <u5> [0..31].           
