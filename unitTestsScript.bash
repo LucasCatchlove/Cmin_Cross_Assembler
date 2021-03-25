@@ -34,6 +34,8 @@ javac analysers/TestSyntaxAnalyser2.java
 java analysers/TestSyntaxAnalyser2 >> tests.txt
 javac analysers/TestLexicalAnalyser2.java 
 java analysers/TestLexicalAnalyser2 >> tests.txt
+javac tests/TestRange.java 
+java tests/TestRange >> tests.txt
 
 
 java aunit tests.txt

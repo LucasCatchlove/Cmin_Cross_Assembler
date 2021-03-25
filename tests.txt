@@ -31,3 +31,12 @@ Test Lineformatter(2)
 Test Lineformatter(3)
 3      0002    02                          dup                                      
 3      0002    02                                   dup                                                   
+Test Range getStart()
+range1: start=0; range2: start=-4
+range1: start=0; range2: start=-4
+Test Range getEnd()
+range1: end=0; range2: end=-4
+range1: end=31; range2: end=3
+Test Range getMncSignStr()
+range1: signStr=unsigned; range2: signStr=signed
+range1: signStr=unsigned; range2: signStr=signed
