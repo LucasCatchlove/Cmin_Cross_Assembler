@@ -2,7 +2,7 @@
 
           ".cstring       ; OK, number <u5> [0..31].
           enter.u5  666        ; OK, number <u5> [0..31].
-          enter.u5  2        ; OK, number <u5> [0..31].
+          enter.u5  2   !     ; OK, number <u5> [0..31].
           enter.u5  3        ; OK, number <u5> [0..31].           
           enter.u5  4        ; OK, number <u5> [0..31].           
           enter.u5  5        ; OK, number <u5> [0..31].           

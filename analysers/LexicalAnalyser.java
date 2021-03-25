@@ -1,5 +1,6 @@
 package analysers;
 
+
 import errorReporters.ErrorMsg;
 import errorReporters.IErrorReporter;
 import interfaces.IFileReader;
@@ -7,6 +8,8 @@ import interfaces.ILexicalAnalyser;
 import components.Token;
 import components.Position;
 import components.TypeToken;
+import java.util.Arrays;
+import java.util.List;
 
 import java.io.IOException;
 
@@ -15,6 +18,7 @@ import java.io.IOException;
  */
 public class LexicalAnalyser implements ILexicalAnalyser {
 
+    List<Integer> invalidChars = Arrays.asList(0,1,2,3,4,5,6,7,8,9,11,12,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33,35,36,37,38,39,40,41,42,43,44,47,58,60,61,62,63,64,91,92,93,94,95,96,123,124,125,126);
     private int EOL = 10;
     private int EOF = -1;
     private int spaces = 32;
@@ -50,6 +54,13 @@ public class LexicalAnalyser implements ILexicalAnalyser {
         while ((i = reader.getNextFin()) != EOF) {
 
             while(i != EOL && i != EOF) {
+
+                if(!isComment && invalidChars.contains(i)) {
+                    errRep.recordError(new ErrorMsg("invalid character", new Position(lineCounter, tokenColumn)));
+                    i = reader.getNextFin();
+                    continue;
+                }
+
 
                 //Starting the Comment part
                 if ((char)i == ';')
