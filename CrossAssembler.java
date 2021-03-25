@@ -1,8 +1,8 @@
 import analysers.FileReader;
+import analysers.ILexicalAnalyser;
 import analysers.LexicalAnalyser;
 import analysers.SyntaxAnalyser;
 import errorReporters.*;
-import components.IR;
 import components.SymbolTable;
 import errorReporters.IErrorReporter;
 import generators.CodeGenerator;

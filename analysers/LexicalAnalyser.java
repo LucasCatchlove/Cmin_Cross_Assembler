@@ -4,7 +4,6 @@ package analysers;
 import errorReporters.ErrorMsg;
 import errorReporters.IErrorReporter;
 import interfaces.IFileReader;
-import interfaces.ILexicalAnalyser;
 import components.Token;
 import components.Position;
 import components.TypeToken;
@@ -181,7 +180,7 @@ public class LexicalAnalyser implements ILexicalAnalyser {
      * @param sbToken
      * @return
      */
-    Token generateToken(StringBuilder sbToken) {
+    public Token generateToken(StringBuilder sbToken) {
 
         if(sbToken.toString().equals(".cstring"))
             return new Token(new Position(lineCounter,tokenColumn), sbToken.toString(), TypeToken.Directive);

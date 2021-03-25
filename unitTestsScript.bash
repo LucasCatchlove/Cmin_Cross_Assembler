@@ -2,6 +2,8 @@
 cd "$(dirname "$0")"
 echo 'Running Unit Tests...'
 javac aunit.java
+javac analysers/TestLexicalAnalyser1.java 
+java analysers/TestLexicalAnalyser1 >> tests.txt
 javac tests/TestSymbolTable.java
 java tests/TestSymbolTable >> tests.txt
 javac tests/TestPosition.java
@@ -30,8 +32,6 @@ javac analysers/TestSyntaxAnalyser1.java
 java analysers/TestSyntaxAnalyser1 >> tests.txt
 javac analysers/TestSyntaxAnalyser2.java 
 java analysers/TestSyntaxAnalyser2 >> tests.txt
-javac analysers/TestLexicalAnalyser1.java 
-java analysers/TestLexicalAnalyser1 >> tests.txt
 javac analysers/TestLexicalAnalyser2.java 
 java analysers/TestLexicalAnalyser2 >> tests.txt
 

@@ -38,10 +38,10 @@ Line   Addr    Machine Code    Label                Assembly Code   Operand     
 37     0020    91                                   ldc.i3          1            ; OK, number <i3> [-4..3]. 
 38     0021    92                                   ldc.i3          2            ; OK, number <i3> [-4..3]. 
 39     0022    93                                   ldc.i3          3            ; OK, number <i3> [-4..3].
-40     0023    94                                   ldc.i3          4            ; OK, number <i3> [-4..3].
-41     0024    93                                   ldc.i3          3            ; OK, number <i3> [-4..3]. 
-42     0025    92                                   ldc.i3          2            ; OK, number <i3> [-4..3]. 
-43     0026    91                                   ldc.i3          1            ; OK, number <i3> [-4..3]. 
+40     0023    94                                   ldc.i3          -4           ; OK, number <i3> [-4..3].
+41     0024    95                                   ldc.i3          -3           ; OK, number <i3> [-4..3]. 
+42     0025    96                                   ldc.i3          -2           ; OK, number <i3> [-4..3]. 
+43     0026    97                                   ldc.i3          -1           ; OK, number <i3> [-4..3]. 
 44     0027                                                                                               
 45     0027    98                                   addv.u3         0            ; OK, number <u3> [0..7].           
 46     0028    99                                   addv.u3         1            ; OK, number <u3> [0..7].    
