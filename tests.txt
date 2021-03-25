@@ -43,6 +43,9 @@ Test components.Mnemonic getOpCode
 Test components.Mnemonic getType
 Inherent Immediate Inherent
 Inherent Immediate Inherent
+Test components.Instruction getMnemonic
+Name: teq, Opcode: 1A Name: add, Opcode: 0C Name: sub, Opcode: 0D
+Name: teq, Opcode: 1A Name: add, Opcode: 0C Name: sub, Opcode: 0D
 Test analysers.FileReader getFileName
 TestLexicalAnalyser.txt
 TestLexicalAnalyser.txt
