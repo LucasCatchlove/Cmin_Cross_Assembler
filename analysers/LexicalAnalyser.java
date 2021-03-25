@@ -1,5 +1,6 @@
 package analysers;
 
+import errorReporters.ErrorMsg;
 import errorReporters.IErrorReporter;
 import interfaces.IFileReader;
 import interfaces.ILexicalAnalyser;
@@ -42,19 +43,26 @@ public class LexicalAnalyser implements ILexicalAnalyser {
         int i;
         StringBuilder sbToken = new StringBuilder();
         boolean isComment = false;
+        boolean isDirective = false;
 
         tokenColumn++;
 
         while ((i = reader.getNextFin()) != EOF) {
 
-            while(i != EOL) {
+            while(i != EOL && i != EOF) {
 
                 //Starting the Comment part
                 if ((char)i == ';')
                     isComment = true;
+                if((char)i == '"') {
+                    isDirective = !isDirective;
+                    i = reader.getNextFin();
+                    continue;
+                }
+
 
                 //Skip the spaces for all except for the Comment part
-                if ((i != spaces && i != carriageReturn) || isComment ) {
+                if ((i != spaces && i != carriageReturn) || isComment || isDirective) {
                     sbToken.append((char)i);
                 } else if (sbToken.length() < 1) {
                     //To skip empty spaces
@@ -64,9 +72,18 @@ public class LexicalAnalyser implements ILexicalAnalyser {
                 }
                 i = reader.getNextFin();
             }
+            if(i == EOL) {
+                if (isDirective)
+                    errRep.recordError(new ErrorMsg("EOL in string", new Position(lineCounter, tokenColumn)));
 
-            return new Token(new Position(lineCounter++,tokenColumn), sbToken.toString(), TypeToken.EOL);
+                return new Token(new Position(lineCounter++,tokenColumn), sbToken.toString(), TypeToken.EOL);
+            }
+
+
         }
+
+        if(isDirective && i == EOF)
+            errRep.recordError(new ErrorMsg("EOF in string", new Position(lineCounter, tokenColumn)));
 
         return new Token(new Position(lineCounter,tokenColumn), "", TypeToken.EOF);
     }
@@ -163,13 +180,14 @@ public class LexicalAnalyser implements ILexicalAnalyser {
             return new Token(new Position(lineCounter,tokenColumn), sbToken.toString(), TypeToken.Label);
         } else if (tokenColumn >= 1) {
             //>=3 means that it is a mnemonic type
-            if (sbToken.length() >= 3) {
+            if (isInteger(sbToken.toString())) { //Means that it is the operand
+
+                return new Token(new Position(lineCounter, tokenColumn), sbToken.toString(), TypeToken.Operand); //Generate a token using the sbToken
+            }
+            else if (sbToken.length() >= 3) {
 
                 return new Token(new Position(lineCounter,tokenColumn), sbToken.toString(), TypeToken.Mnemonic); //Generate a token using the sbToken
 
-            } else if (sbToken.length() >= 1) { //Means that it is the operand
-
-                return new Token(new Position(lineCounter, tokenColumn), sbToken.toString(), TypeToken.Operand); //Generate a token using the sbToken
             }
         } else if (sbToken.charAt(0) == ';') {
             //Comment section
@@ -177,6 +195,30 @@ public class LexicalAnalyser implements ILexicalAnalyser {
         }
 
         return null;
+    }
+
+    private boolean isInteger(String str) {
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
