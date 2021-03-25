@@ -9,14 +9,18 @@ public class TestListing3 {
         Listing l3 = new Listing(ir3);
 
         System.out.println("Test Lineformatter(1)");
-        System.out.println("1      0000    00                          halt                                     ");
-        System.out.print(l3.LineFormatter("1", "0000", "00", "", "halt", "", ""));
+        System.out.println("3      0001    83                                   enter.u5        3            ; OK, number <u5> [0..31].");
+        System.out.print(l3.LineFormatter("3","0001","83","","enter.u5","3","; OK, number <u5> [0..31]."));
+
         System.out.println("Test Lineformatter(2)");
-        System.out.println( "2      0001    01                          pop                                      ");
-        System.out.print(l3.LineFormatter("2", "0001", "01", "", "pop", "", ""));
+        System.out.println("37     0022    94                                   ldc.i3          -4           ; OK, number <i3> [-4..3].");
+        System.out.print(l3.LineFormatter("37","0022","94","","ldc.i3","-4","; OK, number <i3> [-4..3]."));
         System.out.println("Test Lineformatter(3)");
-        System.out.println("3      0002    02                          dup                                      ");
-        System.out.print(l3.LineFormatter("3", "0002", "02", "", "dup", "", ""));
+        System.out.println("2      0000                                         .cstring                     ; directive              ");
+        System.out.print(l3.LineFormatter("2","0000","","",".cstring","","; directive"));
+        System.out.println("Test Lineformatter(4)");
+        System.out.println("2      0000                                         pop                          ; inherent instruction   ");
+        System.out.print(l3.LineFormatter("2","0000","","","pop","","; inherent instruction"));
 
 
 

@@ -8,7 +8,7 @@ public class TestListing2 {
         Listing l1 = new Listing(ir1);
 
         System.out.println("Test header");
-        System.out.println("Line   Addr    Code   Label                Mne     Operand      Comments            ");
+        System.out.println("Line   Addr    Machine Code    Label                Assembly Code   Operand      Comments                 ");
         System.out.print(l1.header());
 
 

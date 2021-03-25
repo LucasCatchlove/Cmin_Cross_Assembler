@@ -43,9 +43,6 @@ Test components.Mnemonic getOpCode
 Test components.Mnemonic getType
 Inherent Immediate Inherent
 Inherent Immediate Inherent
-Test analysers.FileReader getFileName
-TestLexicalAnalyser.txt
-TestLexicalAnalyser.txt
 Test Listing getLineNumber
 3 2
 3 2

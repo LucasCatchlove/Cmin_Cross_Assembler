@@ -69,8 +69,6 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
                     lineStatement.setDirective(token.getName());
                     break;
 
-
-
                 case Operand:
 
                     //Test if operand is needed or not? or if outofbound

@@ -12,13 +12,6 @@ public class LineStatement implements ILineStatement {
     private String directive;
     private String comment;
 
-    /**
-     * For Sprint 2 usage: Creates components.LineStatement with a directive
-     *
-     * @param label
-     * @param directive
-     * @param comment
-     */
 
 
     public LineStatement() {
@@ -78,7 +71,9 @@ public class LineStatement implements ILineStatement {
     }
 
     public String toString() {
-        return "[" + getInstruction().getMnemonic().getMnemonicName() + " " + String.format("%02X", getInstruction().getMnemonic().getOpCode()) + "]";
+        if(instruction == null)
+        return getDirective() + " " + getComment();
+        else
+           return  getInstruction().getMnemonic().getMnemonicName() + " " + getInstruction().getOperand() + " " + getComment();
     }
-
 }
