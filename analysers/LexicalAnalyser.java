@@ -154,5 +154,9 @@ public class LexicalAnalyser implements ILexicalAnalyser {
         return true;
     }
 
+    //helper method for testing
+    public void setTokenColumn(int tokenColumn) {
+        this.tokenColumn = tokenColumn;
+    }
 }
 

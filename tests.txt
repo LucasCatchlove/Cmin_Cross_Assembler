@@ -1,6 +1,9 @@
 Test generateToken
-enter.u5 pop ".cstring"
-enter.u5 pop ".cstring"
+enter.u5 pop ".cstring" 1 ; hello
+enter.u5 pop ".cstring" 1 ; hello
+Test Lexical Analyser scan and getNextFin
+.cstring ; directive enter.u5 4 ; OK, number <u5> [0..31].
+.cstring ; directive enter.u5 4 ; OK, number <u5> [0..31].
 Test components.SymbolTable
 Name: pop, Opcode: 01; Name: halt, Opcode: 00
 Name: pop, Opcode: 01; Name: halt, Opcode: 00
@@ -35,7 +38,7 @@ Test Range getStart()
 range1: start=0; range2: start=-4
 range1: start=0; range2: start=-4
 Test Range getEnd()
-range1: end=0; range2: end=-4
+range1: end=31; range2: end=3
 range1: end=31; range2: end=3
 Test Range getMncSignStr()
 range1: signStr=unsigned; range2: signStr=signed
