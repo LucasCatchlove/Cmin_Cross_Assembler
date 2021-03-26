@@ -1,8 +1,8 @@
 ; TestImmediate.asm - Test immediate instructions.
 
-          enter.u5  0        ; OK, number <u5> [0..31].           
-          enter.u5  1        ; OK, number <u5> [0..31].           
-          enter.u5  2        ; OK, number <u5> [0..31].           
+          halt       ; OK, number <u5> [0..31].
+          enter.u5          ; OK, number <u5> [0..31].
+          enter.u5  2   !     ; OK, number <u5> [0..31].
           enter.u5  3        ; OK, number <u5> [0..31].           
           enter.u5  4        ; OK, number <u5> [0..31].           
           enter.u5  5        ; OK, number <u5> [0..31].           
@@ -36,8 +36,8 @@
             ldc.i3  0        ; OK, number <i3> [-4..3]. 
             ldc.i3  1        ; OK, number <i3> [-4..3]. 
             ldc.i3  2        ; OK, number <i3> [-4..3]. 
-            ldc.i3  3        ; OK, number <i3> [-4..3]. 
-            ldc.i3  -4       ; OK, number <i3> [-4..3]. 
+            ldc.i3  3        ; OK, number <i3> [-4..3].
+            ldc.i3  -4       ; OK, number <i3> [-4..3].
             ldc.i3  -3       ; OK, number <i3> [-4..3]. 
             ldc.i3  -2       ; OK, number <i3> [-4..3]. 
             ldc.i3  -1       ; OK, number <i3> [-4..3]. 
@@ -67,4 +67,4 @@
             stv.u3  4        ; OK, number <u3> [0..7].    
             stv.u3  5        ; OK, number <u3> [0..7].    
             stv.u3  6        ; OK, number <u3> [0..7].    
-            stv.u3  7        ; OK, number <u3> [0..7].    
+            ".cstring

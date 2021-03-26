@@ -27,15 +27,15 @@ public class TestSyntaxAnalyser1 {
 
         System.out.println("Test parseToken (1)");
         System.out.println("enter.u5 pop true");
-        System.out.print(sa1.parseToken(t1).getMnemonicName() + " ");
-        System.out.print(sa1.parseToken(t2).getMnemonicName() + " ");
-        System.out.println(sa1.parseToken(t3) == null);
+        System.out.print(sa1.parseMnemonicToken(t1).getMnemonicName() + " ");
+        System.out.print(sa1.parseMnemonicToken(t2).getMnemonicName() + " ");
+        System.out.println(sa1.parseMnemonicToken(t3) == null);
 
         System.out.println("Test parseToken (2)");
         System.out.println("ldc.i3 true true");
-        System.out.print(sa1.parseToken(t4).getMnemonicName() + " ");
-        System.out.print((sa1.parseToken(t5) == null) + " ");
-        System.out.println(sa1.parseToken(t6) == null);
+        System.out.print(sa1.parseMnemonicToken(t4).getMnemonicName() + " ");
+        System.out.print((sa1.parseMnemonicToken(t5) == null) + " ");
+        System.out.println(sa1.parseMnemonicToken(t6) == null);
 
 
 

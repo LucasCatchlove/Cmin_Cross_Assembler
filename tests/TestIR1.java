@@ -7,9 +7,8 @@ import components.*;
  */
 public class TestIR1 {
     public static void main(String[] args) {
-/*
 
-Do we even need these?
+
 
 
         IR testIR = new IR();
@@ -22,7 +21,7 @@ Do we even need these?
 
 
         System.out.println("Test IR1");
-        System.out.println("[halt 00][pop 01]");
+        System.out.println("halt  pop  ");
 
         testIR.addLineStatement(ls1);
         testIR.addLineStatement(ls2);
@@ -30,7 +29,7 @@ Do we even need these?
         System.out.print(testIR.getLineStatement(1)); //ls2
         System.out.println();
 
- */
+
 
     }
 }

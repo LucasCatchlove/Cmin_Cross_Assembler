@@ -46,6 +46,12 @@ Inherent Immediate Inherent
 Test components.Instruction getMnemonic
 Name: teq, Opcode: 1A Name: add, Opcode: 0C Name: sub, Opcode: 0D
 Name: teq, Opcode: 1A Name: add, Opcode: 0C Name: sub, Opcode: 0D
+Test IR1
+halt  pop  
+halt  pop  
+Test IR2
+truetrue
+truetrue
 Test analysers.FileReader getFileName
 TestLexicalAnalyser.txt
 TestLexicalAnalyser.txt

@@ -10,11 +10,6 @@ import java.util.ArrayList;
 public class TestIR2 {
     public static void main(String[] args) {
 
-        /*
-
-Do we even need these?
-
-
 
         IR testIR = new IR();
         ArrayList<LineStatement> lsl1 = testIR.getLineStatementList();
@@ -36,7 +31,7 @@ Do we even need these?
         System.out.print(lsl1.get(1) instanceof LineStatement);
         System.out.println();
 
-*/
+
 
     }
 
