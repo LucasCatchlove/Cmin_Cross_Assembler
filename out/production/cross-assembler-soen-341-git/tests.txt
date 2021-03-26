@@ -94,3 +94,9 @@ range1: end=31; range2: end=3
 Test Range getMncSignStr()
 range1: signStr=unsigned; range2: signStr=signed
 range1: signStr=unsigned; range2: signStr=signed
+Test ErrorReporter isEmpty()
+ErrorReporter Is Empty = true
+ErrorReporter Is Empty = true
+Test ErrorReporter isEmpty() and recordError()
+ErrorReporter Is Empty = false
+ErrorReporter Is Empty = false

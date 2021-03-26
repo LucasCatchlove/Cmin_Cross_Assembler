@@ -4,7 +4,7 @@ import errorReporters.ErrorReporter;
 import errorReporters.ErrorMsg;
 import components.Position;
 
-public class TestErrorReporter {
+public class TestErrorReporter2 {
 
     public static void main(String[] args) {
 
@@ -15,15 +15,8 @@ public class TestErrorReporter {
         errorReporter.recordError(new ErrorMsg("error test 1", new Position(4,2)));
 
         System.out.println("[error test 1] [4,2]");
-        System.out.println(errorReporter.);
-/*
-        System.out.println("Test ErrorReporter reportErrors()");
+        System.out.println("["+errorReporter.getErrorMsg(0).getMsg()+"] ["+errorReporter.getErrorMsg(0).getPosition().getLineCounter()+","+errorReporter.getErrorMsg(0).getPosition().getColumnCounter()+"]");
 
-        errorReporter.recordError(new ErrorMsg("error test 2", new Position(6,3)));
-        errorReporter.reportErrors();
-        System.out.println();
-
- */
     }
 }
 

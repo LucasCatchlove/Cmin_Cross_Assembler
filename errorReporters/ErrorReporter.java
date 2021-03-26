@@ -31,6 +31,11 @@ public class ErrorReporter implements IErrorReporter {
         }
     }
 
+    //for testing purposes
+    public ErrorMsg getErrorMsg(int index) {
+        return errorLog.get(index);
+    }
+
 
 
 

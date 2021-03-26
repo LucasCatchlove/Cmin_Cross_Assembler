@@ -59,8 +59,11 @@ java tests/TestRange2 >> tests.txt
 javac tests/TestRange3.java 
 java tests/TestRange3 >> tests.txt
 
-javac tests/TestErrorReporter.java
-java tests/TestErrorReporter >> tests.txt
+javac tests/TestErrorReporter1.java
+java tests/TestErrorReporter1 >> tests.txt
+
+javac tests/TestErrorReporter2.java
+java tests/TestErrorReporter2 >> tests.txt
 
 
 java aunit tests.txt
