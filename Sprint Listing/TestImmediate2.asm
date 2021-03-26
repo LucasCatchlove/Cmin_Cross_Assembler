@@ -13,7 +13,7 @@
           halt       ; OK, number <u5> [0..31].
           enter.u5  11       ; OK, number <u5> [0..31].           
           enter.u5  12       ; OK, number <u5> [0..31].           
-          enter.u5  13       ; OK, number <u5> [0..31].           
+            13       ; OK, number <u5> [0..31].
           enter.u5  14       ; OK, number <u5> [0..31].           
           enter.u5  15       ; OK, number <u5> [0..31].           
           enter.u5  16       ; OK, number <u5> [0..31].
