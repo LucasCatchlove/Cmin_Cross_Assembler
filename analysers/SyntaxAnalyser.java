@@ -49,7 +49,7 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 
                     //If there is not directive, create an Instruction
                     if(lineStatement.getDirective() == null)
-                         lineStatement.setInstruction(new Instruction(checkOperand(mnemonic, operandToken), operandToken != null? operandToken.getName(): null));
+                         lineStatement.setInstruction(new Instruction(checkOperand(mnemonic, operandToken, token.getPosition()), operandToken != null? operandToken.getName(): null));
 
                     //Add the Comment to the LineStatement
                     lineStatement.setComment(token.getName());
@@ -124,7 +124,7 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
      * @param operandToken
      * @return
      */
-    private IMnemonic checkOperand(IMnemonic mnemonic, Token operandToken) {
+    private IMnemonic checkOperand(IMnemonic mnemonic, Token operandToken, Position position) {
 
         //Check if mnemonic is null
         if (mnemonic == null) {
@@ -139,7 +139,7 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
         //Check if mnemonic is an immediate type
         //If there is no operand, report error
         if (mnemonic.getType() == MnemonicType.Immediate && operandToken == null) {
-            errRep.recordError(new ErrorMsg("An immediate instruction requires an operand (number or label).", operandToken.getPosition()));
+            errRep.recordError(new ErrorMsg("An immediate instruction requires an operand (number or label).", position));
             return mnemonic;
         }
 
