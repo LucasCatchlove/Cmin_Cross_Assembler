@@ -3,6 +3,7 @@ package generators;
 import components.IR;
 import components.LineStatement;
 import interfaces.IIR;
+import interfaces.ILineStatement;
 import interfaces.IListing;
 
 
@@ -49,9 +50,9 @@ public class Listing implements IListing {
 
 		writer.write(header().getBytes());
 
-		ArrayList<LineStatement> list = intRep.getLineStatementList();
+		ArrayList<ILineStatement> list = intRep.getLineStatementList();
 
-		for (LineStatement lineStatement : list){
+		for (ILineStatement lineStatement : list){
 			String[] instruction = separateLineStatement(lineStatement);
 			String line = LineFormatter(getLineNumber(), address(), instruction[0], instruction[1], instruction[2], instruction[3], instruction[4]);
 			if (!instruction[2].equals(""))
@@ -89,7 +90,7 @@ public class Listing implements IListing {
 	 * @param ls
 	 * @return
 	 */
-	String[] separateLineStatement(LineStatement ls){
+	String[] separateLineStatement(ILineStatement ls){
 
 		if(ls.getDirective() != null) {
 			String label = ls.getLabel() == null ? "": ls.getLabel();

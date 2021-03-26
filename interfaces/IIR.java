@@ -1,6 +1,6 @@
 package interfaces;
 
-import components.LineStatement;
+import interfaces.ILineStatement;
 
 import java.util.ArrayList;
 
@@ -10,14 +10,14 @@ public interface IIR {
 	 * Adds newly generated line statement to components.IR
 	 * @param lineStatement
 	 */
-	void addLineStatement(LineStatement lineStatement);
+	void addLineStatement(ILineStatement lineStatement);
 
 	/**
 	 * returns line statement at specified index
 	 * @param index
 	 * @return
 	 */
-	LineStatement getLineStatement(int index);
-	public ArrayList<LineStatement> getLineStatementList();
+	ILineStatement getLineStatement(int index);
+	public ArrayList<ILineStatement> getLineStatementList();
 
 }

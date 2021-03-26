@@ -1,5 +1,6 @@
 package components;
 
+import interfaces.IInstruction;
 import interfaces.ILineStatement;
 
 /**
@@ -8,7 +9,7 @@ import interfaces.ILineStatement;
 public class LineStatement implements ILineStatement {
 
     private String label;
-    private Instruction instruction;
+    private IInstruction instruction;
     private String directive;
     private String comment;
 
@@ -28,37 +29,23 @@ public class LineStatement implements ILineStatement {
      * @param instruction
      * @param comment
      */
-    public LineStatement(String label, Instruction instruction, String comment) {
+    public LineStatement(String label, IInstruction instruction, String comment) {
         this.label = label;
         this.instruction = instruction;
         this.comment = comment;
     }
 
-    public void setLabel(String label) {
+    public LineStatement(String label, String directive, String comment) {
         this.label = label;
-    }
-
-    public void setInstruction(Instruction instruction) {
-        this.instruction = instruction;
-    }
-
-//    public void setDirective(String directive) {
-//        this.directive = directive;
-//    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public void setDirective(String directive) {
         this.directive = directive;
+        this.comment = comment;
     }
 
     public String getLabel() {
         return label;
     }
 
-    public Instruction getInstruction() {
+    public IInstruction getInstruction() {
         return instruction;
     }
 

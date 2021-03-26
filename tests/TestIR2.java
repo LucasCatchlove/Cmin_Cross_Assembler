@@ -1,6 +1,7 @@
 package tests;
 
 import components.*;
+import interfaces.ILineStatement;
 
 import java.util.ArrayList;
 
@@ -12,7 +13,7 @@ public class TestIR2 {
 
 
         IR testIR = new IR();
-        ArrayList<LineStatement> lsl1 = testIR.getLineStatementList();
+        ArrayList<ILineStatement> lsl1 = testIR.getLineStatementList();
         Mnemonic m1 = new Mnemonic("halt", 0x00, MnemonicType.Inherent);
         Mnemonic m2 = new Mnemonic("pop", 0x01, MnemonicType.Inherent);
         Instruction ins1 = new Instruction(m1, "");

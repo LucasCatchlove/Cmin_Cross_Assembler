@@ -4,6 +4,8 @@ import components.*;
 import interfaces.*;
 import errorReporters.*;
 
+import javax.sound.sampled.Line;
+
 /**
  * Creates line statements from the tokens passed on from the lexer, and pushes them
  * to the IR
@@ -36,9 +38,11 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
         //Scan the file, and get the token
         Token token = lexer.scan();
 
-        IMnemonic mnemonic = null;
+        //Stored Tokens
+        String label = "";
+        Token mnemonicToken = null;
         Token operandToken = null;
-        LineStatement lineStatement = new LineStatement();
+        Token directiveToken = null;
 
         while (token.getType() != TypeToken.EOF) {
 
@@ -46,46 +50,46 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 
                 case EOL:
                     //create line statement and add it to IR
+                    ILineStatement lineStatement;
 
                     //If there is not directive, create an Instruction
-                    if(lineStatement.getDirective() == null)
-                         lineStatement.setInstruction(new Instruction(checkOperand(mnemonic, operandToken, token.getPosition()), operandToken != null? operandToken.getName(): null));
-
-                    //Add the Comment to the LineStatement
-                    lineStatement.setComment(token.getName());
+                    if(directiveToken != null)
+                        lineStatement = new LineStatement(label, directiveToken.getName(), token.getName());
+                    else {
+                        IInstruction instruction = new Instruction(checkOperand(mnemonicToken, operandToken), operandToken != null? operandToken.getName(): null);
+                        lineStatement = new LineStatement(label, instruction, token.getName());
+                    }
 
                     //Adding a LineStatement to the IR
                     intRep.addLineStatement(lineStatement);
 
                     //Reset everything
-                    lineStatement = new LineStatement();
-                    mnemonic = null;
+                    label = "";
+                    mnemonicToken = null;
                     operandToken = null;
+                    directiveToken = null;
+                    operandToken = null;
+
                     break;
 
                 case Label:
-                    //Save the label
-                    lineStatement.setLabel(token.getName());
+                    //Save the labelToken
+                    label = token.getName();
                     break;
 
                 case Mnemonic:
-                    //Save the mnemonic
-                    mnemonic = parseMnemonicToken(token); //get the mnemonic object from the SymbolTable
+                    //Save the mnemonicToken
+                    mnemonicToken = token;
+                    //mnemonic = parseMnemonicToken(token); //get the mnemonic object from the SymbolTable
                     break;
 
                 case Directive:
-                    //Add the Directive to the LineStatement
-                    lineStatement.setDirective(token.getName());
+                    //Save the directiveToken
+                    directiveToken = token;
                     break;
 
                 case Operand:
-
-                    //Test if operand is needed or not? or if outOfBound
-                    if (mnemonic == null) {
-                        errRep.recordError(new ErrorMsg("Cannot have an operand without a mnemonic.", token.getPosition()));
-                    } else if (mnemonic.getType() == MnemonicType.Inherent) {
-                        errRep.recordError(new ErrorMsg("An inherent instruction has no operand.", token.getPosition()));
-                    }
+                    //Save the operandToken
                     operandToken = token;
                     break;
 
@@ -110,36 +114,46 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 
         IMnemonic mnemonic = symbolTable.get(token.getName());
 
-        //Check if the mnemonic is invalid
-        if (mnemonic == null)
-            errRep.recordError(new ErrorMsg("Invalid mnemonic or directive.", token.getPosition()));
-
         return mnemonic;
     }
 
     /**
      * Check all Error cases related to the mnemonic and operand
      * Return the right Mnemonic object with the correct opCode
-     * @param mnemonic
+     * @param mnemonicToken
      * @param operandToken
      * @return
      */
-    private IMnemonic checkOperand(IMnemonic mnemonic, Token operandToken, Position position) {
+    private IMnemonic checkOperand(Token mnemonicToken, Token operandToken) {
+
+        //Check if operand is there without mnemonic
+        if (mnemonicToken == null && operandToken != null) {
+            errRep.recordError(new ErrorMsg("Cannot have an operand without a mnemonic.", operandToken.getPosition()));
+            return null;
+        }
 
         //Check if mnemonic is null
+        if (mnemonicToken == null) {
+//            errRep.recordError(new ErrorMsg("Invalid mnemonic or directive.", mnemonicToken.getPosition()));
+            return null;
+        }
+
+        IMnemonic mnemonic = parseMnemonicToken(mnemonicToken);
+
         if (mnemonic == null) {
+            errRep.recordError(new ErrorMsg("Invalid mnemonic or directive.", mnemonicToken.getPosition()));
             return null;
         }
 
         //Check if mnemonic is an inherent type
         //If there is an operand, report error
-//        if (mnemonic.getType() == MnemonicType.Inherent && operandToken != null)
-//            errRep.recordError(new ErrorMsg("An inherent instruction does not require an operand (number or label).", operandToken.getPosition()));
+        if (mnemonic.getType() == MnemonicType.Inherent && operandToken != null)
+            errRep.recordError(new ErrorMsg("An inherent instruction does not require an operand (number or label).", operandToken.getPosition()));
 
         //Check if mnemonic is an immediate type
         //If there is no operand, report error
         if (mnemonic.getType() == MnemonicType.Immediate && operandToken == null) {
-            errRep.recordError(new ErrorMsg("An immediate instruction requires an operand (number or label).", position));
+            errRep.recordError(new ErrorMsg("An immediate instruction requires an operand (number or label).", mnemonicToken.getPosition()));
             return mnemonic;
         }
 

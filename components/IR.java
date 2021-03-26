@@ -1,6 +1,7 @@
 package components;
 
 import interfaces.IIR;
+import interfaces.ILineStatement;
 
 import java.util.ArrayList;
 
@@ -9,23 +10,23 @@ import java.util.ArrayList;
  */
 public class IR implements IIR {
 
-	private ArrayList<LineStatement> lineStatementList;
+	private ArrayList<ILineStatement> lineStatementList;
 
 	public IR() {
-		lineStatementList = new ArrayList<LineStatement>();
+		lineStatementList = new ArrayList<ILineStatement>();
 	}
 	
-	public void addLineStatement(LineStatement lineStatement) {
+	public void addLineStatement(ILineStatement lineStatement) {
 		lineStatementList.add(lineStatement);
 	}
 
-	public LineStatement getLineStatement(int index) {
+	public ILineStatement getLineStatement(int index) {
 		if (index >= lineStatementList.size())
 			return null;
 		return lineStatementList.get(index);
 	}
 
-	public ArrayList<LineStatement> getLineStatementList() {
+	public ArrayList<ILineStatement> getLineStatementList() {
 		return lineStatementList;
 	}
 

@@ -6,7 +6,7 @@ public interface ILineStatement {
 
     String getLabel();
 
-    Instruction getInstruction();
+    IInstruction getInstruction();
 
     String getDirective();
 
