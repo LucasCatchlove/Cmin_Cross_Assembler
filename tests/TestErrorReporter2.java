@@ -10,19 +10,12 @@ public class TestErrorReporter {
 
         ErrorReporter errorReporter = new ErrorReporter("testsourcefile.txt");
 
-
-        System.out.println("Test ErrorReporter isEmpty()");
-
-        System.out.println("ErrorReporter Is Empty = true");
-        System.out.println("ErrorReporter Is Empty = " + errorReporter.isEmpty());
-
-
         System.out.println("Test ErrorReporter isEmpty() and recordError()");
 
         errorReporter.recordError(new ErrorMsg("error test 1", new Position(4,2)));
 
-        System.out.println("ErrorReporter Is Empty = false");
-        System.out.println("ErrorReporter Is Empty = " + errorReporter.isEmpty());
+        System.out.println("[error test 1] [4,2]");
+        System.out.println(errorReporter.);
 /*
         System.out.println("Test ErrorReporter reportErrors()");
 
@@ -33,3 +26,4 @@ public class TestErrorReporter {
  */
     }
 }
+

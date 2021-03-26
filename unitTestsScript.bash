@@ -50,8 +50,17 @@ java generators/TestListing3 >> tests.txt
 javac generators/TestListing4.java 
 java generators/TestListing4 >> tests.txt
 
-javac tests/TestRange.java 
-java tests/TestRange >> tests.txt
+javac tests/TestRange1.java 
+java tests/TestRange1 >> tests.txt
+
+javac tests/TestRange2.java 
+java tests/TestRange2 >> tests.txt
+
+javac tests/TestRange3.java 
+java tests/TestRange3 >> tests.txt
+
+javac tests/TestErrorReporter.java
+java tests/TestErrorReporter >> tests.txt
 
 
 java aunit tests.txt
