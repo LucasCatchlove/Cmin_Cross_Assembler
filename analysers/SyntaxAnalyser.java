@@ -133,8 +133,8 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 
         //Check if mnemonic is an inherent type
         //If there is an operand, report error
-        if (mnemonic.getType() == MnemonicType.Inherent && operandToken != null)
-            errRep.recordError(new ErrorMsg("An inherent instruction does not require an operand (number or label).", operandToken.getPosition()));
+//        if (mnemonic.getType() == MnemonicType.Inherent && operandToken != null)
+//            errRep.recordError(new ErrorMsg("An inherent instruction does not require an operand (number or label).", operandToken.getPosition()));
 
         //Check if mnemonic is an immediate type
         //If there is no operand, report error

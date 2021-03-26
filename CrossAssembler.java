@@ -17,7 +17,7 @@ public class CrossAssembler {
     public static void main(String[] args) {
 
         //opens input file
-        String srcFile = "Sprint Listing/TestImmediate.asm";
+        String srcFile = "Sprint Listing/TestImmediate2.asm";
         IFileReader reader = new FileReader(srcFile);
 
         //Creation of Error Reporter
