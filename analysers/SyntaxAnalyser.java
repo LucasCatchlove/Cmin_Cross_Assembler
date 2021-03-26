@@ -10,11 +10,7 @@ import errorReporters.*;
  */
 public class SyntaxAnalyser implements ISyntaxAnalyser {
 
-    /*
-    the components.IR class creates the ArrayList
-    private ArrayList<components.LineStatement> components.IR = new ArrayList<>();
-     */
-
+    //Objects
     private ISymbolTable symbolTable;
     private ILexicalAnalyser lexer;
     private IErrorReporter errRep;
@@ -29,11 +25,17 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
         this.errRep = errRep;
     }
 
+    /**
+     * Parse the token, create a LineStatement, add the LineStatement to an IR, return the IR when EOF is reached
+     * @return
+     */
     public IIR parse() {
 
         IR intRep = new IR();
 
+        //Scan the file, and get the token
         Token token = lexer.scan();
+
         IMnemonic mnemonic = null;
         Token operandToken = null;
         LineStatement lineStatement = new LineStatement();
@@ -43,35 +45,42 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
             switch (token.getType()) {
 
                 case EOL:
-                    //create line statement and send to IR
+                    //create line statement and add it to IR
 
+                    //If there is not directive, create an Instruction
                     if(lineStatement.getDirective() == null)
                          lineStatement.setInstruction(new Instruction(checkOperand(mnemonic, operandToken), operandToken != null? operandToken.getName(): null));
 
+                    //Add the Comment to the LineStatement
                     lineStatement.setComment(token.getName());
+
+                    //Adding a LineStatement to the IR
                     intRep.addLineStatement(lineStatement);
+
+                    //Reset everything
                     lineStatement = new LineStatement();
                     mnemonic = null;
                     operandToken = null;
                     break;
 
                 case Label:
-
-                    //Save label;
+                    //Save the label
                     lineStatement.setLabel(token.getName());
                     break;
 
                 case Mnemonic:
-                    mnemonic = parseToken(token);
+                    //Save the mnemonic
+                    mnemonic = parseMnemonicToken(token); //get the mnemonic object from the SymbolTable
                     break;
 
                 case Directive:
+                    //Add the Directive to the LineStatement
                     lineStatement.setDirective(token.getName());
                     break;
 
                 case Operand:
 
-                    //Test if operand is needed or not? or if outofbound
+                    //Test if operand is needed or not? or if outOfBound
                     if (mnemonic == null) {
                         errRep.recordError(new ErrorMsg("Cannot have an operand without a mnemonic.", token.getPosition()));
                     } else if (mnemonic.getType() == MnemonicType.Inherent) {
@@ -93,37 +102,52 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
     }
 
     /**
-     * returns components.Mnemonic object from the symbol table
+     * returns Mnemonic object from the symbol table using the token.getName()
      * @param token
      * @return
      */
-    IMnemonic parseToken(Token token) {
-        //TODO: Check if token should have an operand. To do so, Add true/false (or a range/null) to Mnemonic constructor, and change SymbolTable
+    IMnemonic parseMnemonicToken(Token token) {
 
         IMnemonic mnemonic = symbolTable.get(token.getName());
 
-        if (mnemonic == null) {
-
+        //Check if the mnemonic is invalid
+        if (mnemonic == null)
             errRep.recordError(new ErrorMsg("Invalid mnemonic or directive.", token.getPosition()));
 
-        }
-
-        return mnemonic; //hashtable or components.SymbolTable
+        return mnemonic;
     }
 
+    /**
+     * Check all Error cases related to the mnemonic and operand
+     * Return the right Mnemonic object with the correct opCode
+     * @param mnemonic
+     * @param operandToken
+     * @return
+     */
     private IMnemonic checkOperand(IMnemonic mnemonic, Token operandToken) {
 
-        if (mnemonic == null || operandToken == null) {
+        //Check if mnemonic is null
+        if (mnemonic == null) {
             return null;
         }
 
-        if (mnemonic != null && mnemonic.getType() == MnemonicType.Immediate && operandToken == null) {
+        //Check if mnemonic is an inherent type
+        //If there is an operand, report error
+        if (mnemonic.getType() == MnemonicType.Inherent && operandToken != null)
+            errRep.recordError(new ErrorMsg("An inherent instruction does not require an operand (number or label).", operandToken.getPosition()));
+
+        //Check if mnemonic is an immediate type
+        //If there is no operand, report error
+        if (mnemonic.getType() == MnemonicType.Immediate && operandToken == null) {
             errRep.recordError(new ErrorMsg("An immediate instruction requires an operand (number or label).", operandToken.getPosition()));
             return mnemonic;
         }
 
-        if (mnemonic.getType() != MnemonicType.Inherent) {
+        //Check the range, sign, bit, and create a new Mnemonic with the correct opcode if type is Inherent
+        //Bitwise operations
+        if (mnemonic.getType() != MnemonicType.Inherent && operandToken != null) {
 
+            //Get the mnemonicName, mnemonic sign char, and mnemonic bit
             String mnemonicName = mnemonic.getMnemonicName();
             char mncSignChar = mnemonicName.charAt(mnemonicName.length()-2);
             int mncBitInt = Integer.parseInt(String.valueOf(mnemonicName.charAt(mnemonicName.length()-1)));
@@ -132,13 +156,17 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 
             Range range = new Range(mncSignChar, mncBitInt);
 
+            //Get the opCode registered by the SymbolTable
             int opcode = mnemonic.getOpCode();
 
             switch (mncBitInt) {
 
+                //If the Mnemonic bit is 5
                 case 5:
+
                     opcode = (operandInt > 15) ? opcode : 0x80;
 
+                    //If outOfBound range, report error, and create a new Mnemonic with the bitmask opcode
                     if (operandInt < range.getStart() || operandInt > range.getEnd()) {
                         errRep.recordError(new ErrorMsg("The immediate instruction '" + mnemonicName + "' must have a " + mncBitInt + "-bit " + range.getMncSignStr() + " operand number from " + range.getStart() + " to " + range.getEnd() + ".", operandToken.getPosition()));
                         opcode = opcode | (operandInt & 0x1F); //Bitmask
@@ -148,14 +176,17 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
                     opcode = opcode | operandInt;
                     break;
 
+                //If the Mnemonic bit is 3
                 case 3:
 
+                    //If outOfBound range, report error, and create a new Mnemonic with the bitmask opcode
                     if (operandInt < range.getStart() || operandInt > range.getEnd()) {
                         errRep.recordError(new ErrorMsg("The immediate instruction '" + mnemonicName + "' must have a " + mncBitInt + "-bit " + range.getMncSignStr() + " operand number from " + range.getStart() + " to " + range.getEnd() + ".", operandToken.getPosition()));
                         opcode = opcode | (operandInt & 0x07); //Bitmask
                         return new Mnemonic(mnemonicName, opcode, mnemonic.getType());
                     }
 
+                    //If the mnemonic sign char is 'i', change get the 1's complement of the operand
                     if (mncSignChar == 'i' && operandInt < 0) {
                         operandInt = (~Math.abs(operandInt) & 0x07) + 1;
                     }
@@ -164,8 +195,10 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 
             }
 
+            //Return a new Mnemonic with the new opcode
             return new Mnemonic(mnemonicName, opcode, mnemonic.getType());
 
+            //Not a bitwise operand with the opcode, range, and operand
 //            int range = (int) Math.pow(2, mncBitInt);
 //
 //            int start;
@@ -200,15 +233,9 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 //            return new Mnemonic(mnemonicName, newOpCode, mnemonic.getType());
         }
 
+        //return the same mnemonic if none of the above where performed
         return mnemonic;
 
     }
 
-//    /**
-//     * getter for testing purposes
-//     * @return LineStatement object
-//     */
-//    LineStatement getLineStatement() {
-//        return lineStatement;
-//    }
 }

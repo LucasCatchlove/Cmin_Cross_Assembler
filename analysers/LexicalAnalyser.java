@@ -74,7 +74,7 @@ public class LexicalAnalyser implements ILexicalAnalyser {
 
 
                 //Starting the Comment part
-                if ((char)i == ';')
+                if (i == semiColon)
                     isComment = true;
                 //Starting and ending the Directive part
                 if((char)i == '"') {
@@ -103,6 +103,7 @@ public class LexicalAnalyser implements ILexicalAnalyser {
                 if (isDirective)
                     errRep.recordError(new ErrorMsg("EOL in string", new Position(lineCounter, tokenColumn)));
 
+                //The Comment is sent with EOL
                 return new Token(new Position(lineCounter++,tokenColumn), sbToken.toString(), TypeToken.EOL);
             }
 
