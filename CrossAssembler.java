@@ -17,10 +17,9 @@ public class CrossAssembler {
 
     public static void main(String[] args) {
 
-<<<<<<< Updated upstream
-        //opens input file
-        String srcFile = "Sprint Listing/rela02.asm";
-=======
+
+
+
         System.out.println("\nFor more information about the cross-assemblers optional features, please include the " +
                 "\"-help\" flag following the file name");
 
@@ -36,11 +35,6 @@ public class CrossAssembler {
         System.out.println("listing flag: " + options.listingEnabled());
 
 
-
-      /*  //opens input file
-        String srcFile = "Sprint Listing/TestImmediate2.asm";*/
-
->>>>>>> Stashed changes
         IFileReader reader = new FileReader(srcFile);
 
         //Creation of Error Reporter
