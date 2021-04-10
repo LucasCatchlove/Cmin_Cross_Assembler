@@ -11,11 +11,13 @@ import java.util.HashMap;
 public class SymbolTable implements ISymbolTable {
 
 	private HashMap<String, Mnemonic> instructions;
+	private HashMap<String, Label> labels;
 
 	//Default Constructor: define the HashMap and add all the elements
 	public SymbolTable() {
 
         instructions = new HashMap<>();
+        labels = new HashMap<>();
 
         //Stack or Inherent Addressing
         instructions.put("halt", new Mnemonic("halt", 0x00, MnemonicType.Inherent));
@@ -51,15 +53,41 @@ public class SymbolTable implements ISymbolTable {
         instructions.put("ldv.u3", new Mnemonic("ldv.u3", 0xA0, MnemonicType.Immediate));
         instructions.put("stv.u3", new Mnemonic("stv.u3", 0xA8, MnemonicType.Immediate));
 
+        //Relative Addressing
+        instructions.put("br.i8", new Mnemonic("br.i8", 0xE0, MnemonicType.Relative));
+        instructions.put("brf.i8", new Mnemonic("brf.i8", 0xE3, MnemonicType.Relative));
+        instructions.put("ldc.i8", new Mnemonic("ldc.i8", 0xD9, MnemonicType.Relative));
+        instructions.put("ldv.u8", new Mnemonic("ldv.u8", 0xB1, MnemonicType.Relative));
+        instructions.put("stv.u8", new Mnemonic("stv.u8", 0xB2, MnemonicType.Relative));
+        instructions.put("lda.i16", new Mnemonic("lda.i16", 0xD5, MnemonicType.Relative));
+
     }
 
         /**
-         * get method receives a token, and returns the components.Mnemonic object value related to the token key in the HashMap
-         * @param token
-         * @return
-         */
-    public Mnemonic get(String token){
-                return instructions.get(token);
-        }
+        * get method receives a token, and returns the components.Mnemonic object value related to the token key in the HashMap
+        * @param token
+        * @return
+        */
+    public Mnemonic getMnemonic(String token){
+        return instructions.get(token);
+    }
+
+    public boolean hasMnemonic(String token) {
+        return instructions.get(token) != null;
+    }
+
+    public void addLabel(Label label) {
+        labels.put(label.getName(), label);
+    }
+
+    public Label getLabel(String labelName) {
+        return labels.get(labelName);
+    }
+
+    public boolean hasLabel(String labelName) {
+        return labels.get(labelName) != null;
+    }
+
+
 
 }

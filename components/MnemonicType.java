@@ -1,5 +1,5 @@
 package components;
 
 public enum MnemonicType {
-    Inherent, Immediate
+    Inherent, Immediate, Relative
 }

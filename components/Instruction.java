@@ -13,7 +13,7 @@ public class Instruction implements IInstruction {
     private String operand; //String just for this Sprint
 
     /**
-     * parametrized constructor that creates a new components.Mnemonic object with an optional operand
+     * parametrized constructor that creates a new Mnemonic object with an optional operand
      * @param mnemonic
      * @param operand
      */
@@ -31,7 +31,7 @@ public class Instruction implements IInstruction {
     }
 
     public String toString() {
-        return "components.Mnemonic: (" + mnemonic + "), Operand: " + operand;
+        return "Mnemonic: (" + mnemonic + "), Operand: " + operand;
     }
 
 }

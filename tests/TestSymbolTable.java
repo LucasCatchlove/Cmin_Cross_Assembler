@@ -12,8 +12,8 @@ public class TestSymbolTable {
         System.out.println("Test components.SymbolTable");
 
         System.out.println("Name: pop, Opcode: 01; Name: halt, Opcode: 00");
-        Mnemonic mne1 = symbolTable.get("pop");
-        Mnemonic mne2 = symbolTable.get("halt");
+        Mnemonic mne1 = symbolTable.getMnemonic("pop");
+        Mnemonic mne2 = symbolTable.getMnemonic("halt");
         System.out.println(mne1 + "; " + mne2);
 
     }

@@ -4,13 +4,13 @@ import components.*;
 import interfaces.*;
 import errorReporters.*;
 
-import javax.sound.sampled.Line;
-
 /**
  * Creates line statements from the tokens passed on from the lexer, and pushes them
  * to the IR
  */
 public class SyntaxAnalyser implements ISyntaxAnalyser {
+
+    private int addrCount = 0;
 
     //Objects
     private ISymbolTable symbolTable;
@@ -39,9 +39,10 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
         Token token = lexer.scan();
 
         //Stored Tokens
-        String label = "";
+        Label label = null;
         Token mnemonicToken = null;
-        Token operandToken = null;
+        Token operandOffsetToken = null;
+        Token operandLabelToken = null;
         Token directiveToken = null;
 
         while (token.getType() != TypeToken.EOF) {
@@ -49,32 +50,64 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
             switch (token.getType()) {
 
                 case EOL:
+//                    System.out.println("Test");
                     //create line statement and add it to IR
                     ILineStatement lineStatement;
 
+                    //TODO: If both operandLabel and offset use: Error
+
+                    Token operandToken;
+                    if (operandOffsetToken != null)
+                        operandToken = operandOffsetToken;
+                    else
+                        operandToken = operandLabelToken;
+
                     //If there is not directive, create an Instruction
-                    if(directiveToken != null)
-                        lineStatement = new LineStatement(label, directiveToken.getName(), token.getName());
-                    else {
-                        IInstruction instruction = new Instruction(checkOperand(mnemonicToken, operandToken), operandToken != null? operandToken.getName(): null);
-                        lineStatement = new LineStatement(label, instruction, token.getName());
+                    if(directiveToken != null) {
+                        lineStatement = new LineStatement(addrCount, label, directiveToken.getName(), token.getName());
+                        addrCount++;
+                    } else {
+                        IMnemonic mnemonic = checkOperand(mnemonicToken, operandOffsetToken);
+                        IInstruction instruction = new Instruction(mnemonic, operandToken != null? operandToken.getName(): null);
+                        lineStatement = new LineStatement(addrCount, label, instruction, token.getName());
+//                        System.out.println(label != null ? label.getName(): "");
+                        if (mnemonic != null && mnemonic.getType() == MnemonicType.Relative) {
+                            int mncBitInt = Integer.parseInt(String.valueOf(mnemonic.getMnemonicName().charAt(mnemonic.getMnemonicName().length()-1)));
+                            if (mncBitInt == 8)
+                                addrCount += 2;
+                            else if (mncBitInt == 6)
+                                addrCount += 3;
+                        } else if (mnemonic != null) {
+                            addrCount++;
+                        }
+
                     }
 
                     //Adding a LineStatement to the IR
                     intRep.addLineStatement(lineStatement);
 
                     //Reset everything
-                    label = "";
+                    label = null;
                     mnemonicToken = null;
-                    operandToken = null;
+                    operandOffsetToken = null;
+                    operandLabelToken = null;
                     directiveToken = null;
-                    operandToken = null;
 
                     break;
 
                 case Label:
                     //Save the labelToken
-                    label = token.getName();
+                    String labelName = token.getName();
+                    //If Label exists in the table, and was never given an addr
+                    if (symbolTable.hasLabel(labelName)) {
+                        Label stLabel = symbolTable.getLabel(labelName);
+                        if (stLabel.getAddr() == -1)
+                            stLabel.setAddr(addrCount);
+                        //TODO: else Error cannot have 2 Labels
+                    } else {
+                        symbolTable.addLabel(new Label(token.getName(), addrCount));
+                    }
+                    label = symbolTable.getLabel(labelName);
                     break;
 
                 case Mnemonic:
@@ -88,9 +121,18 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
                     directiveToken = token;
                     break;
 
-                case Operand:
+                case OperandOffset:
                     //Save the operandToken
-                    operandToken = token;
+                    operandOffsetToken = token;
+                    break;
+
+                case OperandLabel:
+                    operandLabelToken = token;
+                    String opLabelName = operandLabelToken.getName();
+                    if (!symbolTable.hasLabel(opLabelName)) {
+                        symbolTable.addLabel(new Label(opLabelName, -1));
+                    }
+//                    System.out.println(opLabelName);
                     break;
 
                 //case Invalid:
@@ -112,7 +154,7 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
      */
     IMnemonic parseMnemonicToken(Token token) {
 
-        IMnemonic mnemonic = symbolTable.get(token.getName());
+        IMnemonic mnemonic = symbolTable.getMnemonic(token.getName());
 
         return mnemonic;
     }

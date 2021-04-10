@@ -17,7 +17,7 @@ public class CrossAssembler {
     public static void main(String[] args) {
 
         //opens input file
-        String srcFile = "Sprint Listing/TestImmediate2.asm";
+        String srcFile = "Sprint Listing/rela02.asm";
         IFileReader reader = new FileReader(srcFile);
 
         //Creation of Error Reporter
@@ -27,7 +27,7 @@ public class CrossAssembler {
         ISymbolTable symbolTable = new SymbolTable();
 
         //creation of line components.IR and subsequent line statements
-        ILexicalAnalyser lexer = new LexicalAnalyser(reader, errRep);
+        ILexicalAnalyser lexer = new LexicalAnalyser(reader, symbolTable, errRep);
         ISyntaxAnalyser parser = new SyntaxAnalyser(symbolTable, lexer, errRep);
 
         //creation of objects used to traverse components.IR
