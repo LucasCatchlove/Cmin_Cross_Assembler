@@ -1,19 +1,19 @@
 ; TestImmediate.asm - Test immediate instructions.
 
-          halt       ; OK, number <u5> [0..31].
+          ".cstring       ; OK, number <u5> [0..31].
           enter.u5          ; OK, number <u5> [0..31].
           enter.u5  2   !     ; OK, number <u5> [0..31].
           enter.u5  3        ; OK, number <u5> [0..31].           
           enter.u5  4        ; OK, number <u5> [0..31].           
-          enter.u5  5        ; OK, number <u5> [0..31].           
+          enter.u5  666        ; OK, number <u5> [0..31].
           enter.u5  6        ; OK, number <u5> [0..31].           
-          enter.u5  7        ; OK, number <u5> [0..31].           
+          halt  7        ; OK, number <u5> [0..31].
           enter.u5  8        ; OK, number <u5> [0..31].           
           enter.u5  9        ; OK, number <u5> [0..31].           
-          enter.u5  10       ; OK, number <u5> [0..31].           
+          halt       ; OK, number <u5> [0..31].
           enter.u5  11       ; OK, number <u5> [0..31].           
           enter.u5  12       ; OK, number <u5> [0..31].           
-          enter.u5  13       ; OK, number <u5> [0..31].           
+            13       ; OK, number <u5> [0..31].
           enter.u5  14       ; OK, number <u5> [0..31].           
           enter.u5  15       ; OK, number <u5> [0..31].           
           enter.u5  16       ; OK, number <u5> [0..31].
