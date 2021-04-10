@@ -7,10 +7,10 @@ import interfaces.IFileReader;
 import components.Token;
 import components.Position;
 import components.TypeToken;
+import interfaces.ISymbolTable;
+
 import java.util.Arrays;
 import java.util.List;
-
-import java.io.IOException;
 
 /**
  * Reads the source file character by character and generates tokens for the parser
@@ -30,15 +30,17 @@ public class LexicalAnalyser implements ILexicalAnalyser {
     private int tokenColumn = 0;
 
     //Objects
-    private IFileReader reader;
-    private IErrorReporter errRep;
+    private final IFileReader reader;
+    private final ISymbolTable symbolTable;
+    private final IErrorReporter errRep;
 
     /**
      * parametrized constructor that also opens the .asm for tokenizing
      * @param reader
      */
-    public LexicalAnalyser(IFileReader reader, IErrorReporter errRep) {
+    public LexicalAnalyser(IFileReader reader, ISymbolTable symbolTable, IErrorReporter errRep) {
         this.reader = reader;
+        this.symbolTable = symbolTable;
         this.errRep = errRep;
     }
 
@@ -72,7 +74,6 @@ public class LexicalAnalyser implements ILexicalAnalyser {
                     continue;
                 }
 
-
                 //Starting the Comment part
                 if (i == semiColon)
                     isComment = true;
@@ -86,7 +87,8 @@ public class LexicalAnalyser implements ILexicalAnalyser {
 
                 //Skip the spaces for all except for the Comment and Directive part
                 if ((i != spaces && i != carriageReturn) || isComment || isDirective) {
-                    sbToken.append((char)i);
+                    if (i != carriageReturn)
+                        sbToken.append((char)i);
                 } else if (sbToken.length() < 1) {
                     //To skip empty spaces
                     //scan again to increment the tokenColumn and returns a valid Token
@@ -104,13 +106,14 @@ public class LexicalAnalyser implements ILexicalAnalyser {
                     errRep.recordError(new ErrorMsg("EOL in string", new Position(lineCounter, tokenColumn)));
 
                 //The Comment is sent with EOL
+                tokenColumn = 0;
                 return new Token(new Position(lineCounter++,tokenColumn), sbToken.toString(), TypeToken.EOL);
             }
 
 
         }
 
-        if(isDirective && i == EOF)
+        if(isDirective)
             errRep.recordError(new ErrorMsg("EOF in string", new Position(lineCounter, tokenColumn)));
 
         //EOF reached
@@ -119,7 +122,7 @@ public class LexicalAnalyser implements ILexicalAnalyser {
 
     /**
      * Generates a Token object from the sbToken collected.
-     * It verifies which TypeToken the sbToken belongs to, and it generates a Directive, Label, Operand, Mnemonic, or Coment token.
+     * It verifies which TypeToken the sbToken belongs to, and it generates a Directive, Label, Operand, Mnemonic, or Comment token.
      * @param sbToken
      * @return Token:
      */
@@ -133,22 +136,18 @@ public class LexicalAnalyser implements ILexicalAnalyser {
             //label
             return new Token(new Position(lineCounter,tokenColumn), sbToken.toString(), TypeToken.Label);
         }
-        //Check if Comment
-        else if (sbToken.charAt(0) == ';') {
-            return new Token(new Position(lineCounter, tokenColumn), sbToken.toString(), TypeToken.Comment);
-        }
         //Means that it is an operand
         else if (isInteger(sbToken.toString())) {
 
-            return new Token(new Position(lineCounter, tokenColumn), sbToken.toString(), TypeToken.Operand); //Generate a token using the sbToken
+            return new Token(new Position(lineCounter, tokenColumn), sbToken.toString(), TypeToken.OperandOffset); //Generate a token using the sbToken
         }
         //>=3 means that it is a mnemonic type
-        else if (sbToken.length() >= 3) {
+        else if (symbolTable.hasMnemonic(sbToken.toString())) {
 
             return new Token(new Position(lineCounter,tokenColumn), sbToken.toString(), TypeToken.Mnemonic); //Generate a token using the sbToken
         }
 
-        return null;
+        return new Token(new Position(lineCounter, tokenColumn), sbToken.toString(), TypeToken.OperandLabel); //previous: return null
     }
 
     /**

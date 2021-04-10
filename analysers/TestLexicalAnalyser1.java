@@ -1,9 +1,10 @@
 package analysers;
 
 
+import components.SymbolTable;
 import errorReporters.ErrorReporter;
 import errorReporters.IErrorReporter;
-
+import interfaces.ISymbolTable;
 
 
 public class TestLexicalAnalyser1 {
@@ -11,8 +12,9 @@ public class TestLexicalAnalyser1 {
 
         String srcFile = "Sprint Listing/TestImmediate.asm";
         FileReader r1 = new FileReader(srcFile);
+        ISymbolTable st = new SymbolTable();
         IErrorReporter er1 = new ErrorReporter(srcFile);
-        LexicalAnalyser l1 = new LexicalAnalyser(r1, er1);
+        LexicalAnalyser l1 = new LexicalAnalyser(r1, st, er1);
 
         StringBuilder sb1 = new StringBuilder();
         StringBuilder sb2 = new StringBuilder();

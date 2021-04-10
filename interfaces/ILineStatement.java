@@ -1,10 +1,12 @@
 package interfaces;
 
-import components.Instruction;
+import components.Label;
 
 public interface ILineStatement {
 
-    String getLabel();
+    int getAddress();
+
+    Label getLabel();
 
     IInstruction getInstruction();
 

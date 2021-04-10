@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class Listing implements IListing {
 
 	private int lineCount = 0;
-	private int addrCount = 0;
 	private IIR intRep;
 
 	public Listing(IIR intRep) {
@@ -54,9 +53,7 @@ public class Listing implements IListing {
 
 		for (ILineStatement lineStatement : list){
 			String[] instruction = separateLineStatement(lineStatement);
-			String line = LineFormatter(getLineNumber(), address(), instruction[0], instruction[1], instruction[2], instruction[3], instruction[4]);
-			if (!instruction[2].equals(""))
-				addrCount++;
+			String line = LineFormatter(getLineNumber(), instruction[0], instruction[1], instruction[2], instruction[3], instruction[4], instruction[5]);
 			writer.write(line.getBytes());
 		}
 
@@ -92,21 +89,21 @@ public class Listing implements IListing {
 	 */
 	String[] separateLineStatement(ILineStatement ls){
 
-		if(ls.getDirective() != null) {
-			String label = ls.getLabel() == null ? "": ls.getLabel();
-			String machineCode = "";
-			String comment = ls.getComment();
+		String addr = String.format("%04X", ls.getAddress());
+		String label = ls.getLabel() == null ? "": ls.getLabel().getName();
+		String comment = ls.getComment();
 
-			return new String[]{machineCode, label, ls.getDirective(), "", comment};
+		if(ls.getDirective() != null) {
+			String machineCode = "";
+
+			return new String[]{addr, machineCode, label, ls.getDirective(), "", comment};
 		}
 
-		String label = ls.getLabel() == null ? "": ls.getLabel();
 		String mnemonicName = ls.getInstruction().getMnemonic() != null? ls.getInstruction().getMnemonic().getMnemonicName(): "";
 		String operand = ls.getInstruction().getOperand() != null ? ls.getInstruction().getOperand(): "";
 		String machineCode = ls.getInstruction().getMnemonic() != null ? String.format("%02X", ls.getInstruction().getMnemonic().getOpCode()): "";
-		String comment = ls.getComment();
 
-		return new String[]{machineCode, label, mnemonicName, operand, comment};
+		return new String[]{addr, machineCode, label, mnemonicName, operand, comment};
 	}
 
 	/**
@@ -115,14 +112,6 @@ public class Listing implements IListing {
 	 */
 	String getLineNumber(){
 		return Integer.toString(++lineCount);
-	}
-
-	/**
-	 * Generates the hexidecimal memory address
-	 * @return
-	 */
-	String address() {
-		return String.format("%04X", addrCount);
 	}
 
 }

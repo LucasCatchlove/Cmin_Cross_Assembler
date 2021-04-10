@@ -13,7 +13,7 @@ public class TestSyntaxAnalyser2 {
         FileReader r1 = new FileReader(srcFile);
         ISymbolTable st1 = new SymbolTable();
         IErrorReporter er1 = new ErrorReporter(srcFile);
-        LexicalAnalyser l1 = new LexicalAnalyser(r1, er1);
+        LexicalAnalyser l1 = new LexicalAnalyser(r1, st1, er1);
         SyntaxAnalyser sa1 = new SyntaxAnalyser(st1,l1,er1);
         IIR ir1 = sa1.parse();
 

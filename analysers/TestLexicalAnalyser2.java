@@ -4,6 +4,7 @@ import components.IR;
 import components.SymbolTable;
 import errorReporters.ErrorReporter;
 import errorReporters.IErrorReporter;
+import interfaces.ISymbolTable;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,8 +15,9 @@ public class TestLexicalAnalyser2 {
 
         String srcFile = "Sprint Listing/testScan.asm";
         FileReader r1 = new FileReader(srcFile);
+        ISymbolTable st = new SymbolTable();
         IErrorReporter er1 = new ErrorReporter(srcFile);
-        LexicalAnalyser l1 = new LexicalAnalyser(r1, er1);
+        LexicalAnalyser l1 = new LexicalAnalyser(r1, st, er1);
 
 
 
