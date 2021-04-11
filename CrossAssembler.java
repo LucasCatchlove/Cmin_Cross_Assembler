@@ -17,22 +17,16 @@ public class CrossAssembler {
 
     public static void main(String[] args) {
 
-
-
-
         System.out.println("\nFor more information about the cross-assemblers optional features, please include the " +
                 "\"-help\" flag following the file name");
 
         Options options = new Options(args);
-
         String srcFile = "";
+                //"Sprint Listing/rela02.asm";
 
+        //for command line file name specification
         if (args.length > 0)
             srcFile = args[0];
-
-        //test purposes
-        System.out.println("verbose flag: " + options.verboseEnabled());
-        System.out.println("listing flag: " + options.listingEnabled());
 
 
         IFileReader reader = new FileReader(srcFile);
@@ -49,14 +43,14 @@ public class CrossAssembler {
 
         //creation of objects used to traverse components.IR
         IIR intRep = parser.parse();
-        IListing list = new Listing(intRep);
+        //IListing list = new Listing(intRep);
 
         if (!errRep.isEmpty()) {
             errRep.reportErrors();
         }
 
         //generates .lst file
-        CodeGenerator codeGenerator = new CodeGenerator(list);
+        CodeGenerator codeGenerator = new CodeGenerator(intRep, options);
 
     }
 

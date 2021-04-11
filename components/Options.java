@@ -2,8 +2,8 @@ package components;
 
 public class Options {
 
-    private static boolean listing = false;
-    private static boolean verbose = false;
+    private boolean listing = false;
+    private boolean verbose = false;
 
     public Options(String[] args) {
         setOptions(args);
