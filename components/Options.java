@@ -5,6 +5,7 @@ public class Options {
     private boolean listing = false;
     private boolean verbose = false;
     private boolean banner = false;
+    private boolean help = false;
 
     public Options(String[] args) {
         setOptions(args);
@@ -17,22 +18,29 @@ public class Options {
     public boolean verboseEnabled() {
         return verbose;
     }
-
+    public boolean helpEnabled(){
+        return help;
+    }
     private void setOptions(String[] args) {
         for(String argument : args) {
             switch(argument) {
                 case "-l":
+                case "-listing":
                     listing = true;
                     break;
                 case "-v":
+                case "-verbose":
                     verbose = true;
                     break;
                 case "-h":
+                case "-help":
+                    help = true;
                     printGuide();
                     break;
                 case "-b":
-                    banner = true;
-                    break;
+                case "-banner":
+                    printBanner();
+
             }
         }
 
@@ -44,5 +52,10 @@ public class Options {
         System.out.println("The \"-listing\" flag produces a source listing of the assembly program");
         System.out.println("The \"-verbose\" flag produces a source listing of the assembly program as well as its corresponding label table\n");
         System.out.println("=====================\n");
+        
+    }
+
+    private void printBanner(){
+        System.out.println("Cm Cross-Assembler Version 1.4 - Developed by Team 5. \n");
     }
 }

@@ -25,9 +25,18 @@ public class CrossAssembler {
                 //"Sprint Listing/rela02.asm";
 
         //for command line file name specification
-        if (args.length > 0)
-            srcFile = args[0];
-
+        if(args.length > 0) {
+            if (args.length != 1 && !options.helpEnabled())
+                srcFile = args[args.length - 1] + ".asm";
+            else
+            {
+                System.out.println("File not specified");
+                System.exit(404);
+            }
+        }else
+        {
+            System.out.println("File not specified");
+            System.exit(404);}
 
         IFileReader reader = new FileReader(srcFile);
 
