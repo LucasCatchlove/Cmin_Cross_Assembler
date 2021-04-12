@@ -3,6 +3,7 @@ package components;
 import interfaces.ISymbolTable;
 
 import java.util.HashMap;
+import java.io.FileOutputStream;
 
 /**
  * Stores and allows for retrieval of mnemonic objects based on an
@@ -88,6 +89,23 @@ public class SymbolTable implements ISymbolTable {
         return labels.get(labelName) != null;
     }
 
+    public void verbosLabelsTable()
+    {
+        try {
+            FileOutputStream writer = new FileOutputStream("Sprint verbose/SymbolsTable.lst", false);
+
+            for(String key: labels.keySet()) {
+                String value = labels.get(key).toString();
+                String TEMP = String.format("%-4s %-s \n",key,value);
+                writer.write(TEMP.getBytes());
+            }
+            writer.close();
+        } catch (Exception e) {
+            System.err.println("An error occurred.");
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
 
 
 }
