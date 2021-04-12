@@ -4,3 +4,4 @@
 .project
 testfile.txt
 *.iml
+*.lst
