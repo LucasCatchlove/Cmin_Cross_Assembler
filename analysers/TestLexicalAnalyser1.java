@@ -32,11 +32,11 @@ public class TestLexicalAnalyser1 {
         System.out.println("Test generateToken");
         System.out.println("enter.u5 pop \".cstring\" 1 ; hello");
         l1.setTokenColumn(3); //tokenColumn = 0 would imply that sbToken was a label
-        System.out.print(l1.generateToken(sb1).getName()+ " ");
-        System.out.print(l1.generateToken(sb2).getName()+ " ");
-        System.out.print(l1.generateToken(sb3).getName() + " ");
-        System.out.print(l1.generateToken(sb4).getName() + " ");
-        System.out.println(l1.generateToken(sb5).getName());
+        System.out.print(l1.generateToken(sb1, false).getName()+ " ");
+        System.out.print(l1.generateToken(sb2, false).getName()+ " ");
+        System.out.print(l1.generateToken(sb3, false).getName() + " ");
+        System.out.print(l1.generateToken(sb4, false).getName() + " ");
+        System.out.println(l1.generateToken(sb5, false).getName());
 
 
 

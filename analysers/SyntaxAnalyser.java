@@ -58,8 +58,8 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 
                     //If there is not directive, create an Instruction
                     if(directiveToken != null) {
-                        lineStatement = new LineStatement(addrCount, label, directiveToken.getName(), token.getName());
-                        addrCount++;
+                        lineStatement = new LineStatement(addrCount, label, directiveToken.getName(), operandOffsetToken.getName(), token.getName());
+                        addrCount += 1 + operandOffsetToken.getName().length();
                     } else {
                         IMnemonic mnemonic = checkOperand(mnemonicToken, operandOffsetToken);
                         IInstruction instruction = null;
@@ -77,7 +77,7 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 
                         lineStatement = new LineStatement(addrCount, label, instruction, token.getName());
 //                        System.out.println(label != null ? label.getName(): "");
-                        if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeLabel) {
+                        if (mnemonic != null && (mnemonic.getType() == MnemonicType.RelativeLabel || mnemonic.getType() == MnemonicType.RelativeOffset)) {
                             int mncBitInt = Integer.parseInt(String.valueOf(mnemonic.getMnemonicName().charAt(mnemonic.getMnemonicName().length()-1)));
                             if (mncBitInt == 8)
                                 addrCount += 2;
@@ -138,6 +138,10 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
                         symbolTable.addLabel(new Label(opLabelName, -1));
                     }
                     operandLabel = symbolTable.getLabel(opLabelName);
+                    break;
+
+                case StringOperand:
+                    operandOffsetToken = token;
                     break;
 
                 //case Invalid:

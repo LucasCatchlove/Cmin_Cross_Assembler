@@ -12,6 +12,8 @@ public interface ILineStatement {
 
     String getDirective();
 
+    String getStringOperand();
+
     String getComment();
 
 

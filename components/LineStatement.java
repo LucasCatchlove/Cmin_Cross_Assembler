@@ -12,6 +12,7 @@ public class LineStatement implements ILineStatement {
     private Label label;
     private IInstruction instruction;
     private String directive;
+    private String stringOperand;
     private String comment;
 
     /**
@@ -28,10 +29,11 @@ public class LineStatement implements ILineStatement {
         this.comment = comment;
     }
 
-    public LineStatement(int address, Label label, String directive, String comment) {
+    public LineStatement(int address, Label label, String directive, String stringOperand, String comment) {
         this.address = address;
         this.label = label;
         this.directive = directive;
+        this.stringOperand = stringOperand;
         this.comment = comment;
     }
 
@@ -49,6 +51,10 @@ public class LineStatement implements ILineStatement {
 
     public String getDirective() {
         return directive;
+    }
+
+    public String getStringOperand() {
+        return stringOperand;
     }
 
     public String getComment() {

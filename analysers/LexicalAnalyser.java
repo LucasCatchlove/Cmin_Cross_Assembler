@@ -80,6 +80,9 @@ public class LexicalAnalyser implements ILexicalAnalyser {
                 //Starting and ending the Directive part
                 if((char)i == '"') {
                     isDirective = !isDirective;
+                    if (!isDirective) {
+                        return generateToken(sbToken, true);
+                    }
                     i = reader.getNextFin();
                     continue;
                 }
@@ -94,7 +97,7 @@ public class LexicalAnalyser implements ILexicalAnalyser {
                     //scan again to increment the tokenColumn and returns a valid Token
                     return scan();
                 } else {
-                    return generateToken(sbToken);
+                    return generateToken(sbToken, false);
                 }
 
                 i = reader.getNextFin();
@@ -126,7 +129,11 @@ public class LexicalAnalyser implements ILexicalAnalyser {
      * @param sbToken
      * @return Token:
      */
-    public Token generateToken(StringBuilder sbToken) {
+    public Token generateToken(StringBuilder sbToken, boolean isDirective) {
+
+        if (isDirective == true) {
+            return new Token(new Position(lineCounter,tokenColumn), sbToken.toString(), TypeToken.StringOperand);
+        }
 
         //Check if directive
         if(sbToken.toString().equals(".cstring"))

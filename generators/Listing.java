@@ -97,7 +97,13 @@ public class Listing implements IListing {
 		if (ls.getDirective() != null) {
 			String machineCode = "";
 
-			return new String[]{addr, machineCode, label, ls.getDirective(), "", comment};
+			String operandString = ls.getStringOperand();
+			for (int i = 0; i < operandString.length(); i++) {
+				machineCode += String.format("%02X ", (byte) operandString.charAt(i));
+			}
+			machineCode += "00";
+
+			return new String[]{addr, machineCode, label, ls.getDirective(), "\"" + operandString + "\"", comment};
 		}
 
 		IMnemonic mnemonic = ls.getInstruction().getMnemonic();
@@ -106,7 +112,6 @@ public class Listing implements IListing {
 		Label operandLabel;
 		String operand;
 		String machineCode;
-		System.out.println(mnemonicName);
 		if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeLabel) {
 			operandLabel = ls.getInstruction().getOperandLabel();
 			operand = operandLabel != null ? operandLabel.getName() : "";
