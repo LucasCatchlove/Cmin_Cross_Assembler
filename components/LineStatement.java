@@ -59,6 +59,6 @@ public class LineStatement implements ILineStatement {
         if(instruction == null)
         return getDirective() + " " + getComment();
         else
-           return  getInstruction().getMnemonic().getMnemonicName() + " " + getInstruction().getOperand() + " " + getComment();
+           return  getInstruction().getMnemonic().getMnemonicName() + " " + getInstruction().getOperandOffset() + " " + getComment();
     }
 }

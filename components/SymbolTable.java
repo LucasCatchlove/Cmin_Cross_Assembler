@@ -55,12 +55,12 @@ public class SymbolTable implements ISymbolTable {
         instructions.put("stv.u3", new Mnemonic("stv.u3", 0xA8, MnemonicType.Immediate));
 
         //Relative Addressing
-        instructions.put("br.i8", new Mnemonic("br.i8", 0xE0, MnemonicType.Relative));
-        instructions.put("brf.i8", new Mnemonic("brf.i8", 0xE3, MnemonicType.Relative));
-        instructions.put("ldc.i8", new Mnemonic("ldc.i8", 0xD9, MnemonicType.Relative));
-        instructions.put("ldv.u8", new Mnemonic("ldv.u8", 0xB1, MnemonicType.Relative));
-        instructions.put("stv.u8", new Mnemonic("stv.u8", 0xB2, MnemonicType.Relative));
-        instructions.put("lda.i16", new Mnemonic("lda.i16", 0xD5, MnemonicType.Relative));
+        instructions.put("br.i8", new Mnemonic("br.i8", 0xE0, MnemonicType.RelativeLabel)); //Label
+        instructions.put("brf.i8", new Mnemonic("brf.i8", 0xE3, MnemonicType.RelativeLabel)); //Label
+        instructions.put("ldc.i8", new Mnemonic("ldc.i8", 0xD9, MnemonicType.RelativeOffset)); //Int
+        instructions.put("ldv.u8", new Mnemonic("ldv.u8", 0xB1, MnemonicType.RelativeOffset)); //Int
+        instructions.put("stv.u8", new Mnemonic("stv.u8", 0xB2, MnemonicType.RelativeOffset)); //Int
+        instructions.put("lda.i16", new Mnemonic("lda.i16", 0xD5, MnemonicType.RelativeLabel)); //Label
 
     }
 

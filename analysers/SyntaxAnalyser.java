@@ -40,9 +40,9 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 
         //Stored Tokens
         Label label = null;
+        Label operandLabel = null;
         Token mnemonicToken = null;
         Token operandOffsetToken = null;
-        Token operandLabelToken = null;
         Token directiveToken = null;
 
         while (token.getType() != TypeToken.EOF) {
@@ -56,22 +56,28 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 
                     //TODO: If both operandLabel and offset use: Error
 
-                    Token operandToken;
-                    if (operandOffsetToken != null)
-                        operandToken = operandOffsetToken;
-                    else
-                        operandToken = operandLabelToken;
-
                     //If there is not directive, create an Instruction
                     if(directiveToken != null) {
                         lineStatement = new LineStatement(addrCount, label, directiveToken.getName(), token.getName());
                         addrCount++;
                     } else {
                         IMnemonic mnemonic = checkOperand(mnemonicToken, operandOffsetToken);
-                        IInstruction instruction = new Instruction(mnemonic, operandToken != null? operandToken.getName(): null);
+                        IInstruction instruction = null;
+                        if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeLabel) {
+                            if (operandOffsetToken != null) {
+                                //TODO: ERROR
+                            }
+                            instruction = new Instruction(mnemonic, operandLabel);
+                        }
+                        else if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeOffset && operandLabel != null)
+                            //TODO: ERROR
+                            System.out.println();
+                        else
+                            instruction = new Instruction(mnemonic, operandOffsetToken != null ? operandOffsetToken.getName() : null);
+
                         lineStatement = new LineStatement(addrCount, label, instruction, token.getName());
 //                        System.out.println(label != null ? label.getName(): "");
-                        if (mnemonic != null && mnemonic.getType() == MnemonicType.Relative) {
+                        if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeLabel) {
                             int mncBitInt = Integer.parseInt(String.valueOf(mnemonic.getMnemonicName().charAt(mnemonic.getMnemonicName().length()-1)));
                             if (mncBitInt == 8)
                                 addrCount += 2;
@@ -90,7 +96,7 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
                     label = null;
                     mnemonicToken = null;
                     operandOffsetToken = null;
-                    operandLabelToken = null;
+                    operandLabel = null;
                     directiveToken = null;
 
                     break;
@@ -127,12 +133,11 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
                     break;
 
                 case OperandLabel:
-                    operandLabelToken = token;
-                    String opLabelName = operandLabelToken.getName();
+                    String opLabelName = token.getName();
                     if (!symbolTable.hasLabel(opLabelName)) {
                         symbolTable.addLabel(new Label(opLabelName, -1));
                     }
-//                    System.out.println(opLabelName);
+                    operandLabel = symbolTable.getLabel(opLabelName);
                     break;
 
                 //case Invalid:
