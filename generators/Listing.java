@@ -1,10 +1,11 @@
 package generators;
 
-import components.IR;
-import components.LineStatement;
+import components.Label;
+import components.MnemonicType;
 import interfaces.IIR;
 import interfaces.ILineStatement;
 import interfaces.IListing;
+import interfaces.IMnemonic;
 
 
 import java.io.FileOutputStream;
@@ -93,15 +94,34 @@ public class Listing implements IListing {
 		String label = ls.getLabel() == null ? "": ls.getLabel().getName();
 		String comment = ls.getComment();
 
-		if(ls.getDirective() != null) {
+		if (ls.getDirective() != null) {
 			String machineCode = "";
 
 			return new String[]{addr, machineCode, label, ls.getDirective(), "", comment};
 		}
 
-		String mnemonicName = ls.getInstruction().getMnemonic() != null? ls.getInstruction().getMnemonic().getMnemonicName(): "";
-		String operand = ls.getInstruction().getOperand() != null ? ls.getInstruction().getOperand(): "";
-		String machineCode = ls.getInstruction().getMnemonic() != null ? String.format("%02X", ls.getInstruction().getMnemonic().getOpCode()): "";
+		IMnemonic mnemonic = ls.getInstruction().getMnemonic();
+		String mnemonicName = mnemonic != null? mnemonic.getMnemonicName(): "";
+
+		Label operandLabel;
+		String operand;
+		String machineCode;
+		System.out.println(mnemonicName);
+		if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeLabel) {
+			operandLabel = ls.getInstruction().getOperandLabel();
+			operand = operandLabel != null ? operandLabel.getName() : "";
+			int machineCodeAddr = operandLabel.getAddr() - ls.getAddress();
+			if (machineCodeAddr < 0) {
+				machineCodeAddr += 256;
+			}
+			machineCode = ls.getInstruction().getMnemonic() != null ? String.format("%02X %02X", ls.getInstruction().getMnemonic().getOpCode(), machineCodeAddr): "";
+		} else if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeOffset) {
+			operand = ls.getInstruction().getOperandOffset() != null ? ls.getInstruction().getOperandOffset(): "";
+			machineCode = ls.getInstruction().getMnemonic() != null ? String.format("%02X %02X", ls.getInstruction().getMnemonic().getOpCode(), Integer.parseInt(operand)): "";
+		} else {
+			operand = ls.getInstruction().getOperandOffset() != null ? ls.getInstruction().getOperandOffset() : "";
+			machineCode = ls.getInstruction().getMnemonic() != null ? String.format("%02X", ls.getInstruction().getMnemonic().getOpCode()): "";
+		}
 
 		return new String[]{addr, machineCode, label, mnemonicName, operand, comment};
 	}
