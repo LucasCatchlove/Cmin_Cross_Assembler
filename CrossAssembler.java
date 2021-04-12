@@ -18,7 +18,7 @@ public class CrossAssembler {
     public static void main(String[] args) {
 
         System.out.println("\nFor more information about the cross-assemblers optional features, please include the " +
-                "\"-help\" flag following the file name");
+                "\"-h\" flag following the file name");
 
         Options options = new Options(args);
         String srcFile = "";
@@ -50,7 +50,7 @@ public class CrossAssembler {
         }
 
         //generates .lst file
-        CodeGenerator codeGenerator = new CodeGenerator(intRep, options);
+        CodeGenerator codeGenerator = new CodeGenerator(intRep, symbolTable, options);
 
     }
 
