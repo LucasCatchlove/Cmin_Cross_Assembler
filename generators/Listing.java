@@ -106,7 +106,6 @@ public class Listing implements IListing {
 		Label operandLabel;
 		String operand;
 		String machineCode;
-		System.out.println(mnemonicName);
 		if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeLabel) {
 			operandLabel = ls.getInstruction().getOperandLabel();
 			operand = operandLabel != null ? operandLabel.getName() : "";

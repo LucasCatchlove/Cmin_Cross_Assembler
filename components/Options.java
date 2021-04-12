@@ -56,6 +56,6 @@ public class Options {
     }
 
     private void printBanner(){
-        System.out.println("Cm Cross-Assembler Version 1.4 - Developed by Team 5.");
+        System.out.println("Cm Cross-Assembler Version 1.4 - Developed by Team 5. \n");
     }
 }
