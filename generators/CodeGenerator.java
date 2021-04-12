@@ -25,7 +25,6 @@ public class CodeGenerator {
             new Listing(ir).openOutputStream();
 
 
-
     }
 
         //code generation here

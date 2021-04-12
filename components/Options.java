@@ -4,6 +4,7 @@ public class Options {
 
     private boolean listing = false;
     private boolean verbose = false;
+    private boolean banner = false;
 
     public Options(String[] args) {
         setOptions(args);
@@ -20,14 +21,18 @@ public class Options {
     private void setOptions(String[] args) {
         for(String argument : args) {
             switch(argument) {
-                case "-listing":
+                case "-l":
                     listing = true;
                     break;
-                case "-verbose":
+                case "-v":
                     verbose = true;
                     break;
-                case "-help":
+                case "-h":
                     printGuide();
+                    break;
+                case "-b":
+                    banner = true;
+                    break;
             }
         }
 
