@@ -10,5 +10,6 @@ public interface ISymbolTable {
     public void addLabel(Label label);
     public Label getLabel(String labelName);
     public boolean hasLabel(String labelName);
+    public void verboseLabelsTable();
 
 }

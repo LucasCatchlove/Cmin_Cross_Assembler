@@ -64,7 +64,9 @@ public class SymbolTable implements ISymbolTable {
 
     }
 
-        /**
+
+
+    /**
         * get method receives a token, and returns the components.Mnemonic object value related to the token key in the HashMap
         * @param token
         * @return
@@ -92,11 +94,11 @@ public class SymbolTable implements ISymbolTable {
     public void verboseLabelsTable()
     {
         try {
-            FileOutputStream writer = new FileOutputStream("Sprint verbose/SymbolsTable.lst", false);
+            FileOutputStream writer = new FileOutputStream("Sprint Listing/LabelsTable.lst", false);
 
             for(String key: labels.keySet()) {
                 String value = labels.get(key).toString();
-                String TEMP = String.format("%-4s %-s \n",key,value);
+                String TEMP = String.format("%-4s %-1s \n",key,value);
                 writer.write(TEMP.getBytes());
             }
             writer.close();

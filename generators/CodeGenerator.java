@@ -1,9 +1,11 @@
 package generators;
 
 
+import components.SymbolTable;
 import interfaces.IListing;
 import components.Options;
 import interfaces.IIR;
+import interfaces.ISymbolTable;
 
 
 /**
@@ -19,15 +21,18 @@ public class CodeGenerator {
      *
      * @param
      */
-    public CodeGenerator(IIR ir, Options op) {
+    public CodeGenerator(IIR ir, ISymbolTable symbolTable, Options op) {
         System.out.println("listing en: " + op.listingEnabled());
         if (op.listingEnabled())
             new Listing(ir).openOutputStream();
+        System.out.println("Verbose en: " + op.verboseEnabled());
+        if (op.verboseEnabled())
+            symbolTable.verboseLabelsTable();
 
 
     }
 
-        //code generation here
+    //code generation here
 
 
 		/*this.list = list;
