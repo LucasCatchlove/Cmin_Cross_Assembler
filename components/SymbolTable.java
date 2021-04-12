@@ -89,7 +89,7 @@ public class SymbolTable implements ISymbolTable {
         return labels.get(labelName) != null;
     }
 
-    public void verbosLabelsTable()
+    public void verboseLabelsTable()
     {
         try {
             FileOutputStream writer = new FileOutputStream("Sprint verbose/SymbolsTable.lst", false);
