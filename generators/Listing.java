@@ -95,13 +95,13 @@ public class Listing implements IListing {
 		String comment = ls.getComment();
 
 		if (ls.getDirective() != null) {
-			String machineCode = "";
 
+			String machineCode = "";
 			String operandString = ls.getStringOperand();
-			for (int i = 0; i < operandString.length(); i++) {
-				machineCode += String.format("%02X ", (byte) operandString.charAt(i));
+
+			for (int i = 0; i < ls.machineCodeSize(); i++) {
+				machineCode += String.format("%02X ", ls.getMachineCode(i));
 			}
-			machineCode += "00";
 
 			return new String[]{addr, machineCode, label, ls.getDirective(), "\"" + operandString + "\"", comment};
 		}
@@ -111,22 +111,25 @@ public class Listing implements IListing {
 
 		Label operandLabel;
 		String operand;
-		String machineCode;
 		if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeLabel) {
 			operandLabel = ls.getInstruction().getOperandLabel();
 			operand = operandLabel != null ? operandLabel.getName() : "";
-			int machineCodeAddr = operandLabel.getAddr() - ls.getAddress();
-			if (machineCodeAddr < 0) {
-				machineCodeAddr += 256;
-			}
-			machineCode = ls.getInstruction().getMnemonic() != null ? String.format("%02X %02X", ls.getInstruction().getMnemonic().getOpCode(), machineCodeAddr): "";
 		} else if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeOffset) {
 			operand = ls.getInstruction().getOperandOffset() != null ? ls.getInstruction().getOperandOffset(): "";
-			machineCode = ls.getInstruction().getMnemonic() != null ? String.format("%02X %02X", ls.getInstruction().getMnemonic().getOpCode(), Integer.parseInt(operand)): "";
 		} else {
 			operand = ls.getInstruction().getOperandOffset() != null ? ls.getInstruction().getOperandOffset() : "";
-			machineCode = ls.getInstruction().getMnemonic() != null ? String.format("%02X", ls.getInstruction().getMnemonic().getOpCode()): "";
 		}
+
+		String machineCode = "";
+
+		for (int i = 0; i < ls.machineCodeSize(); i++) {
+			if (mnemonic != null & mnemonic.getType() == MnemonicType.RelativeLabel && i == 1) {
+				machineCode += String.format("%04X ", ls.getMachineCode(i));
+				continue;
+			}
+			machineCode += String.format("%02X ", ls.getMachineCode(i));
+		}
+
 
 		return new String[]{addr, machineCode, label, mnemonicName, operand, comment};
 	}

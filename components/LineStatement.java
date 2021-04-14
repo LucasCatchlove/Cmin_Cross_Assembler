@@ -3,12 +3,15 @@ package components;
 import interfaces.IInstruction;
 import interfaces.ILineStatement;
 
+import java.util.ArrayList;
+
 /**
  * parsed representation of the source code for convenient use by the code generator
  */
 public class LineStatement implements ILineStatement {
 
     private int address;
+    private ArrayList<Byte> machineCode;
     private Label label;
     private IInstruction instruction;
     private String directive;
@@ -27,6 +30,7 @@ public class LineStatement implements ILineStatement {
         this.label = label;
         this.instruction = instruction;
         this.comment = comment;
+        this.machineCode = new ArrayList<>();
     }
 
     public LineStatement(int address, Label label, String directive, String stringOperand, String comment) {
@@ -35,10 +39,23 @@ public class LineStatement implements ILineStatement {
         this.directive = directive;
         this.stringOperand = stringOperand;
         this.comment = comment;
+        this.machineCode = new ArrayList<>();
+    }
+
+    public void addMachineCode(byte machineCode) {
+        this.machineCode.add(machineCode);
     }
 
     public int getAddress() {
         return address;
+    }
+
+    public byte getMachineCode(int index) {
+        return machineCode.get(index);
+    }
+
+    public int machineCodeSize() {
+        return machineCode.size();
     }
 
     public Label getLabel() {

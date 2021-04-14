@@ -36,7 +36,8 @@ public class CrossAssembler {
         }else
         {
             System.out.println("File not specified");
-            System.exit(404);}
+            System.exit(404);
+        }
 
         IFileReader reader = new FileReader(srcFile);
 
@@ -59,7 +60,7 @@ public class CrossAssembler {
         }
 
         //generates .lst file
-        CodeGenerator codeGenerator = new CodeGenerator(intRep, symbolTable, options);
+        CodeGenerator codeGenerator = new CodeGenerator(intRep, symbolTable, options, errRep);
 
     }
 
