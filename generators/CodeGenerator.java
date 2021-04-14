@@ -1,7 +1,9 @@
 package generators;
 
 
+import components.LineStatement;
 import components.SymbolTable;
+import interfaces.ILineStatement;
 import interfaces.IListing;
 import components.Options;
 import interfaces.IIR;
@@ -32,13 +34,23 @@ public class CodeGenerator {
 
     }
 
-    //code generation here
+    void secondPass(IIR ir, ISymbolTable symbolTable) {
+        for(ILineStatement ls : ir.getLineStatementList()) {
 
 
-		/*this.list = list;
-		this.list.openOutputStream();*/
+
+
+
+        }
+    }
+
+    private int calculateOffset() {
+        return 1;
+    }
+
+
 }
-//not sure why this method cannot be resolved
+
 
 
 
