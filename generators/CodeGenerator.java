@@ -29,7 +29,9 @@ public class CodeGenerator {
 
         System.out.println("listing en: " + op.listingEnabled());
         if (op.listingEnabled())
-            new Listing(ir).openOutputStream();
+            list = new Listing(ir);
+            list.setVerbose(op.verboseEnabled());
+            list.openOutputStream();
         System.out.println("Verbose en: " + op.verboseEnabled());
         if (op.verboseEnabled())
             symbolTable.verboseLabelsTable();

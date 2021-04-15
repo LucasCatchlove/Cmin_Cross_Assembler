@@ -2,6 +2,7 @@ package generators;
 
 import components.Label;
 import components.MnemonicType;
+import components.Options;
 import interfaces.IIR;
 import interfaces.ILineStatement;
 import interfaces.IListing;
@@ -19,16 +20,20 @@ public class Listing implements IListing {
 
 	private int lineCount = 0;
 	private IIR intRep;
+	private boolean verbose = false;
 
 	public Listing(IIR intRep) {
 		this.intRep = intRep;
+	}
+	public void setVerbose(Boolean set)
+	{
+		this.verbose = set;
 	}
 
 	/**
 	 * Opens the output stream
 	 */
 	public void openOutputStream(){
-
 		try {
 			FileOutputStream writer = new FileOutputStream("Sprint Listing/Listing.lst", false);
 			writeListingFile(writer);
@@ -49,12 +54,18 @@ public class Listing implements IListing {
 	void writeListingFile(FileOutputStream writer) throws IOException {
 
 		writer.write(header().getBytes());
+		if(verbose){
+			System.out.println(header());
+		}
 
 		ArrayList<ILineStatement> list = intRep.getLineStatementList();
 
 		for (ILineStatement lineStatement : list){
 			String[] instruction = separateLineStatement(lineStatement);
 			String line = LineFormatter(getLineNumber(), instruction[0], instruction[1], instruction[2], instruction[3], instruction[4], instruction[5]);
+			if(verbose){
+				System.out.print(line);
+			}
 			writer.write(line.getBytes());
 		}
 
