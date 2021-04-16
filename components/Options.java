@@ -1,5 +1,13 @@
 package components;
 
+import components.Label;
+import components.MnemonicType;
+import interfaces.IIR;
+import interfaces.ILineStatement;
+import interfaces.IMnemonic;
+import java.util.ArrayList;
+
+
 public class Options {
 
     private boolean listing = false;
@@ -58,4 +66,104 @@ public class Options {
     private void printBanner(){
         System.out.println("Cm Cross-Assembler Version 1.4 - Developed by Team 5. \n");
     }
+
+
+
+public void verboseListing(IIR ir, int passNumber) {
+
+        if(passNumber == 1)
+            System.out.println("After first pass");
+        else
+            System.out.println("After Second Pass");
+
+
+
+    int lineCount = 0;
+
+    ArrayList<ILineStatement> list = ir.getLineStatementList();
+
+    header();
+
+    for (ILineStatement lineStatement : list) {
+        String[] instruction = separateLineStatement(lineStatement);
+        String line = LineFormatter(getLineNumber(lineCount), instruction[0], instruction[1], instruction[2], instruction[3], instruction[4], instruction[5]);
+
+        System.out.print(line);
+    }
+
+
 }
+
+    String LineFormatter(String line, String address, String code, String label, String mne, String operand, String comments) {
+        return String.format("%-6s %-7s %-15s %-20s %-15s %-12s %-25s\n", line, address, code, label, mne, operand, comments);
+    }
+
+    /**
+     * Returns the header of the generators.Listing File
+     * @return returns the header to the listing file
+     */
+    String header(){
+        return LineFormatter("Line", "Addr", "Machine Code", "Label", "Assembly Code", "Operand", "Comments");
+    }
+
+    /**
+     * gets the [code, label, mnemonic name, operand, comment] from the lineStatement
+     * @param ls
+     * @return
+     */
+    String[] separateLineStatement(ILineStatement ls){
+
+        String addr = String.format("%04X", ls.getAddress());
+        String label = ls.getLabel() == null ? "": ls.getLabel().getName();
+        String comment = ls.getComment();
+
+        if (ls.getDirective() != null) {
+
+            String machineCode = "";
+            String operandString = ls.getStringOperand();
+
+            for (int i = 0; i < ls.machineCodeSize(); i++) {
+                machineCode += String.format("%02X ", ls.getMachineCode(i));
+            }
+
+            return new String[]{addr, machineCode, label, ls.getDirective(), "\"" + operandString + "\"", comment};
+        }
+
+        IMnemonic mnemonic = ls.getInstruction().getMnemonic();
+        String mnemonicName = mnemonic != null? mnemonic.getMnemonicName(): "";
+
+        Label operandLabel;
+        String operand;
+        if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeLabel) {
+            operandLabel = ls.getInstruction().getOperandLabel();
+            operand = operandLabel != null ? operandLabel.getName() : "";
+        } else if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeOffset) {
+            operand = ls.getInstruction().getOperandOffset() != null ? ls.getInstruction().getOperandOffset(): "";
+        } else {
+            operand = ls.getInstruction().getOperandOffset() != null ? ls.getInstruction().getOperandOffset() : "";
+        }
+
+        String machineCode = "";
+
+        for (int i = 0; i < ls.machineCodeSize(); i++) {
+            if (mnemonic != null & mnemonic.getType() == MnemonicType.RelativeLabel && i == 1) {
+                machineCode += String.format("%04X ", ls.getMachineCode(i));
+                continue;
+            }
+            machineCode += String.format("%02X ", ls.getMachineCode(i));
+        }
+
+
+        return new String[]{addr, machineCode, label, mnemonicName, operand, comment};
+    }
+
+    /**
+     * returns the line number as a string
+     * @return
+     */
+    String getLineNumber(int lineCount){
+        return Integer.toString(++lineCount);
+    }
+
+}
+

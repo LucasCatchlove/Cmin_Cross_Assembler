@@ -21,11 +21,12 @@ public class CrossAssembler {
                 "\"-h\" flag following the file name");
 
         Options options = new Options(args);
-        String srcFile = "";
+
+        String srcFile = "Sprint Listing/rela02.asm";
                 //"Sprint Listing/rela02.asm";
 
         //for command line file name specification
-        if(args.length > 0) {
+       /* if(args.length > 0) {
             if (args.length != 1 && !options.helpEnabled())
                 srcFile = args[args.length - 1] + ".asm";
             else
@@ -37,7 +38,7 @@ public class CrossAssembler {
         {
             System.out.println("File not specified");
             System.exit(404);
-        }
+        }*/
 
         IFileReader reader = new FileReader(srcFile);
 
@@ -51,8 +52,10 @@ public class CrossAssembler {
         ILexicalAnalyser lexer = new LexicalAnalyser(reader, symbolTable, errRep);
         ISyntaxAnalyser parser = new SyntaxAnalyser(symbolTable, lexer, errRep);
 
+
         //creation of objects used to traverse components.IR
         IIR intRep = parser.parse();
+        options.verboseListing(intRep, 1);
         //IListing list = new Listing(intRep);
 
         if (!errRep.isEmpty()) {
