@@ -146,7 +146,7 @@ public void verboseListing(IIR ir, int passNumber) {
         String machineCode = "";
 
         for (int i = 0; i < ls.machineCodeSize(); i++) {
-            if (mnemonic != null & mnemonic.getType() == MnemonicType.RelativeLabel && i == 1) {
+            if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeLabel && i == 1 && Integer.parseInt(String.valueOf(ls.getInstruction().getMnemonic().getMnemonicName().charAt(mnemonic.getMnemonicName().length()-1))) == 6) {
                 machineCode += String.format("%04X ", ls.getMachineCode(i));
                 continue;
             }

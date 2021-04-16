@@ -25,16 +25,15 @@ public class CodeGenerator {
     public CodeGenerator(IIR ir, ISymbolTable symbolTable, Options op, IErrorReporter errorReporter) {
 
         this.errorReporter = errorReporter;
-        secondPass(ir);
+        System.out.println("Verbose en: " + op.verboseEnabled());
+        if (op.verboseEnabled()) symbolTable.verboseLabelsTable();
 
+        secondPass(ir);
+        if (op.verboseEnabled()) op.verboseListing(ir,2);
         System.out.println("listing en: " + op.listingEnabled());
         if (op.listingEnabled())
-            list = new Listing(ir);
-            //list.setVerbose(op.verboseEnabled());
-            list.openOutputStream();
-        System.out.println("Verbose en: " + op.verboseEnabled());
-        if (op.verboseEnabled())
-            symbolTable.verboseLabelsTable();
+            new Listing(ir).openOutputStream();
+
 
 
     }
