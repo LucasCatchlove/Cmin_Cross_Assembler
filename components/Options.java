@@ -156,14 +156,14 @@ public void verboseListing(IIR ir, int passNumber) {
                     machineCode += String.format("%02X ", ls.getMachineCode(i));
                 }
                 if(passNumber == 1) {
-                    comment = "<---  Offset resolved when backward branching";
+                    //comment = "<---  Offset resolved when backward branching";
                 }
             } else {
                 machineCode = String.format("%02X ", ls.getMachineCode(0)) + "??";
-                comment = "<---  Offset NOT resolved when backward branching ";
+                //comment = "<---  Offset NOT resolved when backward branching ";
             }
-            if(ls.hadForwardBranch()&&passNumber==2)
-            comment = "<---  Offset NOW resolved when forward branching";
+            //if(ls.hadForwardBranch()&&passNumber==2)
+            //comment = "<---  Offset NOW resolved when forward branching";
 
 
         return new String[]{addr, machineCode, label, mnemonicName, operand, comment};
