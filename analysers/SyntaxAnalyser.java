@@ -298,18 +298,17 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 
     private ArrayList<Byte> formatMachineCode(IMnemonic mnemonic, Label label) {
 
-        if (label.getAddr() == -1) {
-            return null;
-        }
-
         ArrayList<Byte> machineCode = new ArrayList<>();
+
+        machineCode.add((byte) mnemonic.getOpCode());
+        if (label.getAddr() == -1) {
+            return machineCode;
+        }
 
         int machineCodeAddr = label.getAddr() - this.addrCount;
         if (machineCodeAddr < 0) {
             machineCodeAddr += 256;
         }
-
-        machineCode.add((byte) mnemonic.getOpCode());
         machineCode.add((byte) machineCodeAddr);
 
         return machineCode;
