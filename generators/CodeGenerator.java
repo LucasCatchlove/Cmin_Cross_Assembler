@@ -43,38 +43,25 @@ public class CodeGenerator {
 
         for(ILineStatement ls : ir.getLineStatementList()) {
 
-            //.cstring
-            if (ls.getDirective() != null) {
-
-                String operandString = ls.getStringOperand();
-                for (int i = 0; i < operandString.length(); i++) {
-                    ls.addMachineCode((byte) operandString.charAt(i));
-                }
-                ls.addMachineCode((byte) 0);
+            if (ls.getInstruction() == null)
                 continue;
-            }
 
             IMnemonic mnemonic = ls.getInstruction().getMnemonic();
 
-            if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeLabel) {
+            if (mnemonic == null || mnemonic.getType() != MnemonicType.RelativeLabel)
+                continue;
 
-                if (ls.getInstruction().getOperandLabel().getAddr() == -1) {
-                    errorReporter.recordError(new ErrorMsg("No Label: " + ls.getInstruction().getOperandLabel().getName(), new Position(ir.getLineStatementList().indexOf(ls),0)));
-                }
+            if (ls.machineCodeSize() != 0)
+                continue;
 
-                int machineCodeAddr = ls.getInstruction().getOperandLabel().getAddr() - ls.getAddress();
-                if (machineCodeAddr < 0) {
-                    machineCodeAddr += 256;
-                }
-                ls.addMachineCode((byte) ls.getInstruction().getMnemonic().getOpCode());
-                ls.addMachineCode((byte) machineCodeAddr);
-            } else if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeOffset) {
-                String operand = ls.getInstruction().getOperandOffset() != null ? ls.getInstruction().getOperandOffset(): "";
-                ls.addMachineCode((byte) ls.getInstruction().getMnemonic().getOpCode());
-                ls.addMachineCode((byte) Integer.parseInt(operand));
-            } else if (mnemonic != null){
-                ls.addMachineCode((byte) ls.getInstruction().getMnemonic().getOpCode());
+            if (ls.getInstruction().getOperandLabel().getAddr() == -1) {
+                errorReporter.recordError(new ErrorMsg("No Label: " + ls.getInstruction().getOperandLabel().getName(), new Position(ir.getLineStatementList().indexOf(ls), 1)));
             }
+
+            int machineCodeAddr = ls.getInstruction().getOperandLabel().getAddr() - ls.getAddress();
+
+            ls.addMachineCode((byte) ls.getInstruction().getMnemonic().getOpCode());
+            ls.addMachineCode((byte) machineCodeAddr);
 
         }
     }

@@ -25,21 +25,26 @@ public class LineStatement implements ILineStatement {
      * @param instruction
      * @param comment
      */
-    public LineStatement(int address, Label label, IInstruction instruction, String comment) {
+    public LineStatement(int address, ArrayList<Byte> machineCode, Label label, IInstruction instruction, String comment) {
         this.address = address;
+
+        if (machineCode == null)
+            this.machineCode = new ArrayList<>();
+        else
+            this.machineCode = machineCode;
+
         this.label = label;
         this.instruction = instruction;
         this.comment = comment;
-        this.machineCode = new ArrayList<>();
     }
 
-    public LineStatement(int address, Label label, String directive, String stringOperand, String comment) {
+    public LineStatement(int address, ArrayList<Byte> machineCode, Label label, String directive, String stringOperand, String comment) {
         this.address = address;
+        this.machineCode = machineCode;
         this.label = label;
         this.directive = directive;
         this.stringOperand = stringOperand;
         this.comment = comment;
-        this.machineCode = new ArrayList<>();
     }
 
     public void addMachineCode(byte machineCode) {

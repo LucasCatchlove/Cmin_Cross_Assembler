@@ -4,6 +4,8 @@ import components.*;
 import interfaces.*;
 import errorReporters.*;
 
+import java.util.ArrayList;
+
 /**
  * Creates line statements from the tokens passed on from the lexer, and pushes them
  * to the IR
@@ -58,24 +60,36 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 
                     //If there is not directive, create an Instruction
                     if(directiveToken != null) {
-                        lineStatement = new LineStatement(addrCount, label, directiveToken.getName(), operandOffsetToken.getName(), token.getName());
+                        lineStatement = new LineStatement(addrCount, formatMachineCode(operandOffsetToken.getName()), label, directiveToken.getName(), operandOffsetToken.getName(), token.getName());
                         addrCount += 1 + operandOffsetToken.getName().length();
                     } else {
                         IMnemonic mnemonic = checkOperand(mnemonicToken, operandOffsetToken);
                         IInstruction instruction = null;
+                        ArrayList<Byte> machineCode = null;
                         if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeLabel) {
                             if (operandOffsetToken != null) {
                                 //TODO: ERROR
                             }
                             instruction = new Instruction(mnemonic, operandLabel);
+                            machineCode = formatMachineCode(mnemonic, operandLabel);
                         }
-                        else if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeOffset && operandLabel != null)
-                            //TODO: ERROR
-                            System.out.println();
-                        else
+                        else if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeOffset) {
+                            if (operandLabel != null) {
+                                //TODO: ERROR
+                            }
+                            if (operandOffsetToken == null) {
+                                //TODO: ERROR
+                            } else {
+                                instruction = new Instruction(mnemonic, operandOffsetToken != null ? operandOffsetToken.getName() : null);
+                                machineCode = formatMachineCode(mnemonic, operandOffsetToken.getName());
+                            }
+                        }
+                        else {
                             instruction = new Instruction(mnemonic, operandOffsetToken != null ? operandOffsetToken.getName() : null);
+                            machineCode = formatMachineCode(mnemonic);
+                        }
 
-                        lineStatement = new LineStatement(addrCount, label, instruction, token.getName());
+                        lineStatement = new LineStatement(addrCount, machineCode, label, instruction, token.getName());
 //                        System.out.println(label != null ? label.getName(): "");
                         if (mnemonic != null && (mnemonic.getType() == MnemonicType.RelativeLabel || mnemonic.getType() == MnemonicType.RelativeOffset)) {
                             int mncBitInt = Integer.parseInt(String.valueOf(mnemonic.getMnemonicName().charAt(mnemonic.getMnemonicName().length()-1)));
@@ -262,45 +276,64 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 
             //Return a new Mnemonic with the new opcode
             return new Mnemonic(mnemonicName, opcode, mnemonic.getType());
-
-            //Not a bitwise operand with the opcode, range, and operand
-//            int range = (int) Math.pow(2, mncBitInt);
-//
-//            int start;
-//            int end;
-//            String mncSignStr;
-//
-//            if (mncSignChar == 'u') { //Unsigned Bit; char is u
-//                start = 0;
-//                end = range-1;
-//                mncSignStr = "unsigned";
-//            } else { //Signed Bit; char is i
-//                start = -range/2;
-//                end = range/2 -1;
-//                mncSignStr = "signed";
-//            }
-//
-//            int operandInt = Integer.parseInt(operandToken.getName());
-//
-//            //Checking for OutofBound Range
-//            if (operandInt < start || operandInt > end) {
-//                errRep.recordError(new ErrorMsg("The immediate instruction '" + mnemonicName + "' must have a " + mncBitInt + "-bit " + mncSignStr + " operand number from " + start + " to " + end + ".", operandToken.getPosition()));
-//                return mnemonic;
-//            }
-//
-//            int newOpCode;
-//
-//            if (operandInt >= 0)
-//                newOpCode = operandInt + mnemonic.getOpCode();
-//            else
-//                newOpCode = operandInt + range + mnemonic.getOpCode();
-//
-//            return new Mnemonic(mnemonicName, newOpCode, mnemonic.getType());
         }
 
         //return the same mnemonic if none of the above where performed
         return mnemonic;
 
+    }
+
+    private ArrayList<Byte> formatMachineCode(String operandString) {
+
+        ArrayList<Byte> machineCode = new ArrayList<>();
+
+        for (int i = 0; i < operandString.length(); i++) {
+            machineCode.add((byte) operandString.charAt(i));
+        }
+
+        machineCode.add((byte) 0);
+
+        return machineCode;
+    }
+
+    private ArrayList<Byte> formatMachineCode(IMnemonic mnemonic, Label label) {
+
+        if (label.getAddr() == -1) {
+            return null;
+        }
+
+        ArrayList<Byte> machineCode = new ArrayList<>();
+
+        int machineCodeAddr = label.getAddr() - this.addrCount;
+        if (machineCodeAddr < 0) {
+            machineCodeAddr += 256;
+        }
+
+        machineCode.add((byte) mnemonic.getOpCode());
+        machineCode.add((byte) machineCodeAddr);
+
+        return machineCode;
+    }
+
+    private ArrayList<Byte> formatMachineCode(IMnemonic mnemonic, String operandOffset) {
+
+        ArrayList<Byte> machineCode = new ArrayList<>();
+
+        String operand = operandOffset != null ? operandOffset: "";
+        machineCode.add((byte) mnemonic.getOpCode());
+        machineCode.add((byte) Integer.parseInt(operand));
+
+        return machineCode;
+    }
+
+    private ArrayList<Byte> formatMachineCode(IMnemonic mnemonic) {
+
+        if (mnemonic == null)
+            return null;
+
+        ArrayList<Byte> machineCode = new ArrayList<>();
+        machineCode.add((byte) mnemonic.getOpCode());
+        return machineCode;
     }
 
 }
