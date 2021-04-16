@@ -24,7 +24,7 @@ public class CodeGenerator {
      *
      * @param
      */
-    public CodeGenerator(IIR ir, ISymbolTable symbolTable, Options op, IErrorReporter errorReporter) {
+    public CodeGenerator(IIR ir, ISymbolTable symbolTable, Options op, IErrorReporter errorReporter, String srcFile) {
 
         this.errorReporter = errorReporter;
         if (op.verboseEnabled()) {
@@ -35,7 +35,7 @@ public class CodeGenerator {
         if (op.verboseEnabled()) op.verboseListing(ir,2);
         if (op.listingEnabled())
             new Listing(ir).openOutputStream();
-        executableGenerator(ir, "rela01");
+        executableGenerator(ir, srcFile);
 
 
     }

@@ -61,7 +61,7 @@ public class CrossAssembler {
             errRep.reportErrors();
         }
         //generates .lst file
-        CodeGenerator codeGenerator = new CodeGenerator(intRep, symbolTable, options, errRep);
+        CodeGenerator codeGenerator = new CodeGenerator(intRep, symbolTable, options, errRep, srcFile);
 
     }
 
