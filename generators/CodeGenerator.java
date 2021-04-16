@@ -50,7 +50,7 @@ public class CodeGenerator {
             if (mnemonic == null || mnemonic.getType() != MnemonicType.RelativeLabel)
                 continue;
 
-            if (ls.machineCodeSize() != 0)
+            if (ls.machineCodeSize() != 1)
                 continue;
 
             if (ls.getInstruction().getOperandLabel().getAddr() == -1) {
