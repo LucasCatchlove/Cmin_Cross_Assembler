@@ -20,6 +20,8 @@ public interface ILineStatement {
 
     String getStringOperand();
 
+    boolean offsetIsResolved();
+
     String getComment();
 
 

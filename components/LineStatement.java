@@ -2,6 +2,7 @@ package components;
 
 import interfaces.IInstruction;
 import interfaces.ILineStatement;
+import interfaces.IMnemonic;
 
 import java.util.ArrayList;
 
@@ -81,6 +82,21 @@ public class LineStatement implements ILineStatement {
 
     public String getComment() {
         return comment;
+    }
+
+    public boolean offsetIsResolved() {
+
+        if (this.getInstruction() == null)
+            return true;
+
+        if (this.getInstruction().getMnemonic() == null || this.getInstruction().getMnemonic().getType() != MnemonicType.RelativeLabel)
+            return true;
+
+        if (this.machineCodeSize() != 1)
+            return true;
+
+        return false;
+
     }
 
     public String toString() {

@@ -42,15 +42,7 @@ public class CodeGenerator {
 
         for(ILineStatement ls : ir.getLineStatementList()) {
 
-            if (ls.getInstruction() == null)
-                continue;
-
-            IMnemonic mnemonic = ls.getInstruction().getMnemonic();
-
-            if (mnemonic == null || mnemonic.getType() != MnemonicType.RelativeLabel)
-                continue;
-
-            if (ls.machineCodeSize() != 1)
+            if (ls.offsetIsResolved())
                 continue;
 
             if (ls.getInstruction().getOperandLabel().getAddr() == -1) {
