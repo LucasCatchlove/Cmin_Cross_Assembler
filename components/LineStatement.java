@@ -18,6 +18,7 @@ public class LineStatement implements ILineStatement {
     private String directive;
     private String stringOperand;
     private String comment;
+    private boolean forwardBranch;
 
     /**
      * Creates components.LineStatement with an components.Instruction
@@ -37,6 +38,7 @@ public class LineStatement implements ILineStatement {
         this.label = label;
         this.instruction = instruction;
         this.comment = comment;
+        this.forwardBranch = !offsetIsResolved();
     }
 
     public LineStatement(int address, ArrayList<Byte> machineCode, Label label, String directive, String stringOperand, String comment) {
@@ -46,6 +48,7 @@ public class LineStatement implements ILineStatement {
         this.directive = directive;
         this.stringOperand = stringOperand;
         this.comment = comment;
+        this.forwardBranch = !offsetIsResolved();
     }
 
     public void addMachineCode(byte machineCode) {
@@ -98,6 +101,7 @@ public class LineStatement implements ILineStatement {
         return false;
 
     }
+    public boolean hadForwardBranch(){return forwardBranch;}
 
     public String toString() {
         if(instruction == null)

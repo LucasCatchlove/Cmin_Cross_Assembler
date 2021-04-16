@@ -22,6 +22,8 @@ public interface ILineStatement {
 
     boolean offsetIsResolved();
 
+    boolean hadForwardBranch();
+
     String getComment();
 
 

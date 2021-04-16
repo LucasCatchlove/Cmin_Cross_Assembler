@@ -94,24 +94,19 @@ public class SymbolTable implements ISymbolTable {
     public void verboseLabelsTable()
     {
         try {
-            //FileOutputStream writer = new FileOutputStream("Sprint Listing/LabelsTable.lst", false);
             String header ="SymbolTable: \nAddr/code   Name    Type\n";
             System.out.print(header);
-            //writer.write(header.getBytes());
             for(String key: labels.keySet()) {
                 int addr = labels.get(key).getAddr();
                 String type = labels.get(key).getClass().getSimpleName();
                 String TEMP = String.format("%04d        %-7s %-1s\n",addr,key,type);
                 System.out.print(TEMP);
-                //writer.write(TEMP.getBytes());
             }
-            //writer.close();
         } catch (Exception e) {
             System.err.println("An error occurred.");
             e.printStackTrace();
             System.exit(1);
         }
     }
-
 
 }

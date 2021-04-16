@@ -5,6 +5,8 @@ import components.*;
 import errorReporters.ErrorMsg;
 import errorReporters.IErrorReporter;
 import interfaces.*;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
 
 
 /**
@@ -25,15 +27,15 @@ public class CodeGenerator {
     public CodeGenerator(IIR ir, ISymbolTable symbolTable, Options op, IErrorReporter errorReporter) {
 
         this.errorReporter = errorReporter;
-        System.out.println("Verbose en: " + op.verboseEnabled());
-        if (op.verboseEnabled()) symbolTable.verboseLabelsTable();
-
+        if (op.verboseEnabled()) {
+            symbolTable.verboseLabelsTable();
+            op.verboseListing(ir,1);
+        }
         secondPass(ir);
         if (op.verboseEnabled()) op.verboseListing(ir,2);
-        System.out.println("listing en: " + op.listingEnabled());
         if (op.listingEnabled())
             new Listing(ir).openOutputStream();
-
+        executableGenerator(ir, "rela01");
 
 
     }
@@ -51,7 +53,6 @@ public class CodeGenerator {
 
             int machineCodeAddr = ls.getInstruction().getOperandLabel().getAddr() - ls.getAddress();
 
-            ls.addMachineCode((byte) ls.getInstruction().getMnemonic().getOpCode());
             ls.addMachineCode((byte) machineCodeAddr);
 
         }
@@ -61,6 +62,28 @@ public class CodeGenerator {
         return 1;
     }
 
+    private void executableGenerator(IIR ir,String name){
+        try{
+            FileOutputStream file = new FileOutputStream(name+".exe");
+            DataOutputStream data = new DataOutputStream(file);
+            for(ILineStatement ls : ir.getLineStatementList()){
+                for(int i =0;i < ls.machineCodeSize();i++) {
+                    if (ls.getInstruction()!=null && ls.getInstruction().getMnemonic() != null && ls.getInstruction().getMnemonic().getType() == MnemonicType.RelativeLabel && i == 1 && Integer.parseInt(String.valueOf(ls.getInstruction().getMnemonic().getMnemonicName().charAt(ls.getInstruction().getMnemonic().getMnemonicName().length()-1))) == 6){
+                        data.write(0);
+                    }
+                    data.write(ls.getMachineCode(i));
+                }
+            }
+            data.flush();
+            data.close();
+        }
+        catch(Exception e) {
+            System.err.println("An error occurred. while creating executable");
+            e.printStackTrace();
+            System.exit(69);
+
+        }
+    }
 
 }
 

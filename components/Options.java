@@ -85,8 +85,10 @@ public void verboseListing(IIR ir, int passNumber) {
     header();
 
     for (ILineStatement lineStatement : list) {
-        String[] instruction = separateLineStatement(lineStatement);
-        String line = LineFormatter(getLineNumber(lineCount), instruction[0], instruction[1], instruction[2], instruction[3], instruction[4], instruction[5]);
+        String[] instruction = separateLineStatement(lineStatement, passNumber);
+        lineCount++;
+        if(instruction == null){continue;}
+        String line = LineFormatter(Integer.toString(lineCount), instruction[0], instruction[1], instruction[2], instruction[3], instruction[4], instruction[5]);
 
         System.out.print(line);
     }
@@ -111,11 +113,11 @@ public void verboseListing(IIR ir, int passNumber) {
      * @param ls
      * @return
      */
-    String[] separateLineStatement(ILineStatement ls){
+    String[] separateLineStatement(ILineStatement ls, int passNumber){
 
         String addr = String.format("%04X", ls.getAddress());
         String label = ls.getLabel() == null ? "": ls.getLabel().getName();
-        String comment = ls.getComment();
+        String comment = "";
 
         if (ls.getDirective() != null) {
 
@@ -128,7 +130,7 @@ public void verboseListing(IIR ir, int passNumber) {
 
             return new String[]{addr, machineCode, label, ls.getDirective(), "\"" + operandString + "\"", comment};
         }
-
+        if(ls.getInstruction().getMnemonic()==null){return null;}
         IMnemonic mnemonic = ls.getInstruction().getMnemonic();
         String mnemonicName = mnemonic != null? mnemonic.getMnemonicName(): "";
 
@@ -145,13 +147,23 @@ public void verboseListing(IIR ir, int passNumber) {
 
         String machineCode = "";
 
-        for (int i = 0; i < ls.machineCodeSize(); i++) {
-            if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeLabel && i == 1 && Integer.parseInt(String.valueOf(ls.getInstruction().getMnemonic().getMnemonicName().charAt(mnemonic.getMnemonicName().length()-1))) == 6) {
-                machineCode += String.format("%04X ", ls.getMachineCode(i));
-                continue;
+            if(ls.offsetIsResolved()) {
+                for (int i = 0; i < ls.machineCodeSize(); i++) {
+                    if (mnemonic != null && mnemonic.getType() == MnemonicType.RelativeLabel && i == 1 && Integer.parseInt(String.valueOf(ls.getInstruction().getMnemonic().getMnemonicName().charAt(mnemonic.getMnemonicName().length() - 1))) == 6) {
+                        machineCode += String.format("%04X ", ls.getMachineCode(i));
+                        continue;
+                    }
+                    machineCode += String.format("%02X ", ls.getMachineCode(i));
+                }
+                if(passNumber == 1) {
+                    comment = "<---  Offset resolved when backward branching";
+                }
+            } else {
+                machineCode = String.format("%02X ", ls.getMachineCode(0)) + "??";
+                comment = "<---  Offset NOT resolved when backward branching ";
             }
-            machineCode += String.format("%02X ", ls.getMachineCode(i));
-        }
+            if(ls.hadForwardBranch()&&passNumber==2)
+            comment = "<---  Offset NOW resolved when forward branching";
 
 
         return new String[]{addr, machineCode, label, mnemonicName, operand, comment};
@@ -161,9 +173,6 @@ public void verboseListing(IIR ir, int passNumber) {
      * returns the line number as a string
      * @return
      */
-    String getLineNumber(int lineCount){
-        return Integer.toString(++lineCount);
-    }
 
 }
 
