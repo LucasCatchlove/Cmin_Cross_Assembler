@@ -2,8 +2,6 @@ package interfaces;
 
 import components.Label;
 
-import java.util.ArrayList;
-
 public interface ILineStatement {
 
     void addMachineCode(byte machineCode);
