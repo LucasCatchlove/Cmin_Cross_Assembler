@@ -11,8 +11,7 @@ java analysers/TestLexicalAnalyser2 >> tests.txt
 javac analysers/TestSyntaxAnalyser1.java 
 java analysers/TestSyntaxAnalyser1 >> tests.txt
 
-javac analysers/TestSyntaxAnalyser2.java 
-java analysers/TestSyntaxAnalyser2 >> tests.txt
+
 
 javac tests/TestSymbolTable.java
 java tests/TestSymbolTable >> tests.txt
