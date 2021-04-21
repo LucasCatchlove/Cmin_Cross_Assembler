@@ -35,6 +35,7 @@ public class CodeGenerator {
         if (op.verboseEnabled()) op.verboseListing(ir,2);
         if (op.listingEnabled())
             new Listing(ir).openOutputStream();
+        srcFile = srcFile.substring(0,srcFile.length()-4);
         executableGenerator(ir, srcFile);
 
 

@@ -28,14 +28,13 @@ public class CrossAssembler {
         //for command line file name specification
        if(args.length > 0) {
             if (args.length != 1 && !options.helpEnabled())
-                srcFile = args[args.length - 1] + ".asm";
+                srcFile = fileName(args[args.length - 1] );
             else
             {
                 System.out.println("File not specified");
                 System.exit(404);
             }
-        }else
-        {
+        }else{
             System.out.println("File not specified");
             System.exit(404);
         }
@@ -63,6 +62,29 @@ public class CrossAssembler {
         //generates .lst file
         CodeGenerator codeGenerator = new CodeGenerator(intRep, symbolTable, options, errRep, srcFile);
 
+    }
+
+    private static String fileName(String srcFile)
+    {
+        String fileName = "";
+        boolean hasExtension = false;
+        for(int i=0;i<srcFile.length();i++)
+        {
+            if(srcFile.charAt(i)=='.' && srcFile.length()==i+4)
+            {
+                hasExtension = true;
+                if(srcFile.substring(i,srcFile.length()-1)==".asm"){
+                    fileName = srcFile.substring(0,srcFile.length()-4);
+                }else{
+                    fileName=srcFile;
+                }
+            }
+
+        }
+        if(!hasExtension){
+            fileName=srcFile;
+        }
+        return fileName;
     }
 
 }
