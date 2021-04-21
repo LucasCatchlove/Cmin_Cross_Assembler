@@ -17,9 +17,11 @@ public class TestSyntaxAnalyser2 {
         SyntaxAnalyser sa1 = new SyntaxAnalyser(st1,l1,er1);
         IIR ir1 = sa1.parse();
 
+
         System.out.println("Test parse (1)");
         System.out.println(".cstring ; directive");
         System.out.println(ir1.getLineStatement(0).toString());
+
         System.out.println("Test parse (2)");
         System.out.println("enter.u5 4 ; OK, number <u5> [0..31].");
         System.out.println(ir1.getLineStatement(1).toString());

@@ -13,18 +13,6 @@ enter.u5 pop true
 Test parseToken (2)
 ldc.i3 true true
 ldc.i3 true true
-Test parse (1)
-.cstring ; directive
-.cstring ; directive
-Test parse (2)
-enter.u5 4 ; OK, number <u5> [0..31].
-enter.u5 4 ; OK, number <u5> [0..31].
-Test parse (3)
-ldc.i3 3 ; OK, number <i3> [-4..3].
-ldc.i3 3 ; OK, number <i3> [-4..3].
-Test parse (4)
-ldc.i3 -4 ; OK, number <i3> [-4..3].
-ldc.i3 -4 ; OK, number <i3> [-4..3].
 Test components.SymbolTable
 Name: pop, Opcode: 01; Name: halt, Opcode: 00
 Name: pop, Opcode: 01; Name: halt, Opcode: 00
@@ -55,15 +43,6 @@ truetrue
 Test analysers.FileReader getFileName
 TestLexicalAnalyser.txt
 TestLexicalAnalyser.txt
-Test Listing getLineNumber
-3 2
-3 2
-Test Listing address
-0002 0001
-0002 0001
-Test writeListingFile & openOutputStream
-true
-true
 Test header
 Line   Addr    Machine Code    Label                Assembly Code   Operand      Comments                 
 Line   Addr    Machine Code    Label                Assembly Code   Operand      Comments                 
@@ -80,17 +59,17 @@ Test Lineformatter(4)
 2      0000                                         pop                          ; inherent instruction   
 2      0000                                         pop                          ; inherent instruction   
 Test separateLineStatement (1)
-00halt; a comment
-00halt; a comment
+0000halt; a comment
+0000halt; a comment
 Test separateLineStatement (2)
-01pop; a comment
-01pop; a comment
+0001pop; a comment
+0001pop; a comment
 Test separateLineStatement (3)
-70enter.u5; a comment
-70enter.u5; a comment
+0002enter.u5; a comment
+0002enter.u5; a comment
 Test separateLineStatement (4)
-90ldc.i3; a comment
-90ldc.i3; a comment
+0003ldc.i3; a comment
+0003ldc.i3; a comment
 Test Range getStart()
 range1: start=0; range2: start=-4
 range1: start=0; range2: start=-4
