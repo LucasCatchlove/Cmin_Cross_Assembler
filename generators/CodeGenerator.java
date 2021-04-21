@@ -41,6 +41,10 @@ public class CodeGenerator {
 
     }
 
+    /**
+     * performs the second pass of the cross assembler by setting the unresolved offsets
+     * @param ir
+     */
     void secondPass(IIR ir) {
 
         for(ILineStatement ls : ir.getLineStatementList()) {
@@ -63,6 +67,11 @@ public class CodeGenerator {
         return 1;
     }
 
+    /**
+     * generates the executable file from the IR with resolved offsets
+     * @param ir
+     * @param name
+     */
     private void executableGenerator(IIR ir,String name){
         try{
             FileOutputStream file = new FileOutputStream(name+".exe");

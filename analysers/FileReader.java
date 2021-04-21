@@ -30,6 +30,10 @@ public class FileReader implements IFileReader {
         return file;
     }
 
+    /**
+     * returns next byte from input stream
+     * @return
+     */
     public int getNextFin() {
 
         int nextByte = -1;

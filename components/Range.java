@@ -1,5 +1,8 @@
 package components;
 
+/**
+ * a class that checks if an operand is within the apropriate range
+ */
 public class Range {
 
     int start;

@@ -1,5 +1,8 @@
 package components;
 
+/**
+ * a class used to store labels contained in line statements
+ */
 public class Label {
 
     private String name;

@@ -7,7 +7,9 @@ import interfaces.ILineStatement;
 import interfaces.IMnemonic;
 import java.util.ArrayList;
 
-
+/**
+ * a class that allows for the configuration of the cross-assemblers behavior and output
+ */
 public class Options {
 
     private boolean listing = false;
@@ -29,6 +31,11 @@ public class Options {
     public boolean helpEnabled(){
         return help;
     }
+
+    /**
+     * sets the options inputted by the user
+     * @param args
+     */
     private void setOptions(String[] args) {
         for(String argument : args) {
             switch(argument) {
@@ -169,10 +176,6 @@ public void verboseListing(IIR ir, int passNumber) {
         return new String[]{addr, machineCode, label, mnemonicName, operand, comment};
     }
 
-    /**
-     * returns the line number as a string
-     * @return
-     */
 
 }
 

@@ -87,6 +87,10 @@ public class LineStatement implements ILineStatement {
         return comment;
     }
 
+    /**
+     * checks if offset was resolved
+     * @return
+     */
     public boolean offsetIsResolved() {
 
         if (this.getInstruction() == null)
@@ -101,6 +105,11 @@ public class LineStatement implements ILineStatement {
         return false;
 
     }
+
+    /**checks of forward branch exists
+     *
+     * @return
+     */
     public boolean hadForwardBranch(){return forwardBranch;}
 
     public String toString() {
