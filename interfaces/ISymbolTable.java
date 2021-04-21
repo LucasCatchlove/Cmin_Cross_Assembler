@@ -2,7 +2,9 @@ package interfaces;
 
 import components.Label;
 import components.Mnemonic;
-
+/**
+ * intefaces for the symbol table class
+ */
 public interface ISymbolTable {
 
     public Mnemonic getMnemonic(String token);

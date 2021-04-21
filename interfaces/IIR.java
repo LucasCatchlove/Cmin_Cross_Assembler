@@ -4,6 +4,9 @@ import interfaces.ILineStatement;
 
 import java.util.ArrayList;
 
+/**
+ * interface for the IR class
+ */
 public interface IIR {
 
 	/**

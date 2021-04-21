@@ -282,7 +282,11 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
         return mnemonic;
 
     }
-
+    /**
+     * formats the machine code to be written to the executable
+     * @param operandString
+     * @return array of machine code
+     */
     private ArrayList<Byte> formatMachineCode(String operandString) {
 
         ArrayList<Byte> machineCode = new ArrayList<>();
@@ -295,7 +299,11 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
 
         return machineCode;
     }
-
+    /**
+     * formats the machine code to be written to the executable
+     * @param mnemonic
+     * @return array of machine code
+     */
     private ArrayList<Byte> formatMachineCode(IMnemonic mnemonic, Label label) {
 
         ArrayList<Byte> machineCode = new ArrayList<>();
@@ -314,6 +322,11 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
         return machineCode;
     }
 
+    /**
+     * formats the machine code to be written to the executable
+     * @param mnemonic
+     * @return array of machine code
+     */
     private ArrayList<Byte> formatMachineCode(IMnemonic mnemonic, String operandOffset) {
 
         ArrayList<Byte> machineCode = new ArrayList<>();
@@ -325,6 +338,11 @@ public class SyntaxAnalyser implements ISyntaxAnalyser {
         return machineCode;
     }
 
+    /**
+     * formats the machine code to be written to the executable
+     * @param mnemonic
+     * @return array of machine code
+     */
     private ArrayList<Byte> formatMachineCode(IMnemonic mnemonic) {
 
         if (mnemonic == null)
