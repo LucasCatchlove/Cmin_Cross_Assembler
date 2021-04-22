@@ -15,7 +15,7 @@ import java.io.FileOutputStream;
  */
 public class CodeGenerator {
 
-    private IListing list;
+    private IListing listing;
     private IErrorReporter errorReporter;
 
 
@@ -27,16 +27,20 @@ public class CodeGenerator {
     public CodeGenerator(IIR ir, ISymbolTable symbolTable, Options op, IErrorReporter errorReporter, String srcFile) {
 
         this.errorReporter = errorReporter;
-        if (op.verboseEnabled()) {
+        if (op != null && op.verboseEnabled()) {
             symbolTable.verboseLabelsTable();
             op.verboseListing(ir,1);
         }
         secondPass(ir);
-        if (op.verboseEnabled()) op.verboseListing(ir,2);
-        if (op.listingEnabled())
-            new Listing(ir).openOutputStream();
-        srcFile = srcFile.substring(0,srcFile.length()-4);
-        executableGenerator(ir, srcFile);
+        if (op != null && op.verboseEnabled()) op.verboseListing(ir,2);
+        if (op != null && op.listingEnabled()) {
+            this.listing = new Listing(ir);
+            listing.openOutputStream();
+        }
+        if (srcFile != null) {
+            srcFile = srcFile.substring(0, srcFile.length() - 4);
+            executableGenerator(ir, srcFile);
+        }
 
 
     }

@@ -22,7 +22,8 @@ public class TestLexicalAnalyser2 {
 
 
         System.out.println("Test Lexical Analyser scan and getNextFin (1)");
-        System.out.println(".cstring ; directive");
+        System.out.println(".cstring A23 ; directive");
+        System.out.print(l1.scan().getName() + " ");
         System.out.print(l1.scan().getName() + " ");
         System.out.println(l1.scan().getName());
         System.out.println("Test Lexical Analyser scan and getNextFin (2)");

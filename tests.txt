@@ -2,8 +2,8 @@ Test generateToken
 enter.u5 pop ".cstring" 1 ; hello
 enter.u5 pop ".cstring" 1 ; hello
 Test Lexical Analyser scan and getNextFin (1)
-.cstring ; directive
-.cstring ; directive
+.cstring A23 ; directive
+.cstring A23 ; directive
 Test Lexical Analyser scan and getNextFin (2)
 enter.u5 4 ; OK, number <u5> [0..31].
 enter.u5 4 ; OK, number <u5> [0..31].
@@ -13,6 +13,18 @@ enter.u5 pop true
 Test parseToken (2)
 ldc.i3 true true
 ldc.i3 true true
+Test parse (1)
+.cstring ; directive
+.cstring ; directive
+Test parse (2)
+enter.u5 4 ; OK, number <u5> [0..31].
+enter.u5 4 ; OK, number <u5> [0..31].
+Test parse (3)
+ldc.i3 3 ; OK, number <i3> [-4..3].
+ldc.i3 3 ; OK, number <i3> [-4..3].
+Test parse (4)
+ldc.i3 -4 ; OK, number <i3> [-4..3].
+ldc.i3 -4 ; OK, number <i3> [-4..3].
 Test components.SymbolTable
 Name: pop, Opcode: 01; Name: halt, Opcode: 00
 Name: pop, Opcode: 01; Name: halt, Opcode: 00
@@ -43,6 +55,9 @@ truetrue
 Test analysers.FileReader getFileName
 TestLexicalAnalyser.txt
 TestLexicalAnalyser.txt
+Test writeListingFile & openOutputStream
+true
+true
 Test header
 Line   Addr    Machine Code    Label                Assembly Code   Operand      Comments                 
 Line   Addr    Machine Code    Label                Assembly Code   Operand      Comments                 
