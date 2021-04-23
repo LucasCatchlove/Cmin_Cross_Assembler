@@ -15,7 +15,7 @@ import java.io.FileOutputStream;
  */
 public class CodeGenerator {
 
-    private IListing listing;
+//    private IListing listing;
     private IErrorReporter errorReporter;
 
 
@@ -34,8 +34,7 @@ public class CodeGenerator {
         secondPass(ir);
         if (op != null && op.verboseEnabled()) op.verboseListing(ir,2);
         if (op != null && op.listingEnabled()) {
-            this.listing = new Listing(ir);
-            listing.openOutputStream();
+            new Listing(ir).openOutputStream();
         }
         if (srcFile != null) {
             srcFile = srcFile.substring(0, srcFile.length() - 4);
